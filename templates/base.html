@@ -33,15 +33,10 @@
             <div class="page-header">
                 <h1><a href="home">Annotator</a>
                     <small>
-                        Gluten Transcript Annotation Tool
-                        -
-                        {% block display_title %}Welcome to Subject Tracking{% endblock %}
-                        <small>{% block display_title_sub %}
-                            an IIS demo application
-                        {% endblock %}</small>
+                        {% block display_title %}Gluten Transcript Annotation Tool{% endblock %}
+                        <small>{% block display_title_sub %}{% endblock %}</small>
                     </small>
                 </h1>
-                <jsp:invoke fragment="additional" />
             </div>
         </div>
         <div class="col-md-6">
@@ -120,7 +115,6 @@
 <script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
 
 <script type="text/javascript" src="/static/application.js"></script>
-<script src="/static/helpers.js"></script>
 <script src="/static/Encoder.js"></script>
 
 {% block extra_js %}

@@ -7,10 +7,17 @@ import datetime
 import flask
 from flask import Flask, render_template
 
+# TODO: hide/unhide string in encryption stuff
+# TODO: google (social) auth/login
+# TODO: model and storage
+# TODO: audit records
+
+# TODO: actual config for both testing and AWS - should include:
+#       ensure_database, FLASK_SECRET, and setups for both test/local and AWS
+
 # Note that application as the main WSGI app is required for Python apps
 # on Elastic Beanstalk
 application = Flask(__name__)
-# TODO: actual config for both testing and AWS
 application.secret_key = application.config.get('FLASK_SECRET', "defsecret")
 
 
@@ -31,11 +38,30 @@ def before_request():
     flask.g.year = datetime.datetime.now().year
 
 
-# Our home/index page
+# Our home/index page (GET only)
 @application.route('/')
 @application.route('/home')
 def main_page():
+    return render_template("home.html")  # TODO
+
+
+# Assign your transcripts (with taxonomy) to other people
+@application.route('/admin-assign', methods=['GET', 'POST'])
+def admin_assign():
+    return render_template("home.html")  # TODO
+
+
+# Actual annotation page
+@application.route('/edit/<scriptid>', methods=['GET', 'POST'])
+def edit_page(scriptid):
+    # TODO: get, post from save, and post from auto-save
     return render_template("home.html")
+
+
+# Return the taxonomy (in JSON) for the given transcript
+@application.route('/taxonomy/<scriptid>', methods=['GET'])
+def taxonomy_page(scriptid):
+    return render_template("home.html")  # TODO
 
 
 # Final app settings depending on whether or not we are set for debug mode

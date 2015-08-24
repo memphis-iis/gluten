@@ -7,6 +7,7 @@ import datetime
 import flask
 from flask import Flask, render_template
 
+# TODO: Vagrantfile for testing
 # TODO: hide/unhide string in encryption stuff
 # TODO: google (social) auth/login
 # TODO: model and storage

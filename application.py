@@ -76,8 +76,8 @@ else:
     logging.basicConfig(level=logging.INFO)
 
 
-# Our entry point - called when our application is started "locally". NOTE that
-# this WILL NOT be run by Elastic Beanstalk
+# Our entry point - called when our application is started "locally".
+# This WILL NOT be run by Elastic Beanstalk
 def main():
     application.run()
 if __name__ == '__main__':

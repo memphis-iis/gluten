@@ -8,10 +8,11 @@ import flask
 from flask import Flask, render_template
 
 # TODO: Vagrantfile for testing
-# TODO: hide/unhide string in encryption stuff
 # TODO: google (social) auth/login
 # TODO: model and storage
 # TODO: audit records
+# TODO: make sure we're checking that edit isn't letting them edit someone
+#       else's file
 
 # TODO: actual config for both testing and AWS - should include:
 #       ensure_database, FLASK_SECRET, and setups for both test/local and AWS

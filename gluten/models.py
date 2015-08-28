@@ -38,6 +38,36 @@ class Taxonomy(object):
 
 @DBObject(table_name='Transcripts')
 class Transcript(object):
+    # Our own housekeeping fields
     owner = Field('')
-    assigned_to = Field('')
     taxonomy = Field('')
+
+    tagger = Field('')
+    verifier = Field('')
+    tagged_time = Field('')
+    verified_time = Field('')
+
+    # Fields specified in the transcript
+    script_indentifier = Field('')
+    begin_datetime = Field('')
+    script_duration = Field(0)
+    learner_lag_duration = Field(0)
+    class_level = Field('')
+    domain = Field('')
+    area = Field('')
+    subarea = Field('')
+    problem_from_learner = Field('')
+    learner_notes = Field('')
+    tutor_notes = Field('')
+
+    # From taxonomy: was soundness, sessionComments, learningAssessmentScore,
+    # and learningAssessmentComments in first Annotator
+    tagger_supplied_answers = Field(dict)
+
+    # Actual transcript
+    raw_transcript = Field('')
+    utterance_list = Field('')
+
+    # TODO: parse xml file
+
+    # TODO: parse raw_transcript into utterance list

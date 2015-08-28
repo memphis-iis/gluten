@@ -38,12 +38,16 @@ class Taxonomy(object):
 
 @DBObject(table_name='Transcripts')
 class Transcript(object):
-    # Our own housekeeping fields
-    owner = Field('')
-    taxonomy = Field('')
+    STATES = ['Pending', 'InProgress', 'Completed']
 
-    tagger = Field('')
-    verifier = Field('')
+    # Our own housekeeping fields
+    owner = Field('')              # Uploader with assignment rights
+    taxonomy = Field('')           # Opt: an uploaded taxonomy to use
+    source_transcript = Field('')  # Original transcript we're copied from
+    state = Field(STATES[0])       # One of STATES
+
+    tagger = Field('')             # ID of User record for current tagger
+    verifier = Field('')           # ID of User record for current verifier
     tagged_time = Field('')
     verified_time = Field('')
 
@@ -69,5 +73,5 @@ class Transcript(object):
     utterance_list = Field('')
 
     # TODO: parse xml file
-
     # TODO: parse raw_transcript into utterance list
+    # TODO: some kind of handling for tagger_supplied_answers

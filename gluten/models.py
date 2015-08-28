@@ -1,15 +1,15 @@
 import yaml
 
-from gludb import DBObject, Field
+from gludb.simple import DBObject, Field
 
 
-@DBObject(table='Users')
+@DBObject(table_name='Users')
 class User(object):
     email = Field('')
     name = Field('')
 
 
-@DBObject(table='Taxnonomies')
+@DBObject(table_name='Taxnonomies')
 class Taxonomy(object):
     name = Field('')
     tagger_supplied = Field(list)

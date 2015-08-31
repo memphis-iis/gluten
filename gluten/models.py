@@ -139,8 +139,8 @@ class Transcript(object):
             tagger=read('Tagger', ''),
             verifier=read('Verifier', ''),
             begin_datetime=read('BeginDateTime', ''),
-            script_duration=read('ScriptDuration', 0),
-            learner_lag_duration=read('LearnerLagDuration', 0),
+            script_duration=float(read('ScriptDuration', 0)),
+            learner_lag_duration=float(read('LearnerLagDuration', 0)),
             class_level=read('ClassLevel', ''),
             domain=read('Domain', ''),
             area=read('Area', ''),
@@ -159,6 +159,8 @@ class Transcript(object):
         with open(filename, "r") as f:
             return cls.from_xml(f.read())
 
+    # TODO: need to parse XML Utterances as well so that we can import/export
+    #       like the old Annotator
     def parse_raw_transcript(self):
         if self.utterance_list:
             return  # Already done
@@ -184,7 +186,7 @@ class Transcript(object):
                 # Timestamp match - beginning of utterance
                 self.utterance_list.append({
                     'timestamp': match.group().strip('[]'),
-                    'text': line[match.span[1]:].strip(),
+                    'text': line[match.span()[1]:].strip(),
                     'speaker': current_speaker
                 })
             elif seen_blank and _speaker_match(line):

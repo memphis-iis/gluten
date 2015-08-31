@@ -80,6 +80,9 @@ else:
 # Our entry point - called when our application is started "locally".
 # This WILL NOT be run by Elastic Beanstalk
 def main():
+    if os.environ.get('DEBUG', None):
+        pass  # TODO: load a test config script
+
     application.run()
 if __name__ == '__main__':
     main()

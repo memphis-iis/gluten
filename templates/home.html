@@ -39,25 +39,25 @@
                 </td>
                 <td class="nowrap">
                     {{ts.scriptId}}
-                    <c:if test="{{ts.verify}}">
+                    {% if ts.verify %}
                         <span class="label label-danger">
                             <span class="glyphicon glyphicon-check"></span> Verify
                         </span>
-                    </c:if>
-                    <c:if test="{{ts.training}}">
+                    {% endif %}
+                    {% if ts.training %}
                         <span class="label label-warning">
                             <span class="glyphicon glyphicon-book"></span> Training
                         </span>
-                    </c:if>
+                    {% endif %}
                 </td>
                 <td class="nowrap"><c:out value="{{ts.classLevel}}" /></td>
                 <td style="min-width: 180px;"><c:out value="{{ts.domain}}" /></td>
                 <td style="min-width: 180px;"><c:out value="{{ts.area}}" /></td>
                 <td style="min-width: 180px;"><c:out value="{{ts.subarea}}" /></td>
-                <td><c:out value="{{cf:abbreviate(ts.problemFromLearner, 50)}}" /></td>
+                <td><c:out value="{{ts.problemFromLearner[:50]}}" /></td>
                 <td style="min-width: 180px;"><c:out value="{{ts.lastSavedTime}}" /></td>
             </tr>
-            {% endif %}
+            {% endfor %}
         </table>
     </div>
 </div>

@@ -21,7 +21,9 @@ from flask import (
     jsonify
 )
 
-from gluten.models import Taxonomy, Transcript
+from gluten.models import User, Taxonomy, Transcript
+
+from gludb.config import Database, default_database
 
 # TODO: Vagrantfile for testing
 # TODO: google (social) auth/login
@@ -51,14 +53,22 @@ def get_script(scriptid):
     return Transcript.find_one(scriptid) if scriptid else None
 
 
-def ensure_tables():
-    pass  # TODO: this should be in our config stuff
-
-
 # This will be called before the first request is ever serviced
 @application.before_first_request
 def before_first():
-    ensure_tables()
+    # Final app settings depending on whether or not we are set for debug mode
+    if os.environ.get('DEBUG', None):
+        default_database(Database('sqlite', filename=':memory:'))
+        Transcript.ensure_table()
+        Transcript.from_xml_file(
+            project_file('test/sample/SampleTranscript.xml')
+        ).save()
+    else:
+        default_database(Database('dynamodb'))
+
+    User.ensure_table()
+    Taxonomy.ensure_table()
+    Transcript.ensure_table()
 
 
 # This will be called before every request, so we can set up any global data
@@ -134,7 +144,6 @@ if os.environ.get('DEBUG', None):
     # Debug mode - running on a workstation
     application.debug = True
     logging.basicConfig(level=logging.DEBUG)
-    # TODO: insure that we have some test transcripts saved
 else:
     # We are running on AWS Elastic Beanstalk (or something like it)
     application.debug = False

@@ -3,6 +3,22 @@ import yaml
 from gludb.simple import DBObject, Field
 
 
+class ValidationError(Exception):
+    pass
+
+
+def _check(condition, errstr):
+    if not condition:
+        raise ValidationError(errstr)
+
+
+# Useful for checks for string type that work for both Python 2 & 3
+try:
+    basestring
+except NameError:
+    basestring = str
+
+
 @DBObject(table_name='Users')
 class User(object):
     email = Field('')
@@ -20,7 +36,7 @@ class Taxonomy(object):
     def from_yaml(cls, yamlstr):
         data = yaml.load(yamlstr)
         object = cls(
-            tagger_supplied=data.get('tagger_supplied', list()),
+            tagger_supplied=data.get('tagger-supplied', list()),
             modes=data.get('modes', list()),
             acts=data.get('acts', list())
         )
@@ -33,7 +49,48 @@ class Taxonomy(object):
             return cls.from_yaml(f.read())
 
     def validate(self):
-        pass  # TODO: actual validation
+        """Raise a ValidationError if the current internal state isn't
+        correct"""
+
+        # Specifics for tagger-supplied
+        _check(
+            isinstance(self.tagger_supplied, list),
+            "Invalid tagger-supplied data"
+        )
+
+        for ts in self.tagger_supplied:
+            q = ts.get('question', None)
+            _check(isinstance(q, dict), "Invalid tagger-supplied question")
+            _check(len(q.get('text', '')) > 0, "tagger question missing text")
+            a = q.get('a', None)
+            if a:  # Remember, empty is OK
+                _check(type(a) is list, "Invalid tagger-supplied answer list")
+
+        # Specifics for modes
+        _check(isinstance(self.modes, list), "Invalid modes")
+        _check(len(self.modes) > 0, "No modes specified")
+        for m in self.modes:
+            _check(isinstance(m, basestring), "Invalid mode")
+            _check(len(m) > 0, "Blank mode")
+
+        # Specifics for acts
+        _check(isinstance(self.acts, list), "Invalid acts")
+        _check(len(self.acts) > 0, "No speech act specified")
+        for act in self.acts:
+            _check(isinstance(act, dict), "Invalid speech act")
+            act = act.get('act', None)
+            _check(isinstance(act, dict), "Invalid speech act")
+
+            name = act.get('name', None)
+            _check(isinstance(name, basestring), "Invalid speech act name")
+
+            if name != 'Unspecified':
+                st = act.get('subtypes', None)
+                _check(isinstance(st, list), "Invalid act subtypes")
+                _check(len(st) > 0, "Speech acts missing subtypes")
+                for t in st:
+                    _check(isinstance(t, basestring), "Invalid act subtype")
+                    _check(len(t) > 0, "Blank act subtype")
 
 
 @DBObject(table_name='Transcripts')

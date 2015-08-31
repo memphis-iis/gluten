@@ -15,4 +15,4 @@ class TaxnonmyTesting(unittest.TestCase):
     def testDefaultRead(self):
         def_tax = project_file('config/default_taxonomy.yaml')
         tax = Taxonomy.from_yaml_file(def_tax)
-        print(tax.to_data())
+        tax.validate()

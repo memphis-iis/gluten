@@ -8,8 +8,7 @@ tagger-supplied:
             - Disagree
             - Completely Disagree
     - question:
-        text: There is solid evidence that the student acquired important new
-              understanding during the course of this session
+        text: There is solid evidence that the student acquired important new understanding during the course of this session
         answer:
             - Strong evidence that the student did NOT acquire new understanding
             - Some evidence that the student did NOT acquire new understanding

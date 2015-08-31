@@ -1,11 +1,28 @@
 #!/usr/bin/env python
 
+import sys
+if sys.version_info < (3, 0):
+    sys.stderr.write("Sorry, requires Python 3.4 or later\n")
+    sys.exit(1)
+
 import os
+import os.path as pth
 import logging
 import datetime
+import json
 
 import flask
-from flask import Flask, render_template
+from flask import (
+    Flask,
+    render_template,
+    abort,
+    redirect,
+    url_for,
+    request,
+    jsonify
+)
+
+from gluten.models import User, Taxonomy, Transcript
 
 # TODO: Vagrantfile for testing
 # TODO: google (social) auth/login
@@ -21,6 +38,18 @@ from flask import Flask, render_template
 # on Elastic Beanstalk
 application = Flask(__name__)
 application.secret_key = application.config.get('FLASK_SECRET', "defsecret")
+
+
+def project_file(relpath):
+    """Given the path to a file relative to the project root, return the
+    absolute file name. We depend on the fact that this file is IN the project
+    root"""
+    base = pth.abspath(pth.dirname(__file__))
+    return pth.join(base, relpath)
+
+
+def get_script(scriptid):
+    return Transcript.find_one(scriptid) if scriptid else None
 
 
 def ensure_tables():
@@ -56,14 +85,49 @@ def admin_assign():
 # Actual annotation page
 @application.route('/edit/<scriptid>', methods=['GET', 'POST'])
 def edit_page(scriptid):
-    # TODO: get, post from save, and post from auto-save
-    return render_template("home.html")
+    script = get_script(scriptid)
+    if not script:
+        abort(404)
+
+    if request.method == 'GET':
+        return render_template("edit.html", transcript=script)
+
+    # From here on down we're in POST
+
+    # TODO: handle auto-save
+    # TODO: handle "real" save
+
+    return redirect(url_for('edit_page', scriptid=scriptid))
 
 
-# Return the taxonomy (in JSON) for the given transcript
+# Return the taxonomy (in JSON) for the given transcript - note that we
+# explicitly create the dict that we JSONify. This keeps private data private,
+# but it also let's us remove some of the weirdness that comes from our YAML
+# format
 @application.route('/taxonomy/<scriptid>', methods=['GET'])
 def taxonomy_page(scriptid):
-    return render_template("home.html")  # TODO
+    taxid = None
+
+    script = get_script(scriptid)
+    taxid = script.taxonomy or ''
+    tax = Taxonomy.find_one(taxid) if taxid else None
+
+    if not tax:
+        tax = Taxonomy.from_yaml_file(
+            project_file('config/default_taxonomy.yaml')
+        )
+
+    acts = {}
+    for act in tax.acts:
+        act = act['act']  # artifact of our YAML format that we drop for JS
+        name = act['name']
+        acts[name] = {'name': name, 'subtypes': act['subtypes']}
+
+    return jsonify(taxonomy={
+        'modes': tax.modes,
+        'tagger_supplied': [q['question'] for q in tax.tagger_supplied],
+        'acts': acts
+    })
 
 
 # Final app settings depending on whether or not we are set for debug mode
@@ -71,6 +135,7 @@ if os.environ.get('DEBUG', None):
     # Debug mode - running on a workstation
     application.debug = True
     logging.basicConfig(level=logging.DEBUG)
+    # TODO: insure that we have some test transcripts saved
 else:
     # We are running on AWS Elastic Beanstalk (or something like it)
     application.debug = False
@@ -80,9 +145,6 @@ else:
 # Our entry point - called when our application is started "locally".
 # This WILL NOT be run by Elastic Beanstalk
 def main():
-    if os.environ.get('DEBUG', None):
-        pass  # TODO: load a test config script
-
     application.run()
 if __name__ == '__main__':
     main()

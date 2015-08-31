@@ -5,7 +5,7 @@ from gluten.models import Taxonomy
 from .utils import project_file
 
 
-class TaxnonmyTesting(unittest.TestCase):
+class TaxonomyTesting(unittest.TestCase):
     def setUp(self):
         pass
 

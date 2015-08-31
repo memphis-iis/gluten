@@ -9,7 +9,6 @@ import os
 import os.path as pth
 import logging
 import datetime
-import json
 
 import flask
 from flask import (
@@ -22,7 +21,7 @@ from flask import (
     jsonify
 )
 
-from gluten.models import User, Taxonomy, Transcript
+from gluten.models import Taxonomy, Transcript
 
 # TODO: Vagrantfile for testing
 # TODO: google (social) auth/login

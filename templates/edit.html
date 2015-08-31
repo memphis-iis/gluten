@@ -375,7 +375,7 @@
             <td>
                 <select id="editDlgAct" tabindex="1" class="editControl">
                     <option value=""></option>
-                    {% for act in taxonomy.dialogActs %}
+                    {% for act in taxonomy.acts %}
                         <option value="{{act.name}}">{{act.name}}</option>
                     {% endfor %}
                 </select>
@@ -399,7 +399,7 @@
             <td>
                 <select id="editDlgMode" tabindex="3" class="editControl">
                     <option value=""></option>
-                    {% for mode in taxonomy.dialogModes %}
+                    {% for mode in taxonomy.modes %}
                         <option value="{{mode}}">{{mode}}</option>
                     {% endfor %}
                 </select>
@@ -589,7 +589,7 @@ var training_mode = {
 //Also note that our "methods" on this object start with '_'
 var mode_colors = {
     _populate: function(modes) {
-        var dialogModes = taxonomy["dialogModes"];
+        var dialogModes = taxonomy["modes"];
         if (!dialogModes || !dialogModes.length || dialogModes.length < 2) {
             console.log("No Dialog Modes found in the taxonomy!");
             return;
@@ -1063,12 +1063,12 @@ function populateSubAct() {
         alert("No Tagging taxonomy found!");
         return;
     }
-    var dialogAct = taxonomy["dialogActs"][sel];
+    var dialogAct = taxonomy["acts"][sel];
     if (!dialogAct || !dialogAct.subtypes) {
         console.log("No Dialog Act object found in the taxonomy for " + sel);
         console.log(taxonomy);
-        console.log(taxonomy["dialogActs"]);
-        console.log(taxonomy["dialogActs"][sel]);
+        console.log(taxonomy["acts"]);
+        console.log(taxonomy["acts"][sel]);
         return;
     }
 

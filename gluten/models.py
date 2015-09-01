@@ -3,7 +3,7 @@ import re
 
 import yaml
 
-from gludb.simple import DBObject, Field
+from gludb.simple import DBObject, Field, Index
 
 
 class ValidationError(Exception):
@@ -19,6 +19,11 @@ def _check(condition, errstr):
 class User(object):
     email = Field('')
     name = Field('')
+    photo = Field('/static/anonymous_person.png')
+
+    @Index
+    def idx_email(self):
+        return self.email.strip().lower()
 
 
 @DBObject(table_name='Taxnonomies')
@@ -126,6 +131,18 @@ class Transcript(object):
     raw_transcript = Field('')
     utterance_list = Field(list)
 
+    # Indexes
+
+    @Index
+    def idx_owned(self):
+        return self.owner
+
+    @Index
+    def idx_assigned(self):
+        return self.tagger
+
+    # Implementation
+
     @classmethod
     def from_xml(cls, xmlstr):
         root = ET.fromstring(xmlstr)
@@ -187,9 +204,14 @@ class Transcript(object):
                 self.utterance_list.append({
                     'timestamp': match.group().strip('[]'),
                     'text': line[match.span()[1]:].strip(),
-                    'speaker': current_speaker
+                    'speaker': current_speaker,
+                    'act': '',
+                    'subact': '',
+                    'mode': '',
+                    'comment': '',
+                    'tag_confidence': '',
                 })
-            elif seen_blank and _speaker_match(line):
+            elif seen_blank and self.speaker_match(line):
                 # Found the current speaker
                 current_speaker = line.strip()
             elif self.utterance_list:
@@ -200,19 +222,18 @@ class Transcript(object):
 
             seen_blank = False
 
-    # TODO: some kind of handling for tagger_supplied_answers
+    def speaker_match(self, line):
+        line = line.strip().lower()
+        if not line:
+            return False
 
+        if line == "you" or line.endswith('(tutor)'):
+            return True  # tutor
+        if line.endswith('(customer)'):
+            return True  # customer
+        if line == "system message":
+            return True  # sys
 
-def _speaker_match(line):
-    line = line.strip().lower()
-    if not line:
         return False
 
-    if line == "you" or line.endswith('(tutor)'):
-        return True  # tutor
-    if line.endswith('(customer)'):
-        return True  # customer
-    if line == "system message":
-        return True  # sys
-
-    return False
+    # TODO: some kind of handling for tagger_supplied_answers

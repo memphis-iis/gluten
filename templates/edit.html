@@ -50,14 +50,14 @@
 <!-- TODO: actual header -->
 <header>
         Edit <span id="titleBadge" class="label"></span>
-        <a href="home">Return to Session Selection</a>
+        <a href="{{url_for('main_page')}}">Return to Session Selection</a>
 </header>
 
 <!-- Transcript meta data -->
 <div class="row">
     <div class="col-md-4">
         <table class="table table-bordered">
-            <tr><th>Session</th><td>{{transcript.scriptId}}"</td></tr>
+            <tr><th>Session</th><td>{{transcript.scriptId}}</td></tr>
             <tr><th>Begin</th><td>{{transcript.beginDateTime}}</td></tr>
             <tr><th>Duration</th><td>{{transcript.scriptDuration}}</td></tr>
             <tr><th>Student Lag</th><td>{{transcript.learnerLagDuration}}</td></tr>
@@ -126,7 +126,8 @@
                     </span>
                     <br/>
                     <textarea name="learningAssessmentComments" id="learningAssessmentComments"
-                        rows="3" cols="64" ><%--  {{transcript.learningAssessmentComments}} --%></textarea>
+                        rows="3" cols="64"
+                    ></textarea> <!-- WAS  {{transcript.learningAssessmentComments}} -->
                 </td>
             </tr>
             <tr>
@@ -253,23 +254,23 @@
                 <th>?</th>
             </tr></thead>
             <tbody>
-            {% for item in transcript.transcriptItems %}
-                <tr class="transcriptRow" data-utteranceindex="{{status.index}}">
+            {% for item in transcript.utterance_list %}
+                <tr class="transcriptRow" data-utteranceindex="{{loop.index0}}">
                     <!-- Read Only Fields -->
                     <td>{{item.timestamp}}</td>
-                    <td>{{item.dispSpeaker}}</td>
+                    <td>{{item.speaker}}</td>
                     <td>{{item.text}}</td>
 
                     <!-- Editing! -->
                     <td class="nowrap"><button class="btn-xs btn-info startTagBtn">
                         <span class="glyphicon glyphicon-edit"></span>
                     </button></td>
-                    <td class="editCell editCellAct">{{item.dialogAct}}</td>
-                    <td class="editCell editCellSubAct">{{item.dialogSubAct}}</td>
-                    <td class="editCell editCellMode">{{item.dialogMode}}</td>
+                    <td class="editCell editCellAct">{{item.act}}</td>
+                    <td class="editCell editCellSubAct">{{item.subact}}</td>
+                    <td class="editCell editCellMode">{{item.mode}}</td>
                     <td class="editCell editCellComments">{{item.comments}}</td>
-                    <td class="editCell editCellTagConf" data-confidence="{{item.tagConfidence}}">
-                        {% if item.tagConfidence == 0 %}
+                    <td class="editCell editCellTagConf" data-confidence="{{item.tag_confidence}}">
+                        {% if item.tag_confidence == 0 %}
                             <span class='label label-danger'><strong>?</strong></span>
                         {% endif %}
                     </td>
@@ -334,17 +335,18 @@
 
 </form>
 
+<!-- TODO: we don't currently have support for any of this -->
 <!-- Training mode: we store it in a hidden table -->
 {% if trainingMode or verifyMode or assessMode %}
     <div id="trainingScriptContainer" style="display:none;">
     {% if verifyMode %} <div id="trainingIsVerify"></div> {% endif %}
     {% if assessMode %} <div id="trainingIsAssess"></div> {% endif %}
     <table id="trainingScript"><tbody>
-        {% for item in trainerTranscript.transcriptItems %}
-            <tr data-trainindex="{{status.index}}">
-                <td class="trainAct">{{item.dialogAct}}</td>
-                <td class="trainSubAct">{{item.dialogSubAct}}</td>
-                <td class="trainMode">{{item.dialogMode}}</td>
+        {% for item in trainer_transcript.utterance_list %}
+            <tr data-trainindex="{{loop.index0}}">
+                <td class="trainAct">{{item.act}}</td>
+                <td class="trainSubAct">{{item.subact}}</td>
+                <td class="trainMode">{{item.mode}}</td>
                 <td class="trainComments">{{item.comments}}</td>
             </tr>
         {% endfor %}
@@ -375,8 +377,8 @@
             <td>
                 <select id="editDlgAct" tabindex="1" class="editControl">
                     <option value=""></option>
-                    {% for act in taxonomy.acts %}
-                        <option value="{{act.name}}">{{act.name}}</option>
+                    {% for name,act in taxonomy.acts.items() %}
+                        <option value="{{act.name}}">{{name}}</option>
                     {% endfor %}
                 </select>
             </td>
@@ -482,7 +484,7 @@
 
 {% block extra_js %}
 <!-- Make sure we have the taxonomy available for script -->
-<script src="{{url_for('taxonomy', scriptid=transcript.id)}}"></script>
+<script src="{{url_for('taxonomy_page', scriptid=transcript.id)}}"></script>
 
 <!-- We use a jquery scroll-into-view plugin -->
 <script src="/static/jquery.scrollintoview.min.js"></script>

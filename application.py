@@ -9,6 +9,7 @@ import os
 import os.path as pth
 import logging
 import datetime
+import json
 
 import flask
 from flask import (
@@ -18,7 +19,8 @@ from flask import (
     redirect,
     url_for,
     request,
-    jsonify
+    flash,
+    Response
 )
 
 from gluten.models import User, Taxonomy, Transcript
@@ -50,77 +52,14 @@ def project_file(relpath):
 
 
 def get_script(scriptid):
+    """Find and return the matching Transcript (or None)"""
     return Transcript.find_one(scriptid) if scriptid else None
 
 
-# This will be called before the first request is ever serviced
-@application.before_first_request
-def before_first():
-    # Final app settings depending on whether or not we are set for debug mode
-    if os.environ.get('DEBUG', None):
-        default_database(Database('sqlite', filename=':memory:'))
-        Transcript.ensure_table()
-        Transcript.from_xml_file(
-            project_file('test/sample/SampleTranscript.xml')
-        ).save()
-    else:
-        default_database(Database('dynamodb'))
-
-    User.ensure_table()
-    Taxonomy.ensure_table()
-    Transcript.ensure_table()
-
-
-# This will be called before every request, so we can set up any global data
-# that we want all requests to see
-@application.before_request
-def before_request():
-    flask.g.year = datetime.datetime.now().year
-
-
-# Our home/index page (GET only)
-@application.route('/')
-@application.route('/home')
-def main_page():
-    return render_template("home.html")  # TODO
-
-
-# Assign your transcripts (with taxonomy) to other people
-@application.route('/admin-assign', methods=['GET', 'POST'])
-def admin_assign():
-    return render_template("home.html")  # TODO
-
-
-# Actual annotation page
-@application.route('/edit/<scriptid>', methods=['GET', 'POST'])
-def edit_page(scriptid):
-    script = get_script(scriptid)
-    if not script:
-        abort(404)
-
-    if request.method == 'GET':
-        return render_template("edit.html", transcript=script)
-
-    # From here on down we're in POST
-
-    # TODO: handle auto-save
-    # TODO: handle "real" save
-
-    return redirect(url_for('edit_page', scriptid=scriptid))
-
-
-# Return the taxonomy (in JSON) for the given transcript - note that we
-# explicitly create the dict that we JSONify. This keeps private data private,
-# but it also let's us remove some of the weirdness that comes from our YAML
-# format
-@application.route('/taxonomy/<scriptid>', methods=['GET'])
-def taxonomy_page(scriptid):
-    taxid = None
-
-    script = get_script(scriptid)
-    taxid = script.taxonomy or ''
+def get_taxonomy(taxid):
+    """Find and return the proper taxonomy (which might be the default),
+    properly transformed for our templates and client-side JSON"""
     tax = Taxonomy.find_one(taxid) if taxid else None
-
     if not tax:
         tax = Taxonomy.from_yaml_file(
             project_file('config/default_taxonomy.yaml')
@@ -132,11 +71,112 @@ def taxonomy_page(scriptid):
         name = act['name']
         acts[name] = {'name': name, 'subtypes': act['subtypes']}
 
-    return jsonify(taxonomy={
+    return {
         'modes': tax.modes,
         'tagger_supplied': [q['question'] for q in tax.tagger_supplied],
         'acts': acts
-    })
+    }
+
+
+# This will be called before the first request is ever serviced
+@application.before_first_request
+def before_first():
+    # Final app settings depending on whether or not we are set for debug mode
+    if application.debug:
+        # Debug/local dev
+        default_database(Database('sqlite', filename=':memory:'))
+    else:
+        # Production!
+        default_database(Database('dynamodb'))
+
+    # Make sure we have our tables
+    User.ensure_table()
+    Transcript.ensure_table()
+    Taxonomy.ensure_table()
+
+    # Some debug data we might find useful
+    if application.debug:
+        me = User(name='Test User', email='cnkelly@memphis.edu')
+        me.save()
+        ts = Transcript.from_xml_file(
+            project_file('test/sample/SampleTranscript.xml')
+        )
+        ts.owner = me.id
+        ts.save()
+
+
+# This will be called before every request, so we can set up any global data
+# that we want all requests to see
+@application.before_request
+def before_request():
+    flask.g.year = datetime.datetime.now().year
+
+
+# Helper that provides any default, base data for our templates
+def template(template_name, **context_kwrds):
+    # TODO: actually use a real user if we aren't in DEBUG mode
+    ctx = {
+        'user': User.find_by_index('idx_email', 'cnkelly@memphis.edu')[0],
+        'is_verifier': False,
+        'is_assigner': False,
+        'is_assessor': False
+    }
+    ctx.update(context_kwrds)
+    return render_template(template_name, **ctx)
+
+
+# Our home/index page (GET only)
+@application.route('/')
+@application.route('/home')
+def main_page():
+    # TODO: filter templates for current user (owner and assigned)
+    # TODO: check for qs parm do_logout=yes
+    return template("home.html", transcripts=Transcript.find_all())
+
+
+# Assign your transcripts (with taxonomy) to other people
+@application.route('/admin-assign', methods=['GET', 'POST'])
+def admin_assign_page():
+    return template("home.html")  # TODO
+
+
+# Actual annotation page
+@application.route('/edit/<scriptid>', methods=['GET', 'POST'])
+def edit_page(scriptid):
+    script = get_script(scriptid)
+    if not script:
+        abort(404)
+
+    if request.method == 'GET':
+        return template(
+            "edit.html",
+            transcript=script,
+            taxonomy=get_taxonomy(script.taxonomy)
+        )
+
+    # From here on down we're in POST
+
+    # TODO: handle auto-save
+    # TODO: handle "real" save
+
+    flash("Your changes were saved")
+    return redirect(url_for('edit_page', scriptid=scriptid))
+
+
+# Return the taxonomy (in JSON) for the given transcript - note that we
+# explicitly create the dict that we JSONify. This keeps private data private,
+# but it also let's us remove some of the weirdness that comes from our YAML
+# format
+@application.route('/taxonomy/<scriptid>', methods=['GET'])
+def taxonomy_page(scriptid):
+    script = get_script(scriptid)
+    taxid = script.taxonomy if script and script.taxonomy else ''
+
+    # Note that we want to be able to include <script> tag with a taxonomy URL
+    # that will magically create a JS object named taxonomy. As a result, we
+    # can't quite use the magic of Flask jsonify
+    data = "taxonomy = " + json.dumps(get_taxonomy(taxid)) + ";"
+    return Response(data, mimetype='application/json')
 
 
 # Final app settings depending on whether or not we are set for debug mode

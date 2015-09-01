@@ -10,7 +10,7 @@ itsdangerous==0.24
 boto==2.38.0
 
 # Our data library
-gludb==0.1.1
+gludb==0.1.2
 
 # We currently use YAML files for taxonomies
 PyYAML==3.11

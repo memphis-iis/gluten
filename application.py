@@ -37,7 +37,7 @@ from gludb.config import Database, default_database
 #       else's file
 # TODO: actual config for both testing and AWS - should include:
 #       ensure_database, FLASK_SECRET, and setups for both test/local and AWS
-
+# TODO: completed transcripts are VIEW ONLY
 
 # Note that application as the main WSGI app is required for Python apps
 # on Elastic Beanstalk

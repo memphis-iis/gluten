@@ -147,6 +147,12 @@ class Transcript(object):
 
     # Implementation
 
+    def mark_in_progress(self):
+        self.state = self.STATES[1]
+
+    def mark_completed(self):
+        self.state = self.STATES[-1]
+
     @classmethod
     def from_xml(cls, xmlstr):
         root = ET.fromstring(xmlstr)

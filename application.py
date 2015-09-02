@@ -20,13 +20,15 @@ from flask import (
     url_for,
     request,
     flash,
-    Response
+    Response,
+    jsonify
 )
 
 from gluten.models import User, Taxonomy, Transcript
 
 from gludb.config import Database, default_database
 
+# TODO: on edit pending, change to InProgress
 # TODO: Vagrantfile for testing
 # TODO: google (social) auth/login
 # TODO: audit records
@@ -169,20 +171,76 @@ def edit_page(scriptid):
     if not script:
         abort(404)
 
+    tax = get_taxonomy(script.taxonomy)
+    if not tax:
+        return abort(500)  # We are broken
+
     if request.method == 'GET':
+        # If the script is still pending, mark it as in progress
+        if script.state == Transcript.STATES[0]:
+            script.mark_in_progress()
+            script.save()
+
         return template(
             "edit.html",
             transcript=script,
-            taxonomy=get_taxonomy(script.taxonomy)
+            taxonomy=tax
         )
+    else:
+        # Was a POST - do our save
+        return save_page(script, tax)
 
-    # From here on down we're in POST
 
-    # TODO: handle auto-save
-    # TODO: handle "real" save
+def save_page(script, tax):
+    # Get the actual save request parameters
+    raw_data = request.values.get('fulldata', '')
+    if not raw_data:
+        # Not sure what this is, but it's nothing we can handle
+        flash("No data was found, so nothing was saved")
+        return redirect(url_for('edit_page', scriptid=script.id))
 
-    flash("Your changes were saved")
-    return redirect(url_for('edit_page', scriptid=scriptid))
+    is_autosave = request.values.get('autosave', False)
+    is_complete = request.values.get('completed', False)
+    autosave_err = ''
+
+    # TODO: look for tagger-supplied top-level values (that are specified in
+    #       the taxonomy)
+
+    # Save the utterance list
+    saved_data = json.loads(raw_data)
+
+    for src_utt in saved_data:
+        index = int(src_utt.get("index"))
+
+        conf = src_utt['confidence']
+        conf = int(conf) if conf else 1
+
+        dest = script.utterance_list[index]
+        dest['act'] = src_utt['act']
+        dest['subact'] = src_utt['subact']
+        dest['mode'] = src_utt['mode']
+        dest['comment'] = src_utt['comments']
+        dest['tag_confidence'] = conf
+
+    script.save()
+
+    if is_autosave:
+        # On autosave, there is no redirect - they get back a JSON response
+        return jsonify({
+            'success': True if not autosave_err else False,
+            'errmsg': autosave_err
+        })
+    elif is_complete:
+        # Mark complete and then redirect back home
+        if script.state != Transcript.STATES[-1]:
+            script.mark_completed()
+            script.save()
+        flash("The transcript was marked completed")
+        return redirect(url_for('main_page'))
+    else:
+        # Normal save - they get to keep editing
+        flash("Your changes were saved")
+        return redirect(url_for('edit_page', scriptid=script.id))
 
 
 # Return the taxonomy (in JSON) for the given transcript - note that we

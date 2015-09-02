@@ -29,13 +29,13 @@ from gludb.config import Database, default_database
 
 # TODO: Vagrantfile for testing
 # TODO: google (social) auth/login
-# TODO: model and storage
 # TODO: audit records
+# TODO: actually provide prev and next files for edit screen
 # TODO: make sure we're checking that edit isn't letting them edit someone
 #       else's file
-
 # TODO: actual config for both testing and AWS - should include:
 #       ensure_database, FLASK_SECRET, and setups for both test/local and AWS
+
 
 # Note that application as the main WSGI app is required for Python apps
 # on Elastic Beanstalk
@@ -78,6 +78,12 @@ def get_taxonomy(taxid):
     }
 
 
+def get_user():
+    """Return current user"""
+    # TODO: actual work
+    return User.find_by_index('idx_email', 'cnkelly@memphis.edu')[0]
+
+
 # This will be called before the first request is ever serviced
 @application.before_first_request
 def before_first():
@@ -98,11 +104,25 @@ def before_first():
     if application.debug:
         me = User(name='Test User', email='cnkelly@memphis.edu')
         me.save()
-        ts = Transcript.from_xml_file(
+
+        ts1 = Transcript.from_xml_file(
             project_file('test/sample/SampleTranscript.xml')
         )
-        ts.owner = me.id
-        ts.save()
+        ts1.script_identifier = 'Original Owned'
+        ts1.owner = me.id
+        ts1.tagger = ''
+        ts1.id = ''
+        ts1.save()
+
+        ts2 = Transcript.from_xml_file(
+            project_file('test/sample/SampleTranscript.xml')
+        )
+        ts2.script_identifier = 'New Assigned'
+        ts2.owner = me.id
+        ts2.tagger = me.id
+        ts2.source_transcript = ts1.id
+        ts2.id = ''  # Ensure new id on save
+        ts2.save()
 
 
 # This will be called before every request, so we can set up any global data
@@ -114,9 +134,8 @@ def before_request():
 
 # Helper that provides any default, base data for our templates
 def template(template_name, **context_kwrds):
-    # TODO: actually use a real user if we aren't in DEBUG mode
     ctx = {
-        'user': User.find_by_index('idx_email', 'cnkelly@memphis.edu')[0],
+        'user': get_user(),
         'is_verifier': False,
         'is_assigner': False,
         'is_assessor': False
@@ -129,15 +148,18 @@ def template(template_name, **context_kwrds):
 @application.route('/')
 @application.route('/home')
 def main_page():
-    # TODO: filter templates for current user (owner and assigned)
     # TODO: check for qs parm do_logout=yes
-    return template("home.html", transcripts=Transcript.find_all())
+    return template(
+        "home.html",
+        owned=Transcript.find_by_index('idx_owned', get_user().id),
+        assigned=Transcript.find_by_index('idx_assigned', get_user().id),
+    )
 
 
 # Assign your transcripts (with taxonomy) to other people
 @application.route('/admin-assign', methods=['GET', 'POST'])
 def admin_assign_page():
-    return template("home.html")  # TODO
+    return template("home.html")  # TODO: actual assignment screen
 
 
 # Actual annotation page

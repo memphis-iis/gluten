@@ -134,6 +134,10 @@ class Transcript(object):
     # Indexes
 
     @Index
+    def idx_state(self):
+        return self.state
+
+    @Index
     def idx_owned(self):
         return self.owner
 

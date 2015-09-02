@@ -57,10 +57,10 @@
 <div class="row">
     <div class="col-md-4">
         <table class="table table-bordered">
-            <tr><th>Session</th><td>{{transcript.scriptId}}</td></tr>
-            <tr><th>Begin</th><td>{{transcript.beginDateTime}}</td></tr>
-            <tr><th>Duration</th><td>{{transcript.scriptDuration}}</td></tr>
-            <tr><th>Student Lag</th><td>{{transcript.learnerLagDuration}}</td></tr>
+            <tr><th>Session</th><td>{{transcript.script_identifier}}</td></tr>
+            <tr><th>Begin</th><td>{{transcript.begin_datetime}}</td></tr>
+            <tr><th>Duration</th><td>{{transcript.script_duration}}</td></tr>
+            <tr><th>Student Lag</th><td>{{transcript.learner_lag_duration}}</td></tr>
         </table>
     </div>
     <div class="col-md-8">
@@ -68,7 +68,7 @@
             <tr><th>Domain</th><td>{{transcript.domain}}</td></tr>
             <tr><th>Area</th><td>{{transcript.area}}</td></tr>
             <tr><th>Subarea</th><td>{{transcript.subarea}}</td></tr>
-            <tr><th>ProblemFromLearner</th><td>{{transcript.problemFromLearner}}</td></tr>
+            <tr><th>ProblemFromLearner</th><td>{{transcript.problem_from_learner}}</td></tr>
         </table>
     </div>
 </div>
@@ -80,11 +80,11 @@
         <table class="table table-bordered table-condensed">
             <tr>
                 <th width="1%" class="nowrap">Learner Notes</th>
-                <td>{{transcript.learnerNotes}}</td>
+                <td>{{transcript.learner_notes}}</td>
             </tr>
             <tr>
                 <th width="1%" class="nowrap">Tutor Notes</th>
-                <td>{{transcript.tutorNotes}}</td>
+                <td>{{transcript.tutor_notes}}</td>
             </tr>
             <!-- TODO: now is custom, not hard-coded-->
             <tr>
@@ -138,7 +138,7 @@
                     </span>
                     <br/>
                     <textarea name="sessionComments" id="sessionComments"
-                        rows="3" cols="64" >{{transcript.sessionComments}}</textarea>
+                        rows="3" cols="64" >{{transcript.session_comments}}</textarea>
                 </td>
             </tr>
         </table>
@@ -160,7 +160,6 @@
             </td>
             <td class="nowrap" style="padding-left: 12px;">
                 {% if prevfile %}
-                    <!-- TODO: link is now uuid -->
                     <a class="btn btn-primary needTooltip" data-toggle="tooltip"
                         title="{{prevFile.state}} {{prevFile.fileName}}"
                         href="{{url_for('edit_page', scriptid=preFile.id)}}">
@@ -173,7 +172,7 @@
                 {% endif %}
             </td>
             <td class="nowrap" style="padding-left: 2px;">
-                {% if nextFile %} <!-- TODO: link is now uuid -->
+                {% if nextFile %}
                     <a class="btn btn-primary needTooltip" data-toggle="tooltip"
                         title="{{nextFile.state}}/{{nextFile.fileName}}"
                         href="{{url_for('edit_page', scriptid=nexFile.id)}}">

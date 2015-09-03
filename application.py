@@ -21,16 +21,19 @@ from flask import (
     request,
     flash,
     Response,
-    jsonify
+    jsonify,
+    g
 )
-
-from gluten.models import User, Taxonomy, Transcript
 
 from gludb.config import Database, default_database
 
-# TODO: on edit pending, change to InProgress
+from gluten.models import User, Taxonomy, Transcript
+from gluten.auth.google_auth import require_login, auth_scheme
+
+# TODO: OUR GOOGLE LOGIN IS BROKEN FOR PYTHON 3- switch from our current scheme
+#       to Flask-Dance
+
 # TODO: Vagrantfile for testing
-# TODO: google (social) auth/login
 # TODO: audit records
 # TODO: actually provide prev and next files for edit screen
 # TODO: make sure we're checking that edit isn't letting them edit someone
@@ -44,6 +47,8 @@ from gludb.config import Database, default_database
 # on Elastic Beanstalk
 application = Flask(__name__)
 application.secret_key = application.config.get('FLASK_SECRET', "defsecret")
+# Register any blueprints we need
+application.register_blueprint(auth_scheme)
 
 
 def project_file(relpath):
@@ -79,12 +84,6 @@ def get_taxonomy(taxid):
         'tagger_supplied': [q['question'] for q in tax.tagger_supplied],
         'acts': acts
     }
-
-
-def get_user():
-    """Return current user"""
-    # TODO: actual work
-    return User.find_by_index('idx_email', 'cnkelly@memphis.edu')[0]
 
 
 def speaker_display(speaker):
@@ -150,7 +149,7 @@ def before_request():
 # Helper that provides any default, base data for our templates
 def template(template_name, **context_kwrds):
     ctx = {
-        'user': get_user(),
+        'user': getattr(g, 'user', None),
         'is_verifier': False,
         'is_assigner': False,
         'is_assessor': False
@@ -162,12 +161,14 @@ def template(template_name, **context_kwrds):
 # Our home/index page (GET only)
 @application.route('/')
 @application.route('/home')
+@require_login
 def main_page():
     # TODO: check for qs parm do_logout=yes
+    user = getattr(g, 'user')
     return template(
         "home.html",
-        owned=Transcript.find_by_index('idx_owned', get_user().id),
-        assigned=Transcript.find_by_index('idx_assigned', get_user().id),
+        owned=Transcript.find_by_index('idx_owned', user.id),
+        assigned=Transcript.find_by_index('idx_assigned', user.id),
     )
 
 

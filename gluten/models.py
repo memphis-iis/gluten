@@ -20,6 +20,7 @@ class User(object):
     email = Field('')
     name = Field('')
     photo = Field('/static/anonymous_person.png')
+    logins = Field(list)
 
     @Index
     def idx_email(self):

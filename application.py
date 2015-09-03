@@ -37,6 +37,7 @@ from gludb.config import Database, default_database
 #       else's file
 # TODO: actual config for both testing and AWS - should include:
 #       ensure_database, FLASK_SECRET, and setups for both test/local and AWS
+# TODO: taxnonomy - sort act, subact, modes correctly in edit dialog
 # TODO: completed transcripts are VIEW ONLY
 
 # Note that application as the main WSGI app is required for Python apps
@@ -84,6 +85,18 @@ def get_user():
     """Return current user"""
     # TODO: actual work
     return User.find_by_index('idx_email', 'cnkelly@memphis.edu')[0]
+
+
+def speaker_display(speaker):
+    chk = str(speaker).strip().lower()
+    if chk.endswith('(customer)'):
+        return 'Learner'
+    elif chk == 'you':
+        return 'Tutor'
+    elif chk == 'system message':
+        return 'Sys Msg'
+    else:
+        return speaker
 
 
 # This will be called before the first request is ever serviced
@@ -180,6 +193,10 @@ def edit_page(scriptid):
         if script.state == Transcript.STATES[0]:
             script.mark_in_progress()
             script.save()
+
+        # Add any extra data they might need
+        for utt in script.utterance_list:
+            utt['disp_speaker'] = speaker_display(utt['speaker'])
 
         return template(
             "edit.html",

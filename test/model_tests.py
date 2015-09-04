@@ -1,8 +1,7 @@
 import unittest
 
 from gluten.models import Taxonomy, Transcript
-
-from .utils import project_file
+from gluten.utils import project_file
 
 
 class TaxonomyTesting(unittest.TestCase):

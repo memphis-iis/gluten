@@ -4,12 +4,16 @@ gluten model and db config to be handled elsewhere
 
 import sys
 import types
-from functools import wraps, partial
+import traceback
 
-from flask import Blueprint, abort, session, url_for, redirect, request, g
+from functools import partial
+
+from flask import Blueprint, abort, session, url_for, redirect, request
 from gludb.utils import now_field
 
+from gluten.utils import app_logger
 from gluten.models import User
+from gluten.auth import set_user_session
 from .flask_oauth import OAuth
 
 
@@ -41,49 +45,10 @@ def _getUserInfo(self):
 google.getUserInfo = types.MethodType(_getUserInfo, google)
 
 
-auth_scheme = Blueprint('auth_scheme', __name__)
+auth = Blueprint('auth', __name__)
 
 
-def set_user_session(user_id=None):
-    if not user_id:
-        user_id = ''
-    session['user_id'] = user_id
-
-
-def get_user():
-    """Return current user"""
-    user_id = session.get('user_id', '')
-    if not user_id:
-        return None  # Not logged in
-    return User.find_one(user_id)
-
-
-def require_login(func):
-    """Simple decorator helper for requiring login on functions decorated
-    with flask route: make sure that it's LAST in the decorator list
-    so that the flask magic happens (see voice_testing for an example)"""
-    @wraps(func)
-    def wrapper(*args, **kwrds):
-        try:
-            user = get_user()
-            if user:
-                setattr(g, 'user', user)
-                return func(*args, **kwrds)
-            else:
-                url = url_for('login', redir=request.url)
-                return redirect(url)
-        except:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            # TODO: log error issue
-            # logWarning("Unexpected error:", exc_value)
-            # logWarning(''.join(traceback.format_exception(
-            #    exc_type, exc_value, exc_traceback)))
-            return abort(500)
-
-    return wrapper
-
-
-@auth_scheme.route('/login')
+@auth.route('/login')
 def login():
     try:
         set_user_session()  # Clear previous session
@@ -95,21 +60,22 @@ def login():
             extra_params['state'] = redir_url
 
         # Start the oauth process
-        callback = url_for('oauthcallback', _external=True)
+        callback = url_for('auth.oauthcallback', _external=True)
         return google.authorize(
             callback=callback,
             extra_params=extra_params
         )
     except:
         exc_type, exc_value, exc_traceback = sys.exc_info()
-        # TODO: actual log for errors
-        # logWarning("Unexpected error:", exc_value)
-        # logWarning(''.join(traceback.format_exception(
-        #     exc_type, exc_value, exc_traceback)))
+        log = app_logger()
+        log.warning("Unexpected error: %s", exc_value)
+        log.error(''.join(traceback.format_exception(
+            exc_type, exc_value, exc_traceback
+        )))
         return abort(500)
 
 
-@auth_scheme.route('/logout')
+@auth.route('/logout')
 def logout():
     set_user_session()
     redir_url = request.args.get("redir", None)
@@ -118,24 +84,24 @@ def logout():
     return redirect(redir_url)
 
 
-# Simple fail wrapper
-def failed_login(redir_url, msg=None):
+# Simple fail wrapper used below
+def _failed_login(redir_url, msg=None):
     session.pop('google_token', None)
     set_user_session()
     if msg:
-        pass  # TODO: logWarning("LOGIN FAILURE:", msg)
+        app_logger().warning("LOGIN FAILURE:", msg)
     return redirect(redir_url)
 
 
-@auth_scheme.route('/oauthcallback')
+@auth.route('/oauthcallback')
 @google.authorized_handler
 def oauthcallback(resp, user_data=None):
     # No matter what, we need to actually figure out a redirect URL
     redir_url = request.args.get('state', None)
     if not redir_url:
-        redir_url = url_for('/')
+        redir_url = '/'
 
-    fail = partial(failed_login, redir_url)
+    fail = partial(_failed_login, redir_url)
 
     if resp is None:
         return fail()
@@ -173,10 +139,11 @@ def oauthcallback(resp, user_data=None):
         set_user_session(user.id)
     except:
         exc_type, exc_value, exc_traceback = sys.exc_info()
-        # TODO: actual log error
-        # logWarning("Unexpected error:", exc_value)
-        # logWarning(''.join(traceback.format_exception(
-        #    exc_type, exc_value, exc_traceback)))
+        log = app_logger()
+        log.warning("Unexpected error: %s", exc_value)
+        log.error(''.join(traceback.format_exception(
+            exc_type, exc_value, exc_traceback
+        )))
         return abort(500)
 
     return redirect(redir_url)

@@ -3,7 +3,7 @@
 
 import unittest
 
-from .utils import project_file
+from gluten.utils import project_file
 
 
 class UtilTesting(unittest.TestCase):

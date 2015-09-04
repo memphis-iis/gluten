@@ -42,9 +42,9 @@ from gluten.main.app import main
 application = Flask(__name__)
 application.config.from_object('config.DefaultConfig')
 application.config.from_envvar('GLUTEN_CONFIG_FILE')
-application.secret_key = application.config.get('FLASK_SECRET', "defsecret")
+application.secret_key = application.config.get('FLASK_SECRET')
 
-# Set any environment var's request
+# Set any environment var's requested by the config file
 for name in env_populate:
     os.environ[name] = application.config.get(name)
 
@@ -66,7 +66,6 @@ application.register_blueprint(main)
 # This will be called before the first request is ever serviced
 @application.before_first_request
 def before_first():
-    # Final app settings depending on whether or not we are set for debug mode
     if application.debug:
         # Debug/local dev
         default_database(Database('sqlite', filename=':memory:'))

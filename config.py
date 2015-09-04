@@ -1,7 +1,12 @@
+
+
+# The default config for gluten - keep in mind that you can't even run this
+# with the local.sh testing script until you
 class DefaultConfig(object):
     # Default values that you should Probably override (unlike below which
     # you MUST)
     DEBUG = True
+    TEST_EMAIL = 'no-one-cares@gmail.com'
 
     # IMPORTANT: the below properties should be overridden in a config file
     # which is identified by the env var GLUTEN_CONFIG_FILE.

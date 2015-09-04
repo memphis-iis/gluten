@@ -50,7 +50,7 @@
 <!-- TODO: actual header -->
 <header>
         Edit <span id="titleBadge" class="label"></span>
-        <a href="{{url_for('main_page')}}">Return to Session Selection</a>
+        <a href="{{url_for('main.main_page')}}">Return to Session Selection</a>
 </header>
 
 <!-- Transcript meta data -->
@@ -162,7 +162,7 @@
                 {% if prevfile %}
                     <a class="btn btn-primary needTooltip" data-toggle="tooltip"
                         title="{{prevFile.state}} {{prevFile.fileName}}"
-                        href="{{url_for('edit_page', scriptid=preFile.id)}}">
+                        href="{{url_for('main.edit_page', scriptid=preFile.id)}}">
                         <span class="glyphicon glyphicon-step-backward"></span>Prev File
                     </a>
                 {% else %}
@@ -175,7 +175,7 @@
                 {% if nextFile %}
                     <a class="btn btn-primary needTooltip" data-toggle="tooltip"
                         title="{{nextFile.state}}/{{nextFile.fileName}}"
-                        href="{{url_for('edit_page', scriptid=nexFile.id)}}">
+                        href="{{url_for('main.edit_page', scriptid=nexFile.id)}}">
                         <span class="glyphicon glyphicon-step-forward"></span>Next File
                     </a>
                 {% else %}
@@ -297,7 +297,7 @@
             {% if prevfile %}
                 <a class="btn btn-primary needTooltip" data-toggle="tooltip"
                     title="{{prevFile.state}} {{prevFile.fileName}}"
-                    href="{{url_for('edit_page', scriptid=prevFile.id)}}">
+                    href="{{url_for('main.edit_page', scriptid=prevFile.id)}}">
                     <span class="glyphicon glyphicon-step-backward"></span>Prev File
                 </a>
             {% else %}
@@ -310,7 +310,7 @@
             {% if nextFile %}
                 <a class="btn btn-primary needTooltip" data-toggle="tooltip"
                     title="{{nextFile.state}} {{nextFile.fileName}}"
-                    href="{{url_for('edit_page', scriptid=nextFile.id)}}">
+                    href="{{url_for('main.edit_page', scriptid=nextFile.id)}}">
                     <span class="glyphicon glyphicon-step-forward"></span>Next File
                 </a>
             {% else %}
@@ -483,7 +483,7 @@
 
 {% block extra_js %}
 <!-- Make sure we have the taxonomy available for script -->
-<script src="{{url_for('taxonomy_page', scriptid=transcript.id)}}"></script>
+<script src="{{url_for('main.taxonomy_page', scriptid=transcript.id)}}"></script>
 
 <!-- We use a jquery scroll-into-view plugin -->
 <script src="/static/jquery.scrollintoview.min.js"></script>
@@ -704,7 +704,7 @@ var autosave = {
     dispMessage: function(success, msgText) {
         if (!success) {
             if (++autosave.err_count > 10) {
-                msgText += "... NOTE: Auto-saving has been " +
+                msgText += "... WHOOPS: Auto-saving has been " +
                     "disabled for the remainder of this session due to excessive errors";
             }
         }
@@ -774,12 +774,12 @@ var autosave = {
                 "[" + textStatus + ": " + errorThrown + "]"
             );
         });
-    }
+    }f
 };
 
 //Return true if the given data would mark a row as tagged
-//NOTE that act and subact MUST be strings and not null
-//(You can use helper.toTrimStr to ensure this if required)
+//IMPORTANT: act and subact MUST be strings and not null (You can use
+//helper.toTrimStr to ensure this if required)
 function isTagged(act, subact) {
     if (act.length > 1) {
         //We allow "Unspecified" to be a correct tag for a row,

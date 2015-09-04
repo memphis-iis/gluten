@@ -6,6 +6,9 @@ MarkupSafe==0.23
 Werkzeug==0.10.4
 itsdangerous==0.24
 
+# Using the excellent blinker library for signals with flask-dance below
+blinker==1.4
+
 # For auth via Google
 Flask-Dance==0.7.0
 

@@ -1,4 +1,3 @@
-import os
 import datetime
 import json
 
@@ -17,8 +16,6 @@ from flask import (
 
 from gluten.utils import project_file, require_login, template
 from gluten.models import Taxonomy, Transcript
-
-DEBUG = True if os.environ.get('DEBUG', None) else False
 
 main = Blueprint('main', __name__)
 
@@ -74,7 +71,6 @@ def before_request():
 @main.route('/home')
 @require_login
 def main_page():
-    # TODO: check for qs parm do_logout=yes
     user = getattr(g, 'user')
     return template(
         "home.html",
@@ -85,12 +81,14 @@ def main_page():
 
 # Assign your transcripts (with taxonomy) to other people
 @main.route('/admin-assign', methods=['GET', 'POST'])
+@require_login
 def admin_assign_page():
     return template("home.html")  # TODO: actual assignment screen
 
 
 # Actual annotation page
 @main.route('/edit/<scriptid>', methods=['GET', 'POST'])
+@require_login
 def edit_page(scriptid):
     script = get_script(scriptid)
     if not script:
@@ -177,6 +175,7 @@ def save_page(script, tax):
 # but it also let's us remove some of the weirdness that comes from our YAML
 # format
 @main.route('/taxonomy/<scriptid>', methods=['GET'])
+@require_login
 def taxonomy_page(scriptid):
     script = get_script(scriptid)
     taxid = script.taxonomy if script and script.taxonomy else ''

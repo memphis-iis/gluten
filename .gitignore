@@ -1,5 +1,7 @@
 # Project specific
 test_services_env/
+test.config
+prod.config
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

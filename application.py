@@ -105,6 +105,9 @@ def before_first():
 # Our entry point - called when our application is started "locally".
 # This WILL NOT be run by Elastic Beanstalk
 def main():
-    application.run()
+    # Listen on all addresses if running under Vagrant, else listen
+    # on localhost
+    host = '0.0.0.0' if os.environ['USER'] == 'vagrant' else '127.0.0.1'
+    application.run(host=host)
 if __name__ == '__main__':
     main()

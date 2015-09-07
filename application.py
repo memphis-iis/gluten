@@ -5,8 +5,6 @@
 # TODO: actually provide prev and next files for edit screen
 # TODO: make sure we're checking that edit isn't letting them edit someone
 #       else's file
-# TODO: actual config for both testing and AWS - should include:
-#       ensure_database, FLASK_SECRET, and setups for both test/local and AWS
 # TODO: taxnonomy - sort act, subact, modes correctly in edit dialog
 # TODO: completed transcripts are VIEW ONLY
 # TODO: completed transcripts shouldn't be in Assigned view - they should be in
@@ -57,6 +55,7 @@ else:
     # We are running on AWS Elastic Beanstalk (or something like it)
     application.debug = False
     logging.basicConfig(level=logging.INFO)
+logging.getLogger('gluten').info('Application debug is %s', application.debug)
 
 # Register our blueprints
 application.register_blueprint(auth)

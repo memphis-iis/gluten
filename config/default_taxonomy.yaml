@@ -1,5 +1,6 @@
 tagger-supplied:
     - question:
+        name: soundness
         text: This is an educationally sound session
         answer:
             - Completely Agree
@@ -8,6 +9,7 @@ tagger-supplied:
             - Disagree
             - Completely Disagree
     - question:
+        name: understanding
         text: There is solid evidence that the student acquired important new understanding during the course of this session
         answer:
             - Strong evidence that the student did NOT acquire new understanding
@@ -16,9 +18,11 @@ tagger-supplied:
             - Some evidence of new understanding
             - Strong evidence of new understanding
     - question:
+        name: score
         text: Please explain your score as BRIEFLY as possible
         answer:
     - question:
+        name: observations
         text: General observations about this session
         answer:
 

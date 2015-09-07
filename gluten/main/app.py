@@ -98,6 +98,12 @@ def edit_page(scriptid):
     if not tax:
         return abort(500)  # We are broken
 
+    # Make sure transcript has at least the questions for tagger-supplied info
+    for tag_supply in tax['tagger_supplied']:
+        qname = tag_supply['name']
+        if qname not in script.tagger_supplied_answers:
+            script.tagger_supplied_answers[qname] = ''
+
     if request.method == 'GET':
         # If the script is still pending, mark it as in progress
         if script.state == Transcript.STATES[0]:
@@ -130,8 +136,11 @@ def save_page(script, tax):
     is_complete = request.values.get('completed', False)
     autosave_err = ''
 
-    # TODO: look for tagger-supplied top-level values (that are specified in
-    #       the taxonomy)
+    # Get the tagger-supplied answers we expect for the current taxonomy
+    for tag_supply in tax['tagger_supplied']:
+        qname = tag_supply['name']
+        qanswer = request.values.get(qname, '')
+        script.tagger_supplied_answers[qname] = qanswer
 
     # Save the utterance list
     saved_data = json.loads(raw_data)
@@ -146,7 +155,7 @@ def save_page(script, tax):
         dest['act'] = src_utt['act']
         dest['subact'] = src_utt['subact']
         dest['mode'] = src_utt['mode']
-        dest['comment'] = src_utt['comments']
+        dest['comments'] = src_utt['comments']
         dest['tag_confidence'] = conf
 
     script.save()

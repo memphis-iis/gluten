@@ -63,8 +63,9 @@ class Taxonomy(object):
         for ts in self.tagger_supplied:
             q = ts.get('question', None)
             _check(isinstance(q, dict), "Invalid tagger-supplied question")
+            _check(len(q.get('name', '')) > 0, "tagger question missing name")
             _check(len(q.get('text', '')) > 0, "tagger question missing text")
-            a = q.get('a', None)
+            a = q.get('answer', None)
             if a:  # Remember, empty is OK
                 _check(type(a) is list, "Invalid tagger-supplied answer list")
 
@@ -179,6 +180,9 @@ class Transcript(object):
             raw_transcript=read('Transcript')
         )
 
+        # TODO: need to parse XML Utterances as well so that we can
+        #       import/export like the old Annotator
+
         obj.parse_raw_transcript()
         return obj
 
@@ -187,8 +191,6 @@ class Transcript(object):
         with open(filename, "r") as f:
             return cls.from_xml(f.read())
 
-    # TODO: need to parse XML Utterances as well so that we can import/export
-    #       like the old Annotator
     def parse_raw_transcript(self):
         if self.utterance_list:
             return  # Already done
@@ -219,7 +221,7 @@ class Transcript(object):
                     'act': '',
                     'subact': '',
                     'mode': '',
-                    'comment': '',
+                    'comments': '',
                     'tag_confidence': '',
                 })
             elif seen_blank and self.speaker_match(line):
@@ -246,5 +248,3 @@ class Transcript(object):
             return True  # sys
 
         return False
-
-    # TODO: some kind of handling for tagger_supplied_answers

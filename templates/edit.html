@@ -47,7 +47,6 @@
 {% endblock %}
 
 {% block main_content %}
-<!-- TODO: actual header -->
 <header>
         Edit <span id="titleBadge" class="label"></span>
         <a href="{{url_for('main.main_page')}}">Return to Session Selection</a>
@@ -76,73 +75,47 @@
 <form method="post" id="fullSaveForm">
 
 <div class="row">
-    <div class="col-md-12">
-        <table class="table table-bordered table-condensed">
-            <tr>
-                <th width="1%" class="nowrap">Learner Notes</th>
-                <td>{{transcript.learner_notes}}</td>
-            </tr>
-            <tr>
-                <th width="1%" class="nowrap">Tutor Notes</th>
-                <td>{{transcript.tutor_notes}}</td>
-            </tr>
-            <!-- TODO: now is custom, not hard-coded-->
-            <tr>
-                <th width="1%" class="nowrap">Educational Soundness</th>
-                <td>
-                    <span class="text-info">
-                    This is an educationally sound session:
-                    </span>
-                    <select id="sessionSoundness" class="editControl" data-initval="{{transcript.soundness}}">
-                        <option value=""></option>
-                        <option value="1">Completely Agree</option>
-                        <option value="2">Agree</option>
-                        <option value="3">Not Sure</option>
-                        <option value="4">Disagree</option>
-                        <option value="5">Completely Disagree</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th width="1%" class="nowrap">Learning Assessment</th>
-                <td>
-                    <span class="text-info">
-                    There is <em>solid evidence</em> that the student acquired important new understanding
-                    during the course of this session:
-                    </span>
-                    <br/>
-                    <select style="width:auto;" id="learningAssessmentScore" class="editControl" data-initval="{{transcript.learningAssessmentScore}}">
-                        <option value=""></option>
-                        <option value="1">Strong evidence that the student did NOT acquire new understanding</option>
-                        <option value="2">Some evidence that the student did NOT acquire new understanding</option>
-                        <option value="3">No evidence either way</option>
-                        <option value="4">Some evidence of new understanding</option>
-                        <option value="5">Strong evidence of new understanding</option>
-                    </select>
-                    <br/>
+<div class="col-md-12">
+<table class="table table-bordered table-condensed">
+    <tr>
+        <th width="1%" class="nowrap">Learner Notes</th>
+        <td>{{transcript.learner_notes}}</td>
+    </tr>
+    <tr>
+        <th width="1%" class="nowrap">Tutor Notes</th>
+        <td>{{transcript.tutor_notes}}</td>
+    </tr>
 
-                    <span class="text-info">
-                    Please explain your score as BRIEFLY as possible..
-                    </span>
-                    <br/>
-                    <textarea name="learningAssessmentComments" id="learningAssessmentComments"
+    <tr id="beginTaggerSupplied"></tr>
+
+    {% for tag_supply in taxonomy.tagger_supplied %}
+        {% set user_answer = transcript.tagger_supplied_answers[tag_supply.name] %}
+        <tr>
+            <th width="1%" class="nowrap">{{tag_supply.name.title()}}</th>
+            <td>
+                <span class="text-info">{{tag_supply.text}}</span><br>
+                {% if tag_supply.answer %}
+                    <select class="editControl taggerSelection"
+                        id="{{tag_supply.name}}"
+                        data-initval="{{user_answer}}"
+                    >
+                        <option value=""></option>
+                        {% for ans in tag_supply.answer %}
+                            <option value="{{loop.index}}">{{ans}}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <textarea class="taggerFreeform"
+                        name="{{tag_supply.name}}"
+                        id="{{tag_supply.name}}"
                         rows="3" cols="64"
-                    ></textarea> <!-- WAS  {{transcript.learningAssessmentComments}} -->
-                </td>
-            </tr>
-            <tr>
-                <th width="1%" class="nowrap">Overall comments</th>
-                <td>
-                    <span class="text-info">
-                    General observations about this session
-                    </span>
-                    <br/>
-                    <textarea name="sessionComments" id="sessionComments"
-                        rows="3" cols="64" >{{transcript.session_comments}}</textarea>
-                </td>
-            </tr>
-        </table>
-    </div>
+                    >{{user_answer}}</textarea>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+</div>
 </div>
 
 <br/>
@@ -334,7 +307,7 @@
 
 </form>
 
-<!-- TODO: we don't currently have support for any of this -->
+<!-- TODO: we don't currently have backend support for any of this -->
 <!-- Training mode: we store it in a hidden table -->
 {% if trainingMode or verifyMode or assessMode %}
     <div id="trainingScriptContainer" style="display:none;">
@@ -1102,10 +1075,10 @@ function populateSubAct() {
     subselCombo.val(subsel);
 }
 
-function jumpToSoundness(after_scroll) {
-    $("#sessionSoundness").parents("table").scrollintoview({
+function jumpToTaggerSupplied(after_scroll) {
+    $("#beginTaggerSupplied").parents("table").scrollintoview({
         complete: function() {
-            $("#sessionSoundness").parents("td").effect("highlight", {}, 2000);
+            $(".taggerSelection, .taggerFreeform").parents("td").effect("highlight", {}, 2000);
             if (after_scroll) {
                 after_scroll();
             }
@@ -1116,12 +1089,15 @@ function jumpToSoundness(after_scroll) {
 //Read and return data for save
 function readSaveData() {
     var saveData = {
-        soundness: helper.toTrimStr($("#sessionSoundness").val()),
-        learningAssessmentScore: helper.toTrimStr($("#learningAssessmentScore").val()),
-        learningAssessmentComments: helper.toTrimStr($("#learningAssessmentComments").val()),
-        sessionComments: helper.toTrimStr($("#sessionComments").val()),
         utts: []
     };
+
+    //Add tagger-supplied drop-down and freeform selections
+    $(".taggerSelection, .taggerFreeForm").each(function(index, value) {
+        var ele = $(value);
+        var name = ele.attr('id');
+        saveData[name] = ele.val();
+    });
 
     $(".transcriptRow").each(function(index, value) {
         var checkIndex = helper.safeParseInt($(value).data("utteranceindex"), -1);
@@ -1155,9 +1131,31 @@ $(function() {
     mode_colors._populate();
     reStyleRows();
 
-    //Set top-level data fields
-    $("#sessionSoundness").val($("#sessionSoundness").data("initval"));
-    $("#learningAssessmentScore").val($("#learningAssessmentScore").data("initval"));
+    //tagger selection drop-downs should be large enough to show the selected
+    //value. Note that we also put a minimum width in there.
+    $(".taggerSelection").change(function() {
+        var select = $(this);
+
+        //We create an invisible span, measure it's width, and then delete it
+        var span = $(
+            '<span display="none">'+$('option:selected', select).text()+'</span>'
+        ).css({
+            font: select.css('font'),
+            padding: select.css('padding')
+        }).appendTo('body');
+
+        var width = Math.max(120, span.width() + 16);
+
+        span.remove();
+
+        select.width(width);
+    });
+
+    //Set initial values for top-level tagger-supplied drop-down fields
+    $(".taggerSelection").each(function(index, value) {
+        var ele = $(value);
+        ele.val(ele.data("initval"));
+    });
 
     //Turn on any tooltips and popovers if we're NOT on a touch device
     if (helper.isTouchBrowser()) {
@@ -1232,7 +1230,7 @@ $(function() {
 
     $("#cmdScrollToSoundness").click(function(e){
         e.preventDefault();
-        jumpToSoundness();
+        jumpToTaggerSupplied();
     });
 
     var isMappedKey = function(e) {
@@ -1263,10 +1261,12 @@ $(function() {
             }
         }
     });
+
     $("form button").click(function() {
         $("button", $(this).parents("form")).removeAttr("clicked");
         $(this).attr("clicked", "true");
     });
+
     $("#fullSaveForm").submit(function(e){
         try {
             //No saving in assess mode
@@ -1290,10 +1290,18 @@ $(function() {
 
             var saveData = readSaveData();
 
-            if (saveData.soundness.length < 1) {
+            //Check that they selected/entered all tagger-supplied
+            //drop-down/freeform entities
+            var missing_tagger_count = 0;
+            $(".taggerSelection, .taggerFreeForm").each(function(index, value) {
+                if ($(value).val().length < 1) {
+                    missing_tagger_count += 1;
+                }
+            });
+            if (missing_tagger_count > 0) {
                 e.preventDefault();
-                jumpToSoundness(function(){
-                    alert("Please rate this session for educational soundness");
+                jumpToTaggerSupplied(function(){
+                    alert("Please supply all the required information");
                 });
                 return false;
             }
@@ -1321,11 +1329,16 @@ $(function() {
             }
 
             //If they clicked the completed button, send that also
-            if($("button[clicked=true]").attr("id") == "completed"){
-                if (confirm("This will move the transcript to the completed folder.\n You will not be able to read or modify your annotation afterwards. \n Do you want to proceed with this action?")){
+            if($("button[clicked=true]").attr("id") == "completed") {
+                var warning =
+                    "This will move the transcript to the completed folder.\n " +
+                    "You will not be able to read or modify your annotation afterwards. \n " +
+                    "Do you want to proceed with this action?";
+                if (confirm(warning)) {
                     addToForm("completed","true");
                 }
             }
+
             //Data is now clean
             autosave.setDirty(false);
         }

@@ -1,6 +1,8 @@
 import datetime
 import json
 
+from collections import OrderedDict
+
 import flask
 from flask import (
     Blueprint,
@@ -35,7 +37,7 @@ def get_taxonomy(taxid):
             project_file('config/default_taxonomy.yaml')
         )
 
-    acts = {}
+    acts = OrderedDict()
     for act in tax.acts:
         act = act['act']  # artifact of our YAML format that we drop for JS
         name = act['name']

@@ -3,13 +3,13 @@
 # TODO: Vagrantfile for testing
 # TODO: audit records
 # TODO: actually provide prev and next files for edit screen
-# TODO: taxnonomy - sort act, subact, modes correctly in edit dialog
 # TODO: completed transcripts shouldn't be in Assigned view - they should be in
 #       a new Completed View
 # TODO: define an order for transcripts that we use on all home views
 # TODO: deploy script that builds a zip file for AWS *and* enforces a
 #       prod.config file *and* warns you to remember to set that env var in
 #       the AWS EB settings
+# TODO: need an upload screen
 
 import sys
 if sys.version_info < (3, 0):

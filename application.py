@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-# TODO: Vagrantfile for testing
 # TODO: audit records
 # TODO: actually provide prev and next files for edit screen
 # TODO: completed transcripts shouldn't be in Assigned view - they should be in

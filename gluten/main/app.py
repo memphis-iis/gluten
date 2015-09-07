@@ -104,6 +104,18 @@ def edit_page(scriptid):
         if qname not in script.tagger_supplied_answers:
             script.tagger_supplied_answers[qname] = ''
 
+    user = getattr(g, 'user', None)
+    userid = getattr(user, 'id', None)
+    if not userid:
+        return abort(500)  # This shouldn't be possible
+
+    if script.state == Transcript.STATES[-1]:
+        assessMode = True  # Transcript is completed
+    elif userid not in [script.owner, script.tagger]:
+        assessMode = True  # Current user doesn't have write rights
+    else:
+        assessMode = False
+
     if request.method == 'GET':
         # If the script is still pending, mark it as in progress
         if script.state == Transcript.STATES[0]:
@@ -117,10 +129,16 @@ def edit_page(scriptid):
         return template(
             "edit.html",
             transcript=script,
-            taxonomy=tax
+            trainer_transcript=script,
+            taxonomy=tax,
+            trainingMode=False,
+            verifyMode=False,
+            assessMode=assessMode
         )
     else:
         # Was a POST - do our save
+        if assessMode:
+            return abort(500)  # They aren't allowed to save
         return save_page(script, tax)
 
 

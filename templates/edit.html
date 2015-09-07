@@ -1093,7 +1093,7 @@ function readSaveData() {
     };
 
     //Add tagger-supplied drop-down and freeform selections
-    $(".taggerSelection, .taggerFreeForm").each(function(index, value) {
+    $(".taggerSelection, .taggerFreeform").each(function(index, value) {
         var ele = $(value);
         var name = ele.attr('id');
         saveData[name] = ele.val();
@@ -1293,7 +1293,7 @@ $(function() {
             //Check that they selected/entered all tagger-supplied
             //drop-down/freeform entities
             var missing_tagger_count = 0;
-            $(".taggerSelection, .taggerFreeForm").each(function(index, value) {
+            $(".taggerSelection, .taggerFreeform").each(function(index, value) {
                 if ($(value).val().length < 1) {
                     missing_tagger_count += 1;
                 }

@@ -70,9 +70,7 @@ def template(template_name, **context_kwrds):
     it works with @require_login from above"""
     ctx = {
         'user': getattr(g, 'user', None),
-        'is_verifier': False,
         'is_assigner': False,
-        'is_assessor': False
     }
     ctx.update(context_kwrds)
     return render_template(template_name, **ctx)

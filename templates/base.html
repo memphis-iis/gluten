@@ -53,11 +53,9 @@
                 {{user.email}}
             </div>
 
-            {% if is_verifier or is_assigner or is_assessor %}
+            {% if is_assigner %}
                 <div class="pull-right" style="padding-right: 16px; padding-top: 8px;">
-                    {% if is_assigner %}
-                        <a href="{{url_for('main.admin_assign_page')}}" class="btn btn-primary btn-sm">Assign</a>
-                    {% endif %}
+                    <a href="{{url_for('main.admin_assign_page')}}" class="btn btn-primary btn-sm">Assign</a>
                 </div>
             {% endif %}
         </div>

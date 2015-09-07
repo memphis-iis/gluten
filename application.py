@@ -3,10 +3,7 @@
 # TODO: Vagrantfile for testing
 # TODO: audit records
 # TODO: actually provide prev and next files for edit screen
-# TODO: make sure we're checking that edit isn't letting them edit someone
-#       else's file
 # TODO: taxnonomy - sort act, subact, modes correctly in edit dialog
-# TODO: completed transcripts are VIEW ONLY
 # TODO: completed transcripts shouldn't be in Assigned view - they should be in
 #       a new Completed View
 # TODO: define an order for transcripts that we use on all home views

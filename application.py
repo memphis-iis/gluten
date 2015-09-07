@@ -26,8 +26,8 @@ from gludb.config import Database, default_database
 from config import env_populate
 from gluten.utils import project_file
 from gluten.models import User, Taxonomy, Transcript
-from gluten.auth.google_auth import auth
-from gluten.main.app import main
+from gluten.auth import auth
+from gluten.main_app import main
 
 
 # Note that application as the main WSGI app is required for Python apps

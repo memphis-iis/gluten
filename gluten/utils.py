@@ -10,15 +10,9 @@
 """
 
 import os.path as pth
-import sys
 import logging
-import traceback
 
-from functools import wraps
-
-from flask import g, url_for, request, redirect, abort, render_template
-
-from gluten.auth import get_user
+from flask import g, render_template
 
 
 def app_logger():
@@ -36,38 +30,10 @@ def project_file(relpath):
     return pth.join(base, relpath)
 
 
-def require_login(func):
-    """Simple decorator helper for requiring login on functions decorated with
-    flask route: make sure that it's LAST in the decorator list so that the
-    flask magic happens (see voice_testing for an example).
-
-    Important: we are assuming the blueprint endpoint auth.login exists
-    """
-    @wraps(func)
-    def wrapper(*args, **kwrds):
-        try:
-            user = get_user()
-            if user:
-                setattr(g, 'user', user)
-                return func(*args, **kwrds)
-            else:
-                url = url_for('auth.login', redir=request.url)
-                return redirect(url)
-        except:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            log = app_logger()
-            log.warning("Unexpected error: %s", exc_value)
-            log.error(''.join(traceback.format_exception(
-                exc_type, exc_value, exc_traceback
-            )))
-            return abort(500)
-
-    return wrapper
-
-
 def template(template_name, **context_kwrds):
     """Helper that provides any default, base data for our templates. Note that
-    it works with @require_login from above"""
+    if g.user is defined (which routes decorated with .auth.require_login will
+    have), the user will be added to the context"""
     ctx = {
         'user': getattr(g, 'user', None),
         'is_assigner': False,

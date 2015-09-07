@@ -14,8 +14,9 @@ from flask import (
     g
 )
 
-from gluten.utils import project_file, require_login, template
-from gluten.models import Taxonomy, Transcript
+from .utils import project_file, template
+from .auth import require_login
+from .models import Taxonomy, Transcript
 
 main = Blueprint('main', __name__)
 
@@ -86,63 +87,73 @@ def admin_assign_page():
     return template("home.html")  # TODO: actual assignment screen
 
 
+def get_current_transcript_info(scriptid):
+    """Return the triplet (script, tax, user) for the given scriptid as
+    needed for edits/saves"""
+    user = getattr(g, 'user', None)
+    script = get_script(scriptid)
+
+    tax = None
+    if script:
+        tax = get_taxonomy(script.taxonomy)
+
+    if script and tax:
+        # Make sure transcript has the questions for tagger-supplied info
+        for tag_supply in tax['tagger_supplied']:
+            qname = tag_supply['name']
+            if qname not in script.tagger_supplied_answers:
+                script.tagger_supplied_answers[qname] = ''
+
+    return script, tax, user
+
+
 # Actual annotation page
 @main.route('/edit/<scriptid>', methods=['GET', 'POST'])
 @require_login
 def edit_page(scriptid):
-    script = get_script(scriptid)
-    if not script:
-        abort(404)
-
-    tax = get_taxonomy(script.taxonomy)
-    if not tax:
-        return abort(500)  # We are broken
-
-    # Make sure transcript has at least the questions for tagger-supplied info
-    for tag_supply in tax['tagger_supplied']:
-        qname = tag_supply['name']
-        if qname not in script.tagger_supplied_answers:
-            script.tagger_supplied_answers[qname] = ''
-
-    user = getattr(g, 'user', None)
+    # Get the transcript and taxonomy
+    script, tax, user = get_current_transcript_info(scriptid)
     userid = getattr(user, 'id', None)
-    if not userid:
-        return abort(500)  # This shouldn't be possible
 
+    if not script or not tax or not user or not userid:
+        return abort(404 if not user else 500)
+
+    # An edit can be in different states
+    assessMode = False
     if script.state == Transcript.STATES[-1]:
         assessMode = True  # Transcript is completed
     elif userid not in [script.owner, script.tagger]:
         assessMode = True  # Current user doesn't have write rights
-    else:
-        assessMode = False
 
-    if request.method == 'GET':
-        # If the script is still pending, mark it as in progress
-        if script.state == Transcript.STATES[0]:
-            script.mark_in_progress()
-            script.save()
-
-        # Add any extra data they might need
-        for utt in script.utterance_list:
-            utt['disp_speaker'] = speaker_display(utt['speaker'])
-
-        return template(
-            "edit.html",
-            transcript=script,
-            trainer_transcript=script,
-            taxonomy=tax,
-            trainingMode=False,
-            verifyMode=False,
-            assessMode=assessMode
-        )
-    else:
-        # Was a POST - do our save
+    # We can delegate the rest if we are a POST (a save)
+    if request.method == 'POST':
         if assessMode:
-            return abort(500)  # They aren't allowed to save
-        return save_page(script, tax)
+            return abort(500)  # They aren't allowed to save in assess mode
+        return save_page(script, tax, user)
+
+    # We know that from here down, this is a GET (an edit/display)
+
+    # If the script is still pending, mark it as in progress
+    if script.state == Transcript.STATES[0]:
+        script.mark_in_progress()
+        script.save()
+
+    # Add any extra data they might need
+    for utt in script.utterance_list:
+        utt['disp_speaker'] = speaker_display(utt['speaker'])
+
+    return template(
+        "edit.html",
+        transcript=script,
+        trainer_transcript=script,
+        taxonomy=tax,
+        trainingMode=False,
+        verifyMode=False,
+        assessMode=assessMode
+    )
 
 
-def save_page(script, tax):
+def save_page(script, tax, user):
     # Get the actual save request parameters
     raw_data = request.values.get('fulldata', '')
     if not raw_data:

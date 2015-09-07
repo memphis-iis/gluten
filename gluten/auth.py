@@ -2,9 +2,12 @@
 gluten model and db config to be handled elsewhere
 """
 
-from functools import partial
+import sys
+import traceback
 
-from flask import redirect, request, flash
+from functools import partial, wraps
+
+from flask import redirect, request, flash, session, abort, g, url_for
 from flask.globals import LocalProxy, _lookup_app_object
 
 try:
@@ -20,9 +23,51 @@ from flask_dance.consumer import (
 
 from gludb.utils import now_field
 
-from gluten.utils import app_logger
-from gluten.models import User
-from gluten.auth import set_user_session
+from .utils import app_logger
+from .models import User
+
+
+def set_user_session(user_id=None):
+    if not user_id:
+        user_id = ''
+    session['user_id'] = user_id
+
+
+def get_user():
+    """Return current user"""
+    user_id = session.get('user_id', '')
+    if not user_id:
+        return None  # Not logged in
+    return User.find_one(user_id)
+
+
+def require_login(func):
+    """Simple decorator helper for requiring login on functions decorated with
+    flask route: make sure that it's LAST in the decorator list so that the
+    flask magic happens (see voice_testing for an example).
+
+    Important: we are assuming the blueprint endpoint auth.login exists
+    """
+    @wraps(func)
+    def wrapper(*args, **kwrds):
+        try:
+            user = get_user()
+            if user:
+                setattr(g, 'user', user)
+                return func(*args, **kwrds)
+            else:
+                url = url_for('auth.login', redir=request.url)
+                return redirect(url)
+        except:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            log = app_logger()
+            log.warning("Unexpected error: %s", exc_value)
+            log.error(''.join(traceback.format_exception(
+                exc_type, exc_value, exc_traceback
+            )))
+            return abort(500)
+
+    return wrapper
 
 
 # Make the google blueprint (taken from their contrib code)

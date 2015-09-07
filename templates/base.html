@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>{% block title %}gluten - a Transcript Annotator{% endblock %}</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="//cdn.datatables.net/plug-ins/1.10.7/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="/static/application.css" type="text/css">
+{% block extra_head %}{% endblock %}
+</head>
+
+
+<body>
+
+
+<!-- MAIN CONTENT -->
+<div class="container-fluid">
+    <!-- Page header -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="page-header">
+                <h1><a href="{{url_for('main.main_page')}}">Annotator</a>
+                    <small>
+                        {% block display_title %}Gluten Transcript Annotation Tool{% endblock %}
+                        <small>{% block display_title_sub %}{% endblock %}</small>
+                    </small>
+                </h1>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% if user.photo %}
+                <div class="pull-right">
+                    <img src="{{user.photo}}" class="img-user" />
+                </div>
+            {% endif %}
+            <div class="pull-right">
+                {{user.name}}
+                (<a href="{{url_for('auth.logout')}}">Logout</a>)
+                <br/>
+                {{user.email}}
+            </div>
+
+            {% if is_assigner %}
+                <div class="pull-right" style="padding-right: 16px; padding-top: 8px;">
+                    <a href="{{url_for('main.admin_assign_page')}}" class="btn btn-primary btn-sm">Assign</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Messages to flash -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="row">
+            <div class="col-md-5">
+                {% for message in messages %}
+                    <div class="alert alert-info" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{message}}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="col-md-7">&nbsp;</div>
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Content from inherited template -->
+    {% block main_content %}
+        Actual Page Content Will Go Here
+    {% endblock %}
+</div> <!-- /container -->
+
+
+<!-- FOOTER -->
+<div class="container-fluid" style="margin-top: 2in;">
+    <div class="row">
+        <div class="col-md-12">
+            <img style="float:left;" class="img-responsive img-rounder" src="//www.memphis.edu/shared/shared_rootsite/images/brandnew.jpg">
+            <p style="float:right;"><small>Institute for Intelligent Systems, {{g.year}}</small></p>
+            <br style="clear:both">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"><div id="query_progress_txt"></div></div>
+        <div class="col-md-8"><div id="query_progress_bar"></div></div>
+    </div>
+</div>
+
+
+<!-- JAVASCRIPT RESOURCES -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.8.0/lodash.min.js"></script>
+
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript" src="/static/application.js"></script>
+<script src="/static/Encoder.js"></script>
+
+<script>
+$(function(){
+    $(".alert").fadeTo(5000, 500).slideUp(500, function(){
+        $(".alert").alert('close');
+    });
+});
+</script>
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,242 @@
+tagger-supplied:
+    - question:
+        name: soundness
+        text: This is an educationally sound session
+        answer:
+            - Completely Agree
+            - Agree
+            - Not Sure
+            - Disagree
+            - Completely Disagree
+    - question:
+        name: understanding
+        text: There is solid evidence that the student acquired important new understanding during the course of this session
+        answer:
+            - Strong evidence that the student did NOT acquire new understanding
+            - Some evidence that the student did NOT acquire new understanding
+            - No evidence either way
+            - Some evidence of new understanding
+            - Strong evidence of new understanding
+    - question:
+        name: score
+        text: Please explain your score as BRIEFLY as possible
+        answer:
+    - question:
+        name: observations
+        text: General observations about this session
+        answer:
+
+modes:
+    - Opening
+    - ProcessNegotiation
+    - ProblemID
+    - Assessment
+    - MethodID
+    - MethodRoadMap
+    - Modeling
+    - Scaffolding
+    - Fading
+    - Telling
+    - Sensemaking
+    - SessionSummary
+    - WrapUp/Closing
+    - RapportBuilding
+    - Metacognition
+    - OffTopic
+    - Unspecified
+
+acts:
+    - act:
+        name: Answer
+        subtypes:
+            - Approach
+            - Affect:Postive
+            - Affect:Negative
+            - Affect:Neutral
+            - Calculation
+            - Concept
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - PriorKnowledge
+            - PriorKnowledge:Negative
+            - PriorKnowledge:Positive
+            - ProblemStatement
+            - Understanding
+            - Understanding:Negative
+            - Understanding:Positive
+            - Unspecified
+    - act:
+        name: Assertion
+        subtypes:
+            - Affect
+            - Approach
+            - Calculation
+            - Concept
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - ProblemStatement
+            - Prior Knowledge:Positive
+            - Prior Knowledge:Negative
+            - Understanding:Positive
+            - Understanding:Negative
+            - URL
+            - Unspecified
+    - act:
+        name: Correction
+        subtypes:
+            - Approach
+            - Calculation
+            - Concept
+            - ProblemStatement
+            - Process
+            - Typo
+            - Unspecified
+    - act:
+        name: Clarification
+        subtypes:
+            - Approach
+            - Calculation
+            - Concept
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - ProblemStatement
+            - Unspecified
+    - act:
+        name: Confirmation
+        subtypes:
+            - Positive
+            - Neutral
+            - Negative
+            - Unspecified
+    - act:
+        name: Continuation
+        subtypes:
+            - Continuation
+    - act:
+        name: Directive
+        subtypes:
+            - Approach
+            - Attention
+            - Calculation
+            - Concept
+            - DialogControl
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - Unspecified
+    - act:
+        name: Expressive
+        subtypes:
+            - Acknowledgment
+            - Apology
+            - Confirmation:Positive
+            - Confirmation:Negative
+            - Confusion
+            - Celebration
+            - Farewell
+            - Greeting
+            - InstructionalContext
+            - Laugh/Smile
+            - LineCheck
+            - Metacognition
+            - Mistake
+            - Negative
+            - Neutral
+            - Praise
+            - Positive
+            - Thanks
+            - Understanding
+            - Unspecified
+    - act:
+        name: Explanation
+        subtypes:
+            - Approach
+            - Calculation
+            - Concept
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - ProblemStatement
+            - Unspecified
+    - act:
+        name: Hint
+        subtypes:
+            - Approach
+            - Calculation
+            - Concept
+            - Unspecified
+    - act:
+        name: Promise
+        subtypes:
+            - Calculation
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - Unspecified
+    - act:
+        name: Prompt
+        subtypes:
+            - Approach
+            - Calculation
+            - Concept
+            - Process
+            - Unspecified
+    - act:
+        name: Question
+        subtypes:
+            - Affect
+            - Approach
+            - Calculation
+            - Concept
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - Prior Knowledge
+            - ProblemStatement
+            - Understanding
+            - Unspecified
+    - act:
+        name: Reminder
+        subtypes:
+            - Approach
+            - Calculation
+            - Concept
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - Unspecified
+    - act:
+        name: Request
+        subtypes:
+            - Confirmation
+            - Confirmation:PriorKnowledge
+            - Confirmation:Approach
+            - Confirmation:Calculation
+            - Confirmation:Process
+            - Confirmation:ProblemStatement
+            - Confirmation:InstructionalContext
+            - Confirmation:Metacognition
+            - Confirmation:Concept
+            - Confirmation:Understanding
+            - Clarification
+            - DialogControl
+            - Explanation
+            - Process
+            - Unspecified
+    - act:
+        name: Suggestion
+        subtypes:
+            - Approach
+            - Attention
+            - Calculation
+            - Concept
+            - InstructionalContext
+            - Metacognition
+            - Process
+            - Unspecified
+    - act:
+        name: Unspecified
+        subtypes:

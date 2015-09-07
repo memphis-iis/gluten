@@ -1,0 +1,25 @@
+# Flask and dependencies - note that lowering some of these versions could
+# break Python3 compatibility... and Elastic Beanstalk runs Python3
+Flask==0.10.1
+Jinja2==2.8
+MarkupSafe==0.23
+Werkzeug==0.10.4
+itsdangerous==0.24
+
+# Using the excellent blinker library for signals with flask-dance below
+blinker==1.4
+
+# For auth via Google
+Flask-Dance==0.7.0
+
+# Need boto for AWS stuff in gludb
+boto==2.38.0
+
+# Our data library
+gludb==0.1.2
+
+# We currently use YAML files for taxonomies
+PyYAML==3.11
+
+# For testing
+nose==1.3.6

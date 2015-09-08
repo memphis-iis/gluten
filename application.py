@@ -27,6 +27,7 @@ from gluten.utils import project_file
 from gluten.models import User, Taxonomy, Transcript
 from gluten.auth import auth
 from gluten.main_app import main
+from gluten.admin import admin
 
 
 # Note that application as the main WSGI app is required for Python apps
@@ -56,6 +57,7 @@ logging.getLogger('gluten').info('Application debug is %s', application.debug)
 # Register our blueprints
 application.register_blueprint(auth)
 application.register_blueprint(main)
+application.register_blueprint(admin)
 
 
 # This will be called before the first request is ever serviced

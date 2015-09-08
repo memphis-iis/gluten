@@ -67,7 +67,7 @@
       <Utterance>
          <Timestamp>00:00:10</Timestamp>
          <Speaker>You</Speaker>
-         <Text>Hello, Welcome to Tutor.com!</Text>
+         <Text>Hello, Welcome to example.org!</Text>
          <DialogAct>Act:4</DialogAct>
          <DialogSubAct>SubAct:4</DialogSubAct>
          <DialogMode>Mode:4</DialogMode>
@@ -1667,7 +1667,7 @@
       <Utterance>
          <Timestamp>00:28:52</Timestamp>
          <Speaker>You</Speaker>
-         <Text>I imagine somehow someone has purchased a contract with tutor.com, which gives you this, through your company, or some other way...</Text>
+         <Text>I imagine somehow someone has purchased a contract with example.org, which gives you this, through your company, or some other way...</Text>
          <DialogAct>Act:164</DialogAct>
          <DialogSubAct>SubAct:164</DialogSubAct>
          <DialogMode>Mode:164</DialogMode>
@@ -7337,7 +7337,7 @@
       <Utterance>
          <Timestamp>02:30:05</Timestamp>
          <Speaker>You</Speaker>
-         <Text>Thanks for using Tutor.com. Please fill out the survey as you leave so we can learn how we can better help you in the future! </Text>
+         <Text>Thanks for using example.org. Please fill out the survey as you leave so we can learn how we can better help you in the future! </Text>
          <DialogAct>Act:731</DialogAct>
          <DialogSubAct>SubAct:731</DialogSubAct>
          <DialogMode>Mode:731</DialogMode>
@@ -7367,338 +7367,338 @@
    </TranscriptItems>
    <Transcript>System Message
 [00:00:00] *** Please note: All sessions are recorded for quality control. ***
- 
+
 KIMBERLY (Customer)
 [00:00:00]  confused on the gallons
 [00:00:06] hello
- 
+
 You
-[00:00:10] Hello, Welcome to Tutor.com!
+[00:00:10] Hello, Welcome to example.org!
 [00:00:12] hi
- 
+
 KIMBERLY (Customer)
 [00:00:18] my file didnt up;load
- 
+
 You
 [00:00:36] no, I don&apos;t see it either...
 [00:01:24] You can try again.  It can also work during session.  Many students do this...
- 
+
 KIMBERLY (Customer)
 [00:01:36] File Shared &gt; 9.jpg
 [00:01:42] ok
 [00:01:45] there is it
- 
+
 You
 [00:01:47] ok
 [00:02:38] Alright... Let me draw a picture first.  That usually helps...
- 
+
 KIMBERLY (Customer)
-[00:02:54] ok 
+[00:02:54] ok
 [00:04:28] I&apos;m following...
- 
+
 You
 [00:04:48] ok so what we have is something that is varying over time...
 [00:05:02] That is the key point to understand in the beginning
- 
+
 KIMBERLY (Customer)
 [00:05:25] ok
 [00:05:38] I&apos;m following...
- 
+
 You
 [00:05:57] So if say it flowed for 3 minutes, how much additional water would that put in?
- 
+
 KIMBERLY (Customer)
 [00:06:10] 33
- 
+
 You
 [00:06:18] right, you understand... :)
- 
+
 KIMBERLY (Customer)
 [00:06:25] cause it 11 a min
- 
+
 You
 [00:06:28] how did you get that?
 [00:06:31] correct
- 
+
 KIMBERLY (Customer)
 [00:06:34] :)
- 
+
 You
 [00:06:42] So then we go from that to general equation
 [00:07:00] for any t, how much water flow in , over t minutes?
 [00:07:30] This is similar to D = RT
 [00:07:48] Here, we have Volume = R T
- 
+
 KIMBERLY (Customer)
 [00:07:48] ok
- 
+
 You
 [00:08:06] So when t is 3
 [00:08:13] you know that 33 gals flowed in
- 
+
 KIMBERLY (Customer)
 [00:08:14] I&apos;m following...
 [00:08:24] correct
- 
+
 You
 [00:08:55] agree?
- 
+
 KIMBERLY (Customer)
 [00:09:01] yes
- 
+
 You
 [00:09:35] ok so what is the rate of increase then?  what is the general formula for the increase?
 [00:09:54] if t is 5?
- 
+
 KIMBERLY (Customer)
 [00:10:19] ok
- 
+
 You
 [00:10:26] This is like the slope on the line
- 
+
 KIMBERLY (Customer)
 [00:10:26] 55
- 
+
 You
 [00:10:30] right...
 [00:10:44] So the greater the t, the higher that moves the volume
 [00:10:52] So this is like the slope on line
 [00:11:14] At 0 time (t = 0) what is the volume?
- 
+
 KIMBERLY (Customer)
 [00:11:30] correct
 [00:11:37] 0
- 
+
 You
 [00:11:46] are you sure?
- 
+
 KIMBERLY (Customer)
 [00:11:52] because 0 x 11 is 0
- 
+
 You
 [00:11:58] ok, that is true
 [00:12:05] but please look back at text..
- 
+
 KIMBERLY (Customer)
 [00:12:10] ok
- 
+
 You
 [00:12:15] first sentence
- 
+
 KIMBERLY (Customer)
 [00:12:16] let me reread it
 [00:13:20] hmm
 [00:13:45] Im sorry you loist me
 [00:13:48] on this one&apos;
- 
+
 You
 [00:13:55] like when you fill your gas tank... Is it always at 0 when you start?
 [00:14:12] the rate of flow may be 5 gals/min on a gas pump
 [00:14:22] but your tank already has some in it at beginning
 [00:14:37] So V(0) is not equal to 0
- 
+
 KIMBERLY (Customer)
 [00:14:45] ok
- 
+
 You
 [00:14:47] It already had 165 gals in it
- 
+
 KIMBERLY (Customer)
 [00:14:58] so would it be 165
- 
+
 You
 [00:15:10] yes
- 
+
 KIMBERLY (Customer)
 [00:15:13] since tht what it starts at
- 
+
 You
 [00:15:18] right :)
- 
+
 KIMBERLY (Customer)
 [00:15:27] I got it! Thanks!
- 
+
 You
 [00:15:28] What would the y intercept be?
 [00:15:37] (the V intercept)
- 
+
 KIMBERLY (Customer)
 [00:15:56] 0
- 
+
 You
 [00:16:05] when t = 0?
- 
+
 KIMBERLY (Customer)
 [00:16:22] hmmm
- 
+
 You
 [00:16:58] you can put t into the equation now also
 [00:17:01] that will tell you
 [00:17:09] so could put 0 in  for t
- 
+
 KIMBERLY (Customer)
 [00:18:21] ok
- 
+
 You
 [00:18:26] Not meaning to confuse, I know the question didn&apos;t ask for that...
 [00:18:32] but they are the same
- 
+
 KIMBERLY (Customer)
 [00:18:45] k
 [00:18:51] thats for explaining
- 
+
 You
 [00:18:51] So the line crosses y axis at 165
- 
+
 KIMBERLY (Customer)
 [00:18:55] right
 [00:19:11] thanks for explaining
- 
+
 You
 [00:19:14] Did you want to work another?
 [00:19:17] or all for now?
- 
+
 KIMBERLY (Customer)
 [00:19:26] yes please
- 
+
 You
 [00:19:32] I see that you have a paid contract with us...
- 
+
 KIMBERLY (Customer)
 [00:19:32] but real quick
- 
+
 You
 [00:19:34] ok
- 
+
 KIMBERLY (Customer)
 [00:19:54] I just want to confirm that the final answe
 [00:19:58] on no
- 
+
 You
 [00:20:02] ok
- 
+
 KIMBERLY (Customer)
 [00:20:01] you erased it
 [00:20:05] lol
- 
+
 You
 [00:20:21] I added a second window
 [00:20:25] that is what happened
 [00:20:33] and it scrolls up automatically
- 
+
 KIMBERLY (Customer)
-[00:20:35] how do I see the 1st 
+[00:20:35] how do I see the 1st
 [00:20:50] ah ha
 [00:20:51] see it
 [00:21:02] v=165 + 11 A
- 
+
 You
 [00:21:17] yes
- 
+
 KIMBERLY (Customer)
 [00:21:31] ok
 [00:21:39] here is my second problem
 [00:22:19] File Shared &gt; 10.jpg
 [00:22:42] now how I figured this anser
- 
+
 You
 [00:22:52] yes that is correct, 27 x^6
- 
+
 KIMBERLY (Customer)
-[00:22:57] is that I multiply 
+[00:22:57] is that I multiply
 [00:23:02] and add the exponents
 [00:23:05] good
 [00:23:07] thanks
 [00:23:08] David
- 
+
 You
 [00:23:09] yes
- 
+
 KIMBERLY (Customer)
 [00:23:10] lol
 [00:23:16] just wanted to double check
- 
+
 You
 [00:23:20] sure
- 
+
 KIMBERLY (Customer)
 [00:23:19] ok last one
 [00:23:26] I know you have to get to other studebts
 [00:23:29] I will be quick
- 
+
 You
-[00:23:38] you have contract with us, 
- 
+[00:23:38] you have contract with us,
+
 KIMBERLY (Customer)
 [00:23:44] File Shared &gt; 11.jpg
- 
+
 You
 [00:23:45] so you can stay as long as want
- 
+
 KIMBERLY (Customer)
 [00:23:53] oh really
- 
+
 You
 [00:24:03] yes
- 
+
 KIMBERLY (Customer)
 [00:24:04] all the other tutors say I have to go
 [00:24:17] because they have other students in line
 [00:24:22] YOU ROCK! David
- 
+
 You
 [00:24:25] My information says that you are what is called a consumer session
 [00:24:44] which means unlimited time
- 
+
 KIMBERLY (Customer)
 [00:24:51] they make me log back in and its ok because I understand but it just sucks starting all over
 [00:24:53] lol
 [00:25:04] well you will get an excellent rating fron me tonight
- 
+
 You
 [00:25:20] It does depend on how you are accessing our service, though
- 
+
 KIMBERLY (Customer)
 [00:25:21] I rarely give them! Only when earned
 [00:25:27] oh
 [00:25:28] ok
 [00:25:50] well perfect
 [00:26:06] ok well as long as you dont mind I do a 4 more
- 
+
 You
 [00:26:08] to go through a library link I think would be a limited session...
 [00:26:14] ok
- 
+
 KIMBERLY (Customer)
 [00:26:13] hmmm
 [00:26:15] o
 [00:26:16] ok
 [00:26:22] alright
 [00:26:25] well lets see
- 
+
 You
 [00:26:25] basically free to the public
- 
+
 KIMBERLY (Customer)
 [00:26:33] hmmm
 [00:26:35] good to knpw
 [00:26:37] knpw
- 
+
 You
 [00:26:37] but we have to limit it
- 
+
 KIMBERLY (Customer)
 [00:26:41] perfect
- 
+
 You
 [00:26:48] for that reason, others on queue
- 
+
 KIMBERLY (Customer)
 [00:26:54] thanks David! :) you made my night
- 
+
 You
 [00:26:57] ok this problem...
- 
+
 KIMBERLY (Customer)
 [00:27:04] Ive been struggling in math
 [00:27:15] so this really helps with the consistancy
@@ -7707,894 +7707,894 @@ KIMBERLY (Customer)
 [00:27:42] so for this one
 [00:27:46] I subtracted
 [00:28:50] is this right
- 
+
 You
-[00:28:52] I imagine somehow someone has purchased a contract with tutor.com, which gives you this, through your company, or some other way...
+[00:28:52] I imagine somehow someone has purchased a contract with example.org, which gives you this, through your company, or some other way...
 [00:29:06] not quite
- 
+
 KIMBERLY (Customer)
 [00:29:13] ok well I am happy
- 
+
 You
 [00:29:17] heree, you need to insert 24 for x
- 
+
 KIMBERLY (Customer)
 [00:29:20] that we can work on few more
 [00:29:29] I have 4 more after this
- 
+
 You
 [00:29:32] ok
- 
+
 KIMBERLY (Customer)
 [00:29:34] aww shucks
 [00:29:40] ok what did I do wrong
- 
+
 You
 [00:30:08] Like if this is a function, if this is f(x) = x + 7
 [00:30:18] and we substitute 24 for x
- 
+
 KIMBERLY (Customer)
 [00:30:28] ok
- 
+
 You
 [00:30:51] so 31...
 [00:31:06] Yes that is immportant property of functions,
- 
+
 KIMBERLY (Customer)
 [00:31:06] ok
- 
+
 You
 [00:31:25] once you know it you can calculate other points, given a certain x
 [00:31:39] make sense?
- 
+
 KIMBERLY (Customer)
 [00:32:03] yes
- 
+
 You
 [00:32:45] It just becomes confusing if don&apos;t use a different page when pasting...
 [00:32:52] that is why I am doing this...
- 
+
 KIMBERLY (Customer)
-[00:33:29] well trying to remember all of the rulea 
+[00:33:29] well trying to remember all of the rulea
 [00:33:37] rules confusing
 [00:33:43] to me
 [00:33:52] ok here is the other one
 [00:34:40] File Shared &gt; 12.jpg
 [00:35:20] fractions are so confusing to me
- 
+
 You
 [00:36:04] they are difficult for many students I have seen...
 [00:36:24] OK so first what is the formula we use?
- 
+
 KIMBERLY (Customer)
 [00:37:12] now what I think we are suppose to do multiply 2 X 4 +3
- 
+
 You
 [00:37:27] oh, yes
 [00:37:34] to get the numerator...
- 
+
 KIMBERLY (Customer)
 [00:38:00] ok
 [00:38:08] so Im on the right path
- 
+
 You
 [00:38:12] and the reason for that is, because we have two whole numbers
 [00:38:21] and each whole has 4 of the fourths
- 
+
 KIMBERLY (Customer)
 [00:38:24] oh ok
- 
+
 You
-[00:38:28] so we multiply 2 by 4 
+[00:38:28] so we multiply 2 by 4
 [00:38:32] then add in the part
- 
+
 KIMBERLY (Customer)
 [00:38:48] hmmmm
 [00:38:49] ok
 [00:39:26] so now we add
 [00:39:28] ?
- 
+
 You
 [00:39:32] not quite
 [00:39:38] we have to calculate area...
- 
+
 KIMBERLY (Customer)
 [00:39:38] ok
- 
+
 You
 [00:39:50] so we use that formula
- 
+
 KIMBERLY (Customer)
-[00:39:51] alright 
- 
+[00:39:51] alright
+
 You
 [00:40:34] So we fill in the values, same as filling in the 24 for x
 [00:40:54] I got this from the Hint...
- 
+
 KIMBERLY (Customer)
 [00:41:00] so the bh
-[00:41:16] is what I circled 
- 
+[00:41:16] is what I circled
+
 You
 [00:41:38] i see...
 [00:41:40] yes
- 
+
 KIMBERLY (Customer)
 [00:41:54] so now I multiply to figure out the area
- 
+
 You
 [00:41:55] the circle did not appear till after you mentioned it
- 
+
 KIMBERLY (Customer)
 [00:42:04] oh ok
 [00:42:08] no worries
- 
+
 You
 [00:42:16] you fill in the values, substituting the values into the formula
 [00:42:38] oh that is jsut due to internet I am sure...
 [00:42:58] so you fill in the values for that formula...
- 
+
 KIMBERLY (Customer)
 [00:43:25] like that?
- 
+
 You
 [00:43:38] correct, exactly :)
- 
+
 KIMBERLY (Customer)
-[00:43:44] YAHOOOO! 
-[00:43:51] Im on a roll now! 
- 
+[00:43:44] YAHOOOO!
+[00:43:51] Im on a roll now!
+
 You
 [00:43:58] yes :)
- 
+
 KIMBERLY (Customer)
 [00:44:01] next step?
 [00:44:05] lol
- 
+
 You
-[00:44:14] now the multiplication 
- 
+[00:44:14] now the multiplication
+
 KIMBERLY (Customer)
 [00:44:15] Do I add them together
 [00:44:20] aww shucks
 [00:44:25] ok so multiply
- 
+
 You
 [00:44:28] yes
- 
+
 KIMBERLY (Customer)
 [00:44:30] ok
 [00:44:34] give me a sec
- 
+
 You
-[00:45:11] Actually that is how the formula was derived... 
+[00:45:11] Actually that is how the formula was derived...
 [00:45:24] each triangle is one half of a rectangle
- 
+
 KIMBERLY (Customer)
 [00:45:29] ok
 [00:45:40] so I just right it down like that
- 
+
 You
 [00:45:44] So it is not as mysterious as it may seem
- 
+
 KIMBERLY (Customer)
 [00:45:46] and that is the final step
 [00:45:53] or I solve it
- 
+
 You
 [00:45:54] It needs to be calculated
- 
+
 KIMBERLY (Customer)
 [00:45:59] ok
- 
+
 You
 [00:46:03] It should come out to a single fraction
 [00:46:13] so cancellation if you can
- 
+
 KIMBERLY (Customer)
 [00:47:01] I think I did this wrong
- 
+
 You
 [00:47:05] that also could be done, to cancel the 4&apos;s
 [00:47:14] It is correct, just needs to be reduced
- 
+
 KIMBERLY (Customer)
 [00:47:23] by 4
- 
+
 You
 [00:47:25] yes
- 
+
 KIMBERLY (Customer)
 [00:47:28] ok
- 
+
 You
 [00:47:53] yes
- 
+
 KIMBERLY (Customer)
 [00:47:58] :)
 [00:48:02] I feel great
 [00:48:05] Im getting it
 [00:48:08] Yeah
- 
+
 You
 [00:48:14] yes;)
- 
+
 KIMBERLY (Customer)
 [00:48:20] so that is it right were done
 [00:48:23] for this one
- 
+
 You
 [00:48:24] It is a matter of understandig the formula
 [00:48:29] and plugging values in
 [00:48:34] yes is correct
- 
+
 KIMBERLY (Customer)
 [00:48:34] yes and this is wear I get confused
 [00:48:43] with all of the different rules
 [00:48:47] and formulas
 [00:49:04] were done right
- 
+
 You
 [00:49:15] yes this problem finished
 [00:49:19] the 11 is a prime numbe
 [00:49:53] That is how you can tell also, if the numerator or denominator is prime
 [00:49:57] you know it is finished
 [00:50:07] but that doesn&apos;t always happen
- 
+
 KIMBERLY (Customer)
 [00:50:16] the base number is wgat you mean by prime?
- 
+
 You
 [00:50:31] like that
- 
+
 KIMBERLY (Customer)
 [00:50:37] File Shared &gt; 13.jpg
- 
+
 You
 [00:50:44] nothing will divide into those numbers
- 
+
 KIMBERLY (Customer)
 [00:50:53] makes sense
 [00:50:55] thanks
- 
+
 You
 [00:51:26] ok I will make another board, larger...
- 
+
 KIMBERLY (Customer)
 [00:51:33] ok
- 
+
 You
 [00:53:04] the f(x) is the y direction...
- 
+
 KIMBERLY (Customer)
 [00:53:10] I&apos;m following...
- 
+
 You
 [00:53:18] So if x is 0, what is y?
 [00:53:28] if insert 0 for x?
- 
+
 KIMBERLY (Customer)
 [00:53:46] 0
- 
+
 You
 [00:53:54] not quite...
- 
+
 KIMBERLY (Customer)
 [00:54:10] 1
- 
+
 You
 [00:54:13] -3 times 0?
- 
+
 KIMBERLY (Customer)
 [00:54:20] graphs get me every time
 [00:54:25] geez
- 
+
 You
 [00:54:29] the numbers...
- 
+
 KIMBERLY (Customer)
 [00:54:32] -0
- 
+
 You
 [00:54:36] That is what to concentrate on...
 [00:55:03] 0 times anything is 0, right?
- 
+
 KIMBERLY (Customer)
 [00:55:15] correct
- 
+
 You
 [00:55:36] ok so if x is 0, we plot on 5
 [00:56:07] That is called the y intercept, you may have heard that
- 
+
 KIMBERLY (Customer)
 [00:56:24] yes I have
 [00:56:37] the line where y is
 [00:57:09] got it
- 
+
 You
 [00:57:16] yes, like the axle on a car
 [00:57:20] same root word
- 
+
 KIMBERLY (Customer)
 [00:57:44] cool
- 
+
 You
 [00:57:47] It is the start of the coordinates...
- 
+
 KIMBERLY (Customer)
 [00:57:56] ok
- 
+
 You
 [00:58:08] So then What does your teacher say to do, use the slope to calculate another point?
- 
+
 KIMBERLY (Customer)
 [00:58:43] y=mx+b
- 
+
 You
 [00:58:51] right...:)
- 
+
 KIMBERLY (Customer)
 [00:58:54] YAHOO
 [00:58:56] :)
- 
+
 You
 [00:59:02] so what is b here?
- 
+
 KIMBERLY (Customer)
 [00:59:33] this is tricky for me
 [00:59:49] I always get it wrong
- 
+
 You
 [01:00:05] Is ok it is a matter of understanding the pattern
- 
+
 KIMBERLY (Customer)
 [01:00:06] now I know the formula but when it is time to use it I get confused
 [01:01:04] b= 5
- 
+
 You
 [01:01:09] right:)
 [01:01:37] yes if is in this form of y = mx + b, then the b is the lone number, and it is the y intercept
- 
+
 KIMBERLY (Customer)
 [01:01:38] I just cant remember if it is Y or x
 [01:01:49] vertical or horzontal
 [01:01:52] on the graph
- 
+
 You
 [01:01:57] x always horizontal
- 
+
 KIMBERLY (Customer)
 [01:02:17] right ther
- 
+
 You
 [01:03:07] not quite
 [01:03:19] If you want the x intercept...
 [01:03:28] what is y at the x intercept?
- 
+
 KIMBERLY (Customer)
 [01:03:42] it is positive right
- 
+
 You
 [01:03:54] at x intercept, the x axis itself...
 [01:03:58] what is y there?
- 
+
 KIMBERLY (Customer)
 [01:04:02] 0
- 
+
 You
 [01:04:05] correct:)
 [01:04:20] so suppose you put in 0 for y in the formula?
- 
+
 KIMBERLY (Customer)
 [01:04:29] ok
- 
+
 You
 [01:05:06] Then the relation y = -3x + 5 will tell us what x must be
 [01:05:29] following?
- 
+
 KIMBERLY (Customer)
 [01:05:35] I&apos;m following...
 [01:06:08] 8x
- 
+
 You
 [01:06:48] So if solving for x...
- 
+
 KIMBERLY (Customer)
 [01:06:54] we add
- 
+
 You
 [01:07:02] we are solving for x...
- 
+
 KIMBERLY (Customer)
 [01:07:14] -8x
 [01:07:16] I mean
 [01:07:22] since it is negative
 [01:07:43] nope
 [01:07:49] wait
- 
+
 You
 [01:07:50] not quite, ok solving for x, we want x by itself... What we are doing is USING the formula
- 
+
 KIMBERLY (Customer)
 [01:07:56] I just re added it and it is 2x
 [01:08:13] oh
-[01:08:15] I see 
+[01:08:15] I see
 [01:08:28] we add -3x to both sided
 [01:08:32] sides
- 
+
 You
 [01:08:40] could do that, yes
 [01:09:09] So x = ?
- 
+
 KIMBERLY (Customer)
 [01:09:34] I cant see that
 [01:09:39] what are those
- 
+
 You
 [01:10:06] I added 3x to both sides
 [01:10:15] so now we have 3x = 5
- 
+
 KIMBERLY (Customer)
 [01:10:32] oh
 [01:10:33] ok
- 
+
 You
 [01:10:55] So then we solve for x....
- 
+
 KIMBERLY (Customer)
 [01:11:10] 3 cdant go into 5
 [01:11:17] so we make it a fraction
 [01:11:27] right?
- 
+
 You
 [01:11:36] right, we want x by itself
 [01:11:44] So we want 1x
- 
+
 KIMBERLY (Customer)
 [01:12:02] oh because we cnclled out 3 x
- 
+
 You
 [01:12:27] the 3x =5 is correct
- 
+
 KIMBERLY (Customer)
 [01:12:38] got it
- 
+
 You
 [01:12:39] now if 3 times something is 5
- 
+
 KIMBERLY (Customer)
 [01:12:46] so that is the final answer
 [01:12:59] or we have another stpe
- 
+
 You
 [01:13:12] x = 5/3
 [01:13:20] that is the x intercept
- 
+
 KIMBERLY (Customer)
 [01:13:27] oh so I had it backward
 [01:13:42] that is what it should be
- 
+
 You
 [01:13:44] yes
 [01:13:50] yes for the x intercept
- 
+
 KIMBERLY (Customer)
 [01:13:50] oh ok
- 
+
 You
 [01:14:14] It doesn&apos;t have to be done,  but you will certainly do this later in your course, so the time is not wasted
 [01:14:35] We could use the slope, though, to calculate another point
- 
+
 KIMBERLY (Customer)
 [01:14:46] so wait is 5/3 my final answer or 3x+5
 [01:14:50] wait
 [01:14:59]  I meanb 3x=5
- 
+
 You
 [01:15:29] The goal was to graph the function, right?
 [01:15:47] This is one way to do it, to plot both x and y intercepts
 [01:15:59] We just calculated x intercept
- 
+
 KIMBERLY (Customer)
 [01:16:33] ohhh
 [01:17:16] so now we \
 [01:17:26] add on graph
- 
+
 You
 [01:17:30] yes
 [01:17:52] yes :)  because we have to have at least two points
- 
+
 KIMBERLY (Customer)
 [01:18:04] like tha
- 
+
 You
 [01:18:12] the second line not correct
 [01:18:20] the 5,0 not on the line...
 [01:18:35] ctrl -z also
 [01:18:37] will undo
- 
+
 KIMBERLY (Customer)
 [01:18:55] cool
- 
+
 You
 [01:19:33] We can also down three and over 1
 [01:19:36] the slope...
- 
+
 KIMBERLY (Customer)
 [01:19:49] so is that line correct
- 
+
 You
 [01:20:01] yes
- 
+
 KIMBERLY (Customer)
 [01:20:13] so we go up 5 over 3
- 
+
 You
 [01:20:27] The slope is the m
 [01:20:33] that tells how steep it is
 [01:20:38] So what is m here?
 [01:20:59] Don&apos;t get me wrong, the graph is correct
 [01:21:07] just wanting to explain about slope...
- 
+
 KIMBERLY (Customer)
 [01:21:28] ok
- 
+
 You
 [01:21:37] Since the slope is change in y, divided by change in x
- 
+
 KIMBERLY (Customer)
 [01:21:48] is that it
 [01:21:53] up 5 over 3
- 
+
 You
 [01:21:55] then if that slope is large, it is steep
 [01:22:42] so if have -3/1...
- 
+
 KIMBERLY (Customer)
 [01:22:58] down 3 over 1
- 
+
 You
 [01:23:03] right
 [01:23:10] that is how got that point
 [01:23:15] ok you already understod that
- 
+
 KIMBERLY (Customer)
 [01:23:48] ok
 [01:23:52] yes
 [01:24:01] I know some of it
 [01:24:20] I just get stuck on information overload
 [01:24:28] and forget some rules
- 
+
 You
 [01:25:04] yes many students get confused by rules
- 
+
 KIMBERLY (Customer)
 [01:25:08] oh
 [01:25:11] yeah
 [01:25:14] I see why
 [01:25:15] ok
- 
+
 You
-[01:25:22] but you can also remember  that if x is 0 
+[01:25:22] but you can also remember  that if x is 0
 [01:25:31] then that is why the b is the y intercept
- 
+
 KIMBERLY (Customer)
 [01:25:32] so the 1st point is 0,5
- 
+
 You
 [01:25:36] because that part goes to 0
 [01:25:52] so then it makes sense
 [01:25:55] it is logical
- 
+
 KIMBERLY (Customer)
 [01:25:54] the second is 0,1
- 
+
 You
 [01:26:05] 0,2
 [01:26:15] sorry, 1,2
-[01:26:33] Also that is another way, 
+[01:26:33] Also that is another way,
 [01:26:43] simply put a different x in
 [01:26:55] so like use 2 for x
- 
+
 KIMBERLY (Customer)
-[01:26:57] Im sorry David what two points should I connect on this graph 
+[01:26:57] Im sorry David what two points should I connect on this graph
 [01:27:03] Im confused
- 
+
 You
 [01:27:08] (0,5), and (1,2)
- 
+
 KIMBERLY (Customer)
 [01:27:43] ok
 [01:27:55] just wanted to be clear
- 
+
 You
 [01:28:04] (5/3, 0) is also a point on it, but is harder to graph
 [01:28:17] So all you do is get the y intercept...
 [01:28:31] then use slope to get a second point
- 
+
 KIMBERLY (Customer)
 [01:28:49] yeah I could see why
 [01:29:04] the more I do the better I will become
 [01:29:10] it just takes practice
- 
+
 You
 [01:29:11] yes
 [01:29:15] yes definitely
- 
+
 KIMBERLY (Customer)
 [01:29:26] ok let me graph these real quick
- 
+
 You
 [01:29:28] it is logical, once you work enough of them
- 
+
 KIMBERLY (Customer)
 [01:29:29] in the meantime
 [01:29:38] here is the other problem
- 
+
 You
 [01:29:38] ok
- 
+
 KIMBERLY (Customer)
 [01:30:54] File Shared &gt; 14.jpg
 [01:31:22] pls give me a sec
- 
+
 You
 [01:31:42] ok
- 
+
 KIMBERLY (Customer)
 [01:33:14] ok
 [01:33:17] im ready
- 
+
 You
 [01:33:23] hi
 [01:33:37] ok so what do you think?
- 
+
 KIMBERLY (Customer)
 [01:33:43] alright
 [01:33:45] so ...
 [01:35:05] am I on the right track?
- 
+
 You
 [01:35:50] not quite, what they are doing is they have to pay say 500 a month just to keep the lights on in their factory and pay the employees
 [01:36:07] Then for each shirt they cost $4 more
- 
+
 KIMBERLY (Customer)
 [01:36:30] I&apos;m following...
- 
+
 You
 [01:36:39] Would an illustration help?
- 
+
 KIMBERLY (Customer)
 [01:36:45] yes
 [01:36:56] Im a visual learner
 [01:37:30] is thst the shirtd
 [01:37:46] oh ok
 [01:37:47] kool
- 
+
 You
 [01:39:23] So that is what is going on
 [01:39:45] So if they sell no shirts at all they still have to pay 500 dollars
- 
+
 KIMBERLY (Customer)
 [01:39:50] I&apos;m following...
- 
+
 You
 [01:40:22] and they also have to pay 4 for EACH shirt.  That is why this is a VARIABLE cost
- 
+
 KIMBERLY (Customer)
 [01:40:36] ok
- 
+
 You
 [01:40:54] So if x is the number of shirts, what is their variable cost?
- 
+
 KIMBERLY (Customer)
 [01:41:07] x4
- 
+
 You
 [01:41:11] right :)
- 
+
 KIMBERLY (Customer)
 [01:41:16] Yeah!
- 
+
 You
 [01:41:18] so that is part of the equation...:)
- 
+
 KIMBERLY (Customer)
 [01:41:29] alright
- 
+
 You
 [01:41:32] got it!
- 
+
 KIMBERLY (Customer)
 [01:41:46] yup
- 
+
 You
 [01:41:55] yes then that 500 is there no matter what
 [01:42:26] So what would we do next? to include the 500?
- 
+
 KIMBERLY (Customer)
 [01:42:52] +500
- 
+
 You
 [01:43:09] yes
 [01:43:27] and you know that is correct also because if x is 0, you still have 500 cost
- 
+
 KIMBERLY (Customer)
 [01:43:36] true
 [01:44:21] so the cost of producing 6 shirts is x6
 [01:44:27] or 4 x 6
- 
+
 You
-[01:44:48] ok what is the variable?  
- 
+[01:44:48] ok what is the variable?
+
 KIMBERLY (Customer)
 [01:45:34] x
 [01:45:36] right
- 
+
 You
 [01:45:41] correct ;)
- 
+
 KIMBERLY (Customer)
 [01:45:51] so 4x
- 
+
 You
 [01:45:54] yes
- 
+
 KIMBERLY (Customer)
 [01:45:56] x4
 [01:46:05] is the right way to write it
- 
+
 You
 [01:46:11] 4x
- 
+
 KIMBERLY (Customer)
 [01:46:29] so why do they have a $
 [01:46:31] for the answer
 [01:46:41] I have to multiply 4 X 6
 [01:46:45] huh?
- 
+
 You
 [01:46:48] dollar sign?
 [01:47:19] oh did not see that, my fault
- 
+
 KIMBERLY (Customer)
 [01:47:21] the 2nd part of the answer
- 
+
 You
 [01:47:39] so again, we use the formula to tell us the answer
 [01:47:47] what is the x?
- 
+
 KIMBERLY (Customer)
 [01:49:01] the amount of shirts
- 
+
 You
 [01:49:02] We talked about it already, so this is not giving you the answer..
 [01:49:12] yes, so I substituted the 6 for x
- 
+
 KIMBERLY (Customer)
-[01:49:21] yes 
+[01:49:21] yes
 [01:49:28] thats what I thought
 [01:49:57] ok so we 4 x 6 = 24
 [01:50:11] is the cost of 6 shirts
- 
+
 You
 [01:50:13] yes, it is exactly this number
- 
+
 KIMBERLY (Customer)
 [01:50:27] perfect
- 
+
 You
 [01:50:29] We replace the x with 6
- 
+
 KIMBERLY (Customer)
 [01:51:26] ok
 [01:51:31] well I got it
- 
+
 You
 [01:51:40] yes
- 
+
 KIMBERLY (Customer)
 [01:51:44] oh wait
 [01:51:54] I didnt see that last part
 [01:52:16] so we add 24 + 500
- 
+
 You
 [01:52:19] Yes I used the formula directly
- 
+
 KIMBERLY (Customer)
 [01:52:21] to make 524
- 
+
 You
 [01:52:23] yes
 [01:52:39] Yes that is the way to do it, is like a machine
- 
+
 KIMBERLY (Customer)
 [01:52:41] that is the cost of the total shirts because we have to pay 500 no matter what
 [01:52:44] ah ha
 [01:52:46] got it
- 
+
 You
 [01:52:52] yes
- 
+
 KIMBERLY (Customer)
 [01:52:55] :)
 [01:53:00] perfect
 [01:53:10] wow that was a trick question
 [01:53:16] I would have missed it
 [01:53:29] thanks for explaining this in detailed
- 
+
 You
 [01:53:37] I guess in real life, though, you don&apos;t incur costs of 500 with each lot
 [01:53:47] but this is just an example
- 
+
 KIMBERLY (Customer)
 [01:53:58] true
 [01:54:28] it makes you realize that life is not cheap to survive or run a business
 [01:54:31] lol
- 
+
 You
 [01:54:34] I am not an economist, though...
 [01:54:41] yes requires lot of thought and planning
- 
+
 KIMBERLY (Customer)
 [01:54:41] lol
 [01:54:47] yup that makes two us
- 
+
 You
 [01:55:00] :)
- 
+
 KIMBERLY (Customer)
 [01:55:10] ok well this is the last one and then I will let you go
- 
+
 You
 [01:55:15] alright...
- 
+
 KIMBERLY (Customer)
 [01:55:20] I dont want to keep u too much linger
 [01:55:30] I really appreciate this
 [01:55:51] File Shared &gt; 15.jpg
- 
+
 You
 [01:55:55] Oh, this is how we are instructed to work...
- 
+
 KIMBERLY (Customer)
 [01:56:10] well I just feel bad keeping you
- 
+
 You
 [01:56:12] to stay with the student for at least the length of our shift...
- 
+
 KIMBERLY (Customer)
 [01:56:26] but yet it is better to learb
 [01:56:29] learb
 [01:56:32] learn
 [01:56:42] oh is your shift ended
- 
+
 You
 [01:56:43] I am following the rules they told me to do...
- 
+
 KIMBERLY (Customer)
 [01:56:46] I wont keep you
- 
+
 You
 [01:56:48] not till 11
- 
+
 KIMBERLY (Customer)
 [01:57:00] what time zone are you in
 [01:57:07] it is 7:40pm my time
- 
+
 You
 [01:57:11] Eastern
- 
+
 KIMBERLY (Customer)
 [01:57:17] ok
 [01:57:25] well this is it
 [01:57:28] thanks David
 [01:57:31] for your patience
 [01:57:34] ok
- 
+
 You
 [01:57:39] you&apos;re welcome
- 
+
 KIMBERLY (Customer)
 [01:57:49] so lets hurry so you can get off work lol
 [01:57:51] :)
@@ -8602,148 +8602,148 @@ KIMBERLY (Customer)
 [01:58:13] ok
 [01:58:15] alright
 [01:58:20] here we go
- 
+
 You
 [01:58:41] ok you are to use substitution...
- 
+
 KIMBERLY (Customer)
 [01:58:52] well kinds
 [01:58:55] kinda
 [01:59:07] this problem confuese me
 [01:59:10] ok
- 
+
 You
 [01:59:30] Ok substitution means that you first solve for one variable in one equation
 [01:59:41] and then substitute that into the other one
- 
+
 KIMBERLY (Customer)
 [01:59:46] ok
- 
+
 You
 [02:00:04] This way you eliminate one variable and can solve for the other one
- 
+
 KIMBERLY (Customer)
 [02:00:10] ok
- 
+
 You
 [02:00:29] So like in equation 1... if we solved for a...
- 
+
 KIMBERLY (Customer)
 [02:00:37] I&apos;m following...
- 
+
 You
 [02:01:00] lets solve for b actually, no fractions...
- 
+
 KIMBERLY (Customer)
 [02:03:08] thankis for sharinfg the ctrl alt z
 [02:03:10] feature
 [02:03:11] ok
- 
+
 You
 [02:03:18] yes, you &apos;re welcome
 [02:03:22] is faster and neater
- 
+
 KIMBERLY (Customer)
 [02:03:26] so we subtract b from both sides
 [02:03:28] yes it is
- 
+
 You
 [02:04:26] If we subtracted the 5 it would be better, rigth
 [02:04:32] then b is more by itself
- 
+
 KIMBERLY (Customer)
 [02:04:34] yes
 [02:05:05] oh go ahead
 [02:05:06] sorry
- 
+
 You
 [02:05:13] please continue
 [02:05:21] better if student does work
- 
+
 KIMBERLY (Customer)
 [02:06:06] like that
- 
+
 You
 [02:06:22] yes removes that 5
- 
+
 KIMBERLY (Customer)
 [02:06:27] ok
 [02:06:49] so thats it
 [02:06:52] 0-b
 [02:06:57] or we have another step
- 
+
 You
 [02:07:26] so now have -b on right
 [02:07:32] so is the negative of what we want
- 
+
 KIMBERLY (Customer)
 [02:07:34] yes
 [02:07:53] no
 [02:08:01] it will become positive
- 
+
 You
 [02:08:52] If multiply by -1, that fixes it
 [02:08:59] let me show a better way, just a second
 [02:09:05] if had added b in beginning
- 
+
 KIMBERLY (Customer)
 [02:09:06] ok
 [02:10:12] that does seem easier to read
 [02:10:15] and understand
- 
+
 You
 [02:10:25] ok so b is 5-5a
 [02:10:42] Now we substitute
 [02:11:38] make sense?
- 
+
 KIMBERLY (Customer)
 [02:11:44] yes
 [02:11:58] because 5-5=o
- 
+
 You
 [02:12:52] oh, we still have to solve for a
- 
+
 KIMBERLY (Customer)
 [02:12:56] ok
- 
+
 You
 [02:13:53] you want to work it?
- 
+
 KIMBERLY (Customer)
 [02:13:55] yes we need see if there is a solution
 [02:14:02] or ordered pair
 [02:14:10] so we work on a next right
 [02:14:13] ok
- 
+
 You
 [02:14:15] yes
- 
+
 KIMBERLY (Customer)
 [02:14:16] let me try
 [02:14:51] is that it
- 
+
 You
 [02:15:27] not quite, some confusion somewhere
 [02:15:36] we need to perform this algebra
- 
+
 KIMBERLY (Customer)
 [02:15:41] ok
- 
+
 You
 [02:15:47] It is not necessarilyh equal to 0
- 
+
 KIMBERLY (Customer)
 [02:15:55] ok
- 
+
 You
 [02:16:32] It is just coincidence that they are all 5&apos;s
- 
+
 KIMBERLY (Customer)
 [02:16:59] yes
- 
+
 You
 [02:17:01] So distributive property
- 
+
 KIMBERLY (Customer)
 [02:17:05] and thats why I was confuses
 [02:17:29] I was looking at the last one you did
@@ -8752,159 +8752,159 @@ KIMBERLY (Customer)
 [02:18:01] with the second one
 [02:18:07] and messed it up
 [02:18:14] :(
- 
+
 You
 [02:18:29] takes practice, as you said...
- 
+
 KIMBERLY (Customer)
 [02:18:37] ok
- 
+
 You
 [02:19:42] This is just like taking one piece, the b,
 [02:19:57] and completely replacing it with this group, 5-5a
 [02:20:01] that is what is happening
 [02:21:01] What it is, these are two lines, at different angles that will intersect
- 
+
 KIMBERLY (Customer)
 [02:21:07] ok
- 
+
 You
 [02:21:39] -(-5a)
- 
+
 KIMBERLY (Customer)
 [02:21:50] this is so confusing
 [02:22:01] but I appreciate your exlaining
 [02:22:04] ok
- 
+
 You
 [02:22:25] Perhaps  will take some more time to sink in
- 
+
 KIMBERLY (Customer)
 [02:22:32] yeah
 [02:22:47] ok
 [02:22:57] so what is next
- 
+
 You
 [02:23:01] well...
 [02:23:13] this is a strange one, not the usual...
 [02:23:24] 5a on both sides...
 [02:23:28] so what could be done?
- 
+
 KIMBERLY (Customer)
 [02:23:48] oh so  a trick question huh?
- 
+
 You
 [02:23:57] that means the 5a is redundant
- 
+
 KIMBERLY (Customer)
 [02:23:58] subtract
- 
+
 You
 [02:24:02] correct
- 
+
 KIMBERLY (Customer)
 [02:24:03] yes
 [02:24:11] and it cancels out
- 
+
 You
 [02:24:17] but...
- 
+
 KIMBERLY (Customer)
 [02:24:21] uh oh
- 
+
 You
 [02:24:24] as you ccan see there is a problem
- 
+
 KIMBERLY (Customer)
 [02:24:27] :(
- 
+
 You
 [02:24:39] We did calculations correctly
- 
+
 KIMBERLY (Customer)
 [02:24:44] ok
- 
+
 You
 [02:24:53] but if examine the first two equations...
 [02:25:02] 5a = 5-b
 [02:25:04] and
 [02:25:16] 5a also equals 3 - b
 [02:25:24] but that is not possible
- 
+
 KIMBERLY (Customer)
 [02:25:26] yes I see
 [02:25:47] hmmm yeah I really am confused on this one
 [02:25:54] but go ahead
 [02:26:00] keep teaching
- 
+
 You
 [02:26:09] we did substitution correctly, so please don&apos;t be confused by that
- 
+
 KIMBERLY (Customer)
 [02:26:15] ok good
- 
+
 You
 [02:26:29] But this just proves that there is no solution to this system
- 
+
 KIMBERLY (Customer)
 [02:26:47] because it is redundant
 [02:26:54] and we cant find an asnwer
- 
+
 You
 [02:27:09] There are no two numbers a and b in which 5a = 5-b
 [02:27:15] and at same time
- 
+
 KIMBERLY (Customer)
 [02:27:22] right to equal a point
- 
+
 You
 [02:27:24] 5a = 3-b
 [02:27:43] If on x-y plane, these would be parallel lines
 [02:27:47] never intersect
 [02:28:02] But bottom line is when get contradiction
 [02:28:14] and you know you performed the substitution correctly
- 
+
 KIMBERLY (Customer)
 [02:28:16] oh wow
- 
+
 You
 [02:28:20] then you know there is no solution
- 
+
 KIMBERLY (Customer)
 [02:28:32] well thanks because I was really worried I goofed it up
 [02:28:37] perfect
 [02:28:59] well David you have been incredible tonight
 [02:29:07] I want to send you my deepest appreciation for your teaching and patience
 [02:29:14] I know you have to go now
- 
+
 You
 [02:29:17] you worked hard and were attentive also..
- 
+
 KIMBERLY (Customer)
 [02:29:17] but thanks a million
 [02:29:23] I will see you again soon
- 
+
 You
 [02:29:25] you&apos;re welcome
- 
+
 KIMBERLY (Customer)
 [02:29:28] :)
 [02:29:36] Excellent Ratings
 [02:29:41] from you on your survey
- 
+
 You
 [02:29:43] good evening
 [02:29:48] thank you
- 
+
 KIMBERLY (Customer)
 [02:29:48] Have a good evening too
- 
+
 You
-[02:30:05] Thanks for using Tutor.com. Please fill out the survey as you leave so we can learn how we can better help you in the future!  
- 
+[02:30:05] Thanks for using example.org. Please fill out the survey as you leave so we can learn how we can better help you in the future! 
+
 KIMBERLY (Customer)
 [02:30:11] bye
- 
+
 You
 [02:30:13] bye
 </Transcript>

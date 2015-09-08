@@ -82,13 +82,6 @@ def main_page():
     )
 
 
-# Assign your transcripts (with taxonomy) to other people
-@main.route('/admin-assign', methods=['GET', 'POST'])
-@require_login
-def admin_assign_page():
-    return template("home.html")  # TODO: actual assignment screen
-
-
 def get_current_transcript_info(scriptid):
     """Return the triplet (script, tax, user) for the given scriptid as
     needed for edits/saves"""

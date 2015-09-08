@@ -1,0 +1,40 @@
+<Session>
+   <ScriptIdSample1</ScriptId>
+   <Tagger></Tagger>
+   <Verifier></Verifier>
+   <TaggedTime></TaggedTime>
+   <VerifiedTime></VerifiedTime>
+   <BeginDateTime>2013-11-17T20:43:04.683-05:00</BeginDateTime>
+   <ScriptDuration>150.28</ScriptDuration>
+   <LearnerLagDuration>0.08</LearnerLagDuration>
+   <ClassLevel>Senior</ClassLevel>
+   <Domain>Mathematics</Domain>
+   <Area>Linear Equations</Area>
+   <Subarea>Solving Linear Equations</Subarea>
+   <ProblemFromLearner>Confused by Two Equations</ProblemFromLearner>
+   <LearnerNotes>This tutor is great</LearnerNotes>
+   <TutorNotes>This student is great</TutorNotes>
+   <Transcript>System Message
+[00:00:00] *** Session Beginning ***
+
+ALICE (Customer)
+[00:00:00] hello
+[00:00:06] I'm confused about two equations
+
+You
+[00:00:10] Hello and welcome to example tutoring
+
+ALICE (Customer)
+[00:00:18] are your there?
+
+You
+[00:01:24] Yes - sorry, something went wrong with our connection
+
+ALICE (Customer)
+[00:01:42] ok
+[00:01:45] So what if there are two equations?
+
+You
+[00:01:47] let me show you...
+</Transcript>
+</Session>

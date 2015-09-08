@@ -16,6 +16,7 @@ class DefaultConfig(object):
 
     # These are config values that you shouldn't need to change unless you
     # really know what you're doing
+    MAX_CONTENT_LENGTH = 32 * 1024 * 1024  # 32 MB for a single upload
     OAUTHLIB_RELAX_TOKEN_SCOPE = '1'
     OAUTHLIB_INSECURE_TRANSPORT = '1'  # TODO: fix with https in prod
 

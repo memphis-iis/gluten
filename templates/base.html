@@ -55,7 +55,7 @@
 
             {% if is_assigner %}
                 <div class="pull-right" style="padding-right: 16px; padding-top: 8px;">
-                    <a href="{{url_for('main.admin_assign_page')}}" class="btn btn-primary btn-sm">Assign</a>
+                    <a href="{{url_for('admin.admin_page')}}" class="btn btn-primary btn-sm">Admin</a>
                 </div>
             {% endif %}
         </div>
@@ -129,3 +129,50 @@ $(function(){
 
 </body>
 </html>
+
+
+{% macro transcript_table(transcripts, table_id) -%}
+    <table id="{{table_id}}" class="table table-bordered">
+        <thead><tr>
+            <th>State</th>
+            <th>Session</th>
+            <th>Class</th>
+            <th>Domain</th>
+            <th>Area</th>
+            <th>SubArea</th>
+            <th>ProblemFromLearner</th>
+            <th>LastSaved</th>
+        </tr></thead>
+
+        {% for transcript in transcripts %}
+        <tr>
+            <td class="nowrap">
+                <a title="Open Transcript"
+                    class="btn-sm btn-primary"
+                    href="{{url_for('main.edit_page', scriptid=transcript.id)}}"
+                ><span class="glyphicon glyphicon-pencil"></span></a>
+                &nbsp; {{transcript.state}}
+            </td>
+            <td class="nowrap">
+                {{transcript.script_identifier}}
+                {% if transcript.verify %}
+                    <span class="label label-danger">
+                        <span class="glyphicon glyphicon-check"></span> Verify
+                    </span>
+                {% endif %}
+                {% if transcript.training %}
+                    <span class="label label-warning">
+                        <span class="glyphicon glyphicon-book"></span> Training
+                    </span>
+                {% endif %}
+            </td>
+            <td class="nowrap">{{transcript.class_level}}</td>
+            <td style="min-width: 180px;">{{transcript.domain}}</td>
+            <td style="min-width: 180px;">{{transcript.area}}</td>
+            <td style="min-width: 180px;">{{transcript.subarea}}</td>
+            <td>{{transcript.problem_from_learner[:50]}}</td>
+            <td style="min-width: 180px;">{{transcript.last_saved_time}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{%- endmacro %}

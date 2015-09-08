@@ -97,4 +97,4 @@ To run unit tests:
 
 Connect to gluten from your host operating system at:
 
-    http://127.0.0.1:5000/
+    http://localhost:5000/

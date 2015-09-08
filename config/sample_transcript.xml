@@ -1,5 +1,5 @@
 <Session>
-   <ScriptIdSample1</ScriptId>
+   <ScriptId>Sample1</ScriptId>
    <Tagger></Tagger>
    <Verifier></Verifier>
    <TaggedTime></TaggedTime>

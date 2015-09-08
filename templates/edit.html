@@ -91,7 +91,7 @@
     {% for tag_supply in taxonomy.tagger_supplied %}
         {% set user_answer = transcript.tagger_supplied_answers[tag_supply.name] %}
         <tr>
-            <th width="1%" class="nowrap">{{tag_supply.name.title()}}</th>
+            <th width="1%" class="nowrap">{{tag_supply.name | title}}</th>
             <td>
                 <span class="text-info">{{tag_supply.text}}</span><br>
                 {% if tag_supply.answer %}

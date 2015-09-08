@@ -36,3 +36,13 @@
     width: 300px;
     z-index: 9999;
 }
+
+.uploader {
+    border: 1px solid #444;
+    padding: 6px;
+    background-color: #eeeeee;
+}
+
+.uploader .upload-ctl {
+    display: inline;
+}

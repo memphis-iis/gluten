@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %} Assignment {% endblock %}
-{% block display_title %} Assignment {% endblock %}
+{% from 'macros.html' import transcript_table %}
+
+{% block title %} User Admin {% endblock %}
+{% block display_title %} User Admin {% endblock %}
 {% block display_title_sub %}{% endblock %}
 
 
@@ -14,48 +16,41 @@
 </div>
 
 <div class="row">
+    <div class="col-md-12">
+        {{transcript_table(transcripts, 'transcript-table', open_icon='glyphicon-copy', open_title='Assign Transcript')}}
+    </div>
+</div>
 
-<div class="col-md-8">
-    <ul id="tabs" class="nav nav-pills" role="tablist" data-tabs="tabs">
-        <li class="active"><a href="#owned" data-toggle="owned">Owned By Me</a></li>
-        <li><a href="#assigned" data-toggle="assigned">Assigned To Me</a></li>
-    </ul>
-
-    <br/>
-
-    <div id="my-tab-content" class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="owned">
-            {{transcript_table(transcripts, 'transcript-table')}}
+<div class="row">
+    <div class="col-md-6">
+        <div class="uploader img-rounded">
+            <form class="form-line" action="{{url_for('admin.upload_transcript')}}" method="post" enctype="multipart/form-data">
+                <label class="upload-ctl" for="transcript-file">Upload Transcript:</label>
+                <input class="upload-ctl" type="file" id="transcript-file" name="file">
+                <button type="submit" class="upload-ctl btn btn-default">
+                    <span class="glyphicon glyphicon-upload"></span>
+                    Upload
+                </button>
+            </form>
+            <small>Transcripts should be in our standard XML format. Download a
+            sample <a href="{{url_for('admin.sample_transcript')}}">here</a></small>
         </div>
     </div>
-</div>
 
-<div class="col-md-8">
-    <div class="uploader">
-        <form action="{{url_for('admin.upload_transcript')}}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="transcript-file">Upload Transcript:</label>
-                <input type="file" id="transcript-file" name="file">
-                <button type="submit" class="btn btn-default">Upload</button>
-            </div>
-        </form>
-        <small>Transcripts should be in our standard XML format. Download a
-        sample <a href="{{url_for('admin.sample_transcript')}}">here</a></small>
+    <div class="col-md-6">
+        <div class="uploader img-rounded">
+            <form class="form-inline" action="{{url_for('admin.upload_taxonomy')}}" method="post" enctype="multipart/form-data">
+                <label class="upload-ctl" for="transcript-file">Upload Taxonomy:</label>
+                <input class="upload-ctl" type="file" id="taxonomy-file" name="file">
+                <button type="submit" class="upload-ctl btn btn-default">
+                    <span class="glyphicon glyphicon-upload"></span>
+                    Upload
+                </button>
+            </form>
+            <small>Taxonomies should be in our standard YAML format. Download a
+            sample <a href="{{url_for('admin.sample_taxonomy')}}">here</a></small>
+        </div>
     </div>
-
-    <div class="uploader">
-        <form action="{{url_for('admin.upload_taxonomy')}}" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="transcript-file">Upload Taxonomy:</label>
-                <input type="file" id="taxonomy-file" name="file">
-                <button type="submit" class="btn btn-default">Upload</button>
-            </div>
-        </form>
-        <small>Taxonomies should be in our standard YAML format. Download a
-        sample <a href="{{url_for('admin.sample_taxonomy')}}">here</a></small>
-    </div>
-</div>
-
 </div>
 
 {% endblock %}

@@ -35,8 +35,7 @@ def template(template_name, **context_kwrds):
     if g.user is defined (which routes decorated with .auth.require_login will
     have), the user will be added to the context"""
     ctx = {
-        'user': getattr(g, 'user', None),
-        'is_assigner': False,
+        'user': getattr(g, 'user', None)
     }
     ctx.update(context_kwrds)
     return render_template(template_name, **ctx)

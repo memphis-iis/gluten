@@ -1,6 +1,7 @@
 # Project specific
 test_services_env/
 .vagrant
+.test.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

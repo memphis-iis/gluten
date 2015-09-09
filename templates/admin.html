@@ -1,30 +1,93 @@
 {% extends "base.html" %}
 
-{% from 'macros.html' import transcript_table %}
-
 {% block title %} User Admin {% endblock %}
 {% block display_title %} User Admin {% endblock %}
 {% block display_title_sub %}{% endblock %}
 
-
 {% block main_content %}
 
+<!-- Transcripts to assign -->
 <div class="row">
     <div class="col-md-12">
+        <table id="availForAssign" class="table table-bordered table-condensed">
+            <thead><tr>
+                <th>Assign</th>
+                <th>Script Id</th>
+                <th>Domain</th>
+                <th>Area</th>
+                <th>Subarea</th>
+                <th>Problem</th>
+            </tr></thead>
+            <tbody>
+            {% for transcript in transcripts %}
+                <tr>
+                    <td class="nowrap control-cell">
+                        <a title="Assign Transcript" href=""
+                            class="btn-sm btn-primary cmdStartAssign"
+                            data-scriptid="{{transcript.id}}"
+                            data-scriptdisp="{{transcript.script_identifier}}"
+                        ><span class="glyphicon glyphicon-search"></span></a>
+                        &nbsp; Assign
+                    </td>
 
+                    <td>{{transcript.script_identifier}}</td>
+                    <td>{{transcript.domain}}</td>
+                    <td>{{transcript.area}}</td>
+                    <td>{{transcript.subarea}}</td>
+                    <td>{{transcript.problem_from_learner | truncate(35)}}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        {{transcript_table(transcripts, 'transcript-table', open_icon='glyphicon-copy', open_title='Assign Transcript')}}
+<!-- Dialog displayed for assignment details -->
+<div id="selectAssignDetails" class="modal fade"><div class="modal-dialog"><div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Assign File <span id="dlgTitleFileName"></span></h4>
     </div>
+    <div class="modal-body">
+        You are about to assign<br/>
+        Transcript <span id="dlgTranscriptDisp" class="label label-primary dlgDataDisp"></span><br/>
+        <br/>
+        Please choose the user that the transcript should be assigned to. You should also choose
+        the taxonomy to be used for tagging.
+        <br/>
+        <select id="targetUserList" class="editControl">
+            <option value=""></option>
+            {% for user in users %}
+                <option value="{{user.id}}">{{user.email}} ({{user.name}})</option>
+            {% endfor %}
+        </select>
+        <select id="targetTaxList" class="editControl">
+            <option value="">[Default Taxonomy]</option>
+            {% for tax in taxonomies %}
+                <option value="{{tax.id}}">{{tax.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button id="cmdFinalAssign" type="button" class="btn btn-primary">Assign!</button>
+    </div>
+</div></div></div>
+
+<!-- HIDDEN form that we manually submit on assignment -->
+<div style="display:none;">
+    <form id="startAssignmentForm" method="post" action="{{url_for('admin.admin_page')}}">
+        <input type="hidden" name="user" id="user" value="" />
+        <input type="hidden" name="script" id="script" value="" />
+        <input type="hidden" name="taxonomy" id="taxonomy" value="" />
+    </form>
 </div>
 
+<!-- Uploads -->
 <div class="row">
     <div class="col-md-6">
         <div class="uploader img-rounded">
-            <form class="form-line" action="{{url_for('admin.upload_transcript')}}" method="post" enctype="multipart/form-data">
+            <form id="transcript-upload-form" class="form-line" action="{{url_for('admin.upload_transcript')}}" method="post" enctype="multipart/form-data">
                 <label class="upload-ctl" for="transcript-file">Upload Transcript:</label>
                 <input class="upload-ctl" type="file" id="transcript-file" name="file">
                 <button type="submit" class="upload-ctl btn btn-default">
@@ -39,8 +102,11 @@
 
     <div class="col-md-6">
         <div class="uploader img-rounded">
-            <form class="form-inline" action="{{url_for('admin.upload_taxonomy')}}" method="post" enctype="multipart/form-data">
-                <label class="upload-ctl" for="transcript-file">Upload Taxonomy:</label>
+            <form id="tax-upload-form" class="form-inline" action="{{url_for('admin.upload_taxonomy')}}" method="post" enctype="multipart/form-data">
+                <label class="upload-ctl" for="taxonomy-name">Taxonomy Name:</label>
+                <input class="upload-ctl" type="text" id="taxonomy-name" name="name">
+                <br>
+                <label class="upload-ctl" for="taxonomy-file">Upload Taxonomy:</label>
                 <input class="upload-ctl" type="file" id="taxonomy-file" name="file">
                 <button type="submit" class="upload-ctl btn btn-default">
                     <span class="glyphicon glyphicon-upload"></span>
@@ -58,6 +124,86 @@
 {% block extra_js %}
 <script>
 $(document).ready(function() {
+    // Verify transcript and taxonomy uploads are OK
+    $("#transcript-upload-form").submit(function(evt) {
+        if (helper.toTrimStr($("#transcript-file").val()).length < 1) {
+            evt.preventDefault();
+            alert("You must supply a transcript file to upload!");
+            return;
+        }
+    });
+    $("#tax-upload-form").submit(function(evt) {
+        if (helper.toTrimStr($("#taxonomy-name").val()).length < 1) {
+            evt.preventDefault();
+            alert("You must supply a name for the taxonomy");
+            return;
+        }
+        if (helper.toTrimStr($("#taxonomy-file").val()).length < 1) {
+            evt.preventDefault();
+            alert("You must supply a taxonomy file to upload");
+            return;
+        }
+    });
+
+    // Clicked on assign button in the list of transcripts
+    $(".cmdStartAssign").click(function(e) {
+        e.preventDefault();
+        var src = $(this);
+
+        var script_id = helper.toTrimStr(src.data("scriptid"));
+        var script_disp = helper.toTrimStr(src.data("scriptdisp"));
+
+        if (script_id.length < 1) {
+            console.log("Cannot assign script - missing ID");
+            return;
+        }
+
+        // Technically, the script_identifier field we use for display is optional
+        if (script_disp <= '')
+            script_disp = 'ID:' + script_id;
+
+        $("#dlgTranscriptDisp").html(script_disp);
+
+        // We pre-select no user and the last tax used
+        // You'll notice that we default taxonomy in case the last-selected
+        // is blank OR no longer exists
+        $("#targetUserList").val("");
+        $("#targetTaxList").val("");
+        $("#targetTaxList").val(Cookies.get("last-assigned-tax") || "");
+
+        // Set the form to what we currently know
+        $("#user").val('');
+        $("#script").val(script_id);
+        $("#taxonomy").val('');
+
+        // Now we can finally show the dialog
+        $("#selectAssignDetails").modal("show");
+    });
+
+    // They clicked "Assign" in our dialog, so now we actually need to do the
+    // assignment by submitting our hidden form
+    $("#cmdFinalAssign").click(function(e){
+        e.preventDefault();
+
+        var targetUser = helper.toTrimStr($("#targetUserList").val());
+        var targetTax = helper.toTrimStr($("#targetTaxList").val());
+
+        if (targetUser.length < 1) {
+            alert("You must select a user!");
+            return false;
+        }
+
+        $("#selectBackFile").modal("hide");
+
+        $("#user").val(targetUser);
+        $("#taxonomy").val(targetTax);
+
+        // Save the taxonomy used for next assignment
+        Cookies.set("last-assigned-tax", targetTax);
+
+        // Now post the form - they;ll be redirected back here
+        $("#startAssignmentForm").submit();
+    });
 });
 </script>
 {% endblock %}

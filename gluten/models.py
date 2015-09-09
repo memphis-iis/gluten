@@ -30,9 +30,14 @@ class User(object):
 @DBObject(table_name='Taxnonomies')
 class Taxonomy(object):
     name = Field('')
+    owner = Field('')
     tagger_supplied = Field(list)
     modes = Field(list)
     acts = Field(list)
+
+    @Index
+    def idx_owned(self):
+        return self.owner
 
     @classmethod
     def from_yaml(cls, yamlstr):
@@ -51,8 +56,7 @@ class Taxonomy(object):
             return cls.from_yaml(f.read())
 
     def validate(self):
-        """Raise a ValidationError if the current internal state isn't
-        correct"""
+        """Raise a ValidationError if internal state isn't correct"""
 
         # Specifics for tagger-supplied
         _check(
@@ -248,3 +252,26 @@ class Transcript(object):
             return True  # sys
 
         return False
+
+    def assigned_copy(self, assignee, taxonomy):
+        """Return a copy of the current transcript as an assignment to a new
+        user."""
+        # Need a copy with a different ID
+        copy = Transcript.from_data(self.to_data())
+        copy.id = None
+
+        # Change or reset some data field
+        copy.source_transcript = self.id
+        copy.tagger = assignee
+        copy.taxonomy = taxonomy
+        copy.state = self.STATES[0]
+        copy.tagged_time = ''
+        copy.verified_time = ''
+        copy.tagger_supplied_answers = dict()
+
+        # Force re-parse of utterance list so that any previous tagging is gone
+        copy.utterance_list = list()
+        copy.parse_raw_transcript()
+
+        # All done
+        return copy

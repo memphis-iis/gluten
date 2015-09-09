@@ -65,7 +65,7 @@ application.register_blueprint(admin)
 def before_first():
     if application.debug:
         # Debug/local dev
-        default_database(Database('sqlite', filename=':memory:'))
+        default_database(Database('sqlite', filename=project_file('.test.db')))
     else:
         # Production!
         default_database(Database('dynamodb'))

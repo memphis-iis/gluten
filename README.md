@@ -4,6 +4,17 @@ A Flask-based Python 3 annotation application.
 
 ## Getting started
 
+If you are running on a Ubuntu-like environment, you need to make sure you've
+installed libyaml-dev. If you have, you can run setup.sh, provide a test.config
+file.
+
+    $ sudo apt-get install libyaml-dev
+    $ git clone https://github.com/memphis-iis/gluten
+    $ cd gluten
+    $ ./setup.sh
+
+After that you can run a local debug server with `./local.sh`.
+
 If you aren't running in a Mac/Linux type environment, you can use the
 bundled Vagrantfile (assuming that you have vagrant and VirtualBox installed).
 In fact, you can use the Vagrantfile even if you're running on Linux. That way
@@ -76,13 +87,6 @@ First things first: log in and set up the test environment
    $ cd gluten
    $ ./setup.sh
 
-To run the test servers in the background (keeps you from running with
-"real" AWS services) :
-
-   $ vagrant ssh
-   $ cd gluten
-   $ test/local_test_services.sh
-
 To run the server in development mode:
 
     $ vagrant ssh
@@ -98,3 +102,10 @@ To run unit tests:
 Connect to gluten from your host operating system at:
 
     http://localhost:5000/
+
+If for some reason you wanted to run mock AWS services in the background (e.g.
+better simulate AWS testing):
+
+   $ vagrant ssh
+   $ cd gluten
+   $ test/local_test_services.sh

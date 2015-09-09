@@ -8,7 +8,6 @@
 # TODO: deploy script that builds a zip file for AWS *and* enforces a
 #       prod.config file *and* warns you to remember to set that env var in
 #       the AWS EB settings
-# TODO: need an upload screen
 
 import sys
 if sys.version_info < (3, 0):

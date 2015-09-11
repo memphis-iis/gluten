@@ -16,7 +16,7 @@ Flask-Dance==0.7.0
 boto==2.38.0
 
 # Our data library
-gludb==0.1.2
+gludb==0.1.3
 
 # We currently use YAML files for taxonomies
 PyYAML==3.11

@@ -51,7 +51,7 @@ def user_audit_record(transcript, msg):
         subact += tag_count(utt['subact'])
         mode += tag_count(utt['mode'])
 
-    app_logger.info("[[AUDIT]] %s {totitems:%d,act:%d,subact:%d,mode:%d}" % (
+    app_logger().info("[[AUDIT]] %s {totitems:%d,act:%d,subact:%d,mode:%d}" % (
         base_msg,
         totitems,
         act,

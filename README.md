@@ -109,3 +109,26 @@ better simulate AWS testing):
    $ vagrant ssh
    $ cd gluten
    $ test/local_test_services.sh
+
+
+## Deploying to AWS Elastic Beanstalk
+
+The deployment is fairly easy:
+
+* Make sure your have a prod.config file created with at least these
+  variables defined:
+    - DEBUG (should be 1)
+    - FLASK_SECRET (use a really good random string)
+    - GOOGLE_OAUTH_CLIENT_ID (you get this from Google)
+    - GOOGLE_OAUTH_CLIENT_SECRET (you get this from Google)
+* Use `./make_aws_upload.sh` to create the ZIP'ed application bundle
+* When you create your AWS environment/application, be sure to select:
+    - The Python application type
+    - A single instance web application (instead of the default load balanced)
+    - Use t2.micro instead of t1.micro (t1.micro is the default, but t2.micro
+      is cheaper and has more resources)
+    - Set the GLUTEN_CONFIG_FILE environment variable to "prod.config"
+* Once everything is running, don't forget to add the new URL to the authorized
+  list under your Google Developer's console. If you just use a default URL
+  from EB, it will look something like:
+  http://my-cool-env-name.elasticbeanstalk.com/auth/authorized

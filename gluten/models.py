@@ -104,6 +104,8 @@ class Taxonomy(object):
 class Transcript(object):
     STATES = ['Pending', 'InProgress', 'Completed']
 
+    STATE_ORDERS = dict([(name, idx) for idx, name in enumerate(STATES)])
+
     # Our own housekeeping fields
     owner = Field('')              # Uploader with assignment rights
     taxonomy = Field('')           # Opt: an uploaded taxonomy to use
@@ -275,3 +277,12 @@ class Transcript(object):
 
         # All done
         return copy
+
+    @classmethod
+    def sort_key(cls, transcript):
+        """We define a canonical sorting for transcripts"""
+        return "" % (
+            cls.STATE_ORDERS.get(transcript.state, -1) + 1,
+            transcript.script_identifier,
+            
+        )

@@ -1,6 +1,8 @@
 import datetime
 import json
 
+from itertools import chain
+
 from collections import OrderedDict
 
 import flask
@@ -75,11 +77,23 @@ def before_request():
 @require_login
 def main_page():
     user = getattr(g, 'user')
-    return template(
-        "home.html",
-        owned=Transcript.find_by_index('idx_owned', user.id),
-        assigned=Transcript.find_by_index('idx_assigned', user.id),
-    )
+
+    owned, assigned, completed = [], [], []
+
+    for t in Transcript.find_by_index('idx_owned', user.id):
+        if t.assigned != user.id:
+            owned.append(t)  # Assigned will be in one of the other 2 lists
+
+    for t in Transcript.find_by_index('idx_assigned', user.id):
+        if t.state == Transcript.STATES[-1]:
+            completed.append(t)
+        else:
+            assigned.append(t)
+
+    for lst in [owned, assigned, completed]:
+        lst.sort(key=transcript_sort_key)
+
+    return template("home.html", **locals())
 
 
 def get_current_transcript_info(scriptid):

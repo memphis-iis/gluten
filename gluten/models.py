@@ -99,6 +99,14 @@ class Taxonomy(object):
                     _check(isinstance(t, str), "Invalid act subtype")
                     _check(len(t) > 0, "Blank act subtype")
 
+    @classmethod
+    def sort_key(cls, tax):
+        """We define a canonical sorting for transcripts"""
+        return "%50s %-32s" % (
+            tax.name[:50],
+            tax._create_date,
+        )
+
 
 @DBObject(table_name='Transcripts')
 class Transcript(object):
@@ -281,8 +289,7 @@ class Transcript(object):
     @classmethod
     def sort_key(cls, transcript):
         """We define a canonical sorting for transcripts"""
-        return "" % (
+        return "%3d %s" % (
             cls.STATE_ORDERS.get(transcript.state, -1) + 1,
-            transcript.script_identifier,
-            
+            transcript._create_date
         )

@@ -39,3 +39,8 @@ def template(template_name, **context_kwrds):
     }
     ctx.update(context_kwrds)
     return render_template(template_name, **ctx)
+
+
+def first(lst):
+    """Return the first element of the given list - otherwise return None"""
+    return lst[0] if lst else None

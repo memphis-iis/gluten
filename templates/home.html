@@ -20,6 +20,7 @@
     <ul id="tabs" class="nav nav-pills" role="tablist" data-tabs="tabs">
         <li class="active"><a href="#owned" data-toggle="owned">Owned By Me</a></li>
         <li><a href="#assigned" data-toggle="assigned">Assigned To Me</a></li>
+        <li><a href="#completed" data-toggle="completed">Completed By Me</a></li>
     </ul>
 
     <br/>
@@ -30,6 +31,9 @@
         </div>
         <div role="tabpanel" class="tab-pane" id="assigned">
             {{transcript_table(assigned, 'assigned-table')}}
+        </div>
+        <div role="tabpanel" class="tab-pane" id="completed">
+            {{transcript_table(completed, 'completed-table')}}
         </div>
     </div>
 

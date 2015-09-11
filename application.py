@@ -1,10 +1,5 @@
 #!/usr/bin/env python
 
-# TODO: define an order for transcripts that we use on all home views
-
-# TODO: completed transcripts shouldn't be in Assigned view - they should be in
-#       a new Completed View
-
 # TODO: actually provide prev and next files for edit screen
 
 # TODO: audit records
@@ -26,7 +21,7 @@ from flask import Flask
 from gludb.config import Database, default_database
 
 from config import env_populate
-from gluten.utils import project_file
+from gluten.utils import project_file, first
 from gluten.models import User, Taxonomy, Transcript
 from gluten.auth import auth
 from gluten.main_app import main
@@ -81,29 +76,30 @@ def before_first():
     # Some debug data we might find useful
     if application.debug:
         TEST_EMAIL = application.config.get('TEST_EMAIL')
-        me = User.find_by_index('idx_email', TEST_EMAIL)
+        me = first(User.find_by_index('idx_email', TEST_EMAIL))
         if not me:
             me = User(name='Test User', email=TEST_EMAIL)
             me.save()
 
-        ts1 = Transcript.from_xml_file(
-            project_file('test/sample/SampleTranscript.xml')
-        )
-        ts1.script_identifier = 'Original Owned'
-        ts1.owner = me.id
-        ts1.tagger = ''
-        ts1.id = ''
-        ts1.save()
+        if not Transcript.find_all():
+            ts1 = Transcript.from_xml_file(
+                project_file('test/sample/SampleTranscript.xml')
+            )
+            ts1.script_identifier = 'Original Owned'
+            ts1.owner = me.id
+            ts1.tagger = ''
+            ts1.id = ''
+            ts1.save()
 
-        ts2 = Transcript.from_xml_file(
-            project_file('test/sample/SampleTranscript.xml')
-        )
-        ts2.script_identifier = 'New Assigned'
-        ts2.owner = me.id
-        ts2.tagger = me.id
-        ts2.source_transcript = ts1.id
-        ts2.id = ''  # Ensure new id on save
-        ts2.save()
+            ts2 = Transcript.from_xml_file(
+                project_file('test/sample/SampleTranscript.xml')
+            )
+            ts2.script_identifier = 'New Assigned'
+            ts2.owner = me.id
+            ts2.tagger = me.id
+            ts2.source_transcript = ts1.id
+            ts2.id = ''  # Ensure new id on save
+            ts2.save()
 
 
 # Our entry point - called when our application is started "locally".

@@ -20,14 +20,19 @@ admin = Blueprint('admin', __name__)
 def admin_page():
     user = getattr(g, 'user')
 
+    users = User.find_all()
+    taxonomies = Taxonomy.find_by_index('idx_owned', user.id)
+    transcripts = [
+        t for t in Transcript.find_by_index('idx_owned', user.id)
+        if not t.tagger
+    ]
+
+    transcripts.sort(key=Transcript.sort_key)
+    taxonomies.sort(key=Taxonomy.sort_key)
+
     # GET is easy...
     if request.method == 'GET':
-        return template(
-            "admin.html",
-            transcripts=Transcript.find_by_index('idx_owned', user.id),
-            users=User.find_all(),
-            taxonomies=Taxonomy.find_by_index('idx_owned', user.id),
-        )
+        return template("admin.html", **locals())
 
     # POST: They are requesting a transcript assignment
 

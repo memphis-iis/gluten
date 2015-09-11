@@ -1,8 +1,6 @@
 import datetime
 import json
 
-from itertools import chain
-
 from collections import OrderedDict
 
 import flask
@@ -81,7 +79,7 @@ def main_page():
     owned, assigned, completed = [], [], []
 
     for t in Transcript.find_by_index('idx_owned', user.id):
-        if t.assigned != user.id:
+        if t.tagger != user.id:
             owned.append(t)  # Assigned will be in one of the other 2 lists
 
     for t in Transcript.find_by_index('idx_assigned', user.id):
@@ -91,7 +89,7 @@ def main_page():
             assigned.append(t)
 
     for lst in [owned, assigned, completed]:
-        lst.sort(key=transcript_sort_key)
+        lst.sort(key=Transcript.sort_key)
 
     return template("home.html", **locals())
 

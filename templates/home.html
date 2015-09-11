@@ -45,7 +45,9 @@
 {% block extra_js %}
 <script>
 $(document).ready(function() {
-    $(".table").dataTable();
+    $(".table").dataTable({
+        "aaSorting": []
+    });
     $("#tabs").tab();
     $("#tabs a").click(function (e) {
         e.preventDefault();

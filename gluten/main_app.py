@@ -114,6 +114,29 @@ def get_current_transcript_info(scriptid):
     return script, tax, user
 
 
+def get_prev_next(userid, scriptid):
+    """Return prev and next transcripts relative to the given transcript for
+    the given user"""
+    prevFile, nextFile = None, None
+
+    working = [
+        t for t in Transcript.find_by_index('idx_assigned', userid)
+        if t.state != Transcript.STATES[-1]
+    ]
+
+    working.sort(key=Transcript.sort_key)
+
+    for idx, t in enumerate(working):
+        if t.id == scriptid:
+            if idx > 0:
+                prevFile = working[idx-1]
+            if idx < len(working) - 1:
+                nextFile = working[idx+1]
+            break
+
+    return prevFile, nextFile
+
+
 # Actual annotation page
 @main.route('/edit/<scriptid>', methods=['GET', 'POST'])
 @require_login
@@ -149,6 +172,10 @@ def edit_page(scriptid):
     for utt in script.utterance_list:
         utt['disp_speaker'] = speaker_display(utt['speaker'])
 
+    # Figure out previous and next
+    prevFile, nextFile = get_prev_next(userid, scriptid)
+
+    # We're finally ready
     return template(
         "edit.html",
         transcript=script,
@@ -156,7 +183,9 @@ def edit_page(scriptid):
         taxonomy=tax,
         trainingMode=False,
         verifyMode=False,
-        assessMode=assessMode
+        assessMode=assessMode,
+        prevFile=prevFile,
+        nextFile=nextFile
     )
 
 

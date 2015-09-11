@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# TODO: actually provide prev and next files for edit screen
-
 # TODO: audit records
 
 # TODO: deploy script that builds a zip file for AWS *and* enforces a

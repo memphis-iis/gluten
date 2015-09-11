@@ -132,10 +132,10 @@
                 </button>
             </td>
             <td class="nowrap" style="padding-left: 12px;">
-                {% if prevfile %}
+                {% if prevFile %}
                     <a class="btn btn-primary needTooltip" data-toggle="tooltip"
-                        title="{{prevFile.state}} {{prevFile.fileName}}"
-                        href="{{url_for('main.edit_page', scriptid=preFile.id)}}">
+                        title="{{prevFile.state}} {{prevFile.script_identifier}}"
+                        href="{{url_for('main.edit_page', scriptid=prevFile.id)}}">
                         <span class="glyphicon glyphicon-step-backward"></span>Prev File
                     </a>
                 {% else %}
@@ -147,8 +147,8 @@
             <td class="nowrap" style="padding-left: 2px;">
                 {% if nextFile %}
                     <a class="btn btn-primary needTooltip" data-toggle="tooltip"
-                        title="{{nextFile.state}}/{{nextFile.fileName}}"
-                        href="{{url_for('main.edit_page', scriptid=nexFile.id)}}">
+                        title="{{nextFile.state}} {{nextFile.script_identifier}}"
+                        href="{{url_for('main.edit_page', scriptid=nextFile.id)}}">
                         <span class="glyphicon glyphicon-step-forward"></span>Next File
                     </a>
                 {% else %}
@@ -267,9 +267,9 @@
         </td>
 
         <td class="nowrap" style="padding-left: 12px;">
-            {% if prevfile %}
+            {% if prevFile %}
                 <a class="btn btn-primary needTooltip" data-toggle="tooltip"
-                    title="{{prevFile.state}} {{prevFile.fileName}}"
+                    title="{{prevFile.state}} {{prevFile.script_identifier}}"
                     href="{{url_for('main.edit_page', scriptid=prevFile.id)}}">
                     <span class="glyphicon glyphicon-step-backward"></span>Prev File
                 </a>
@@ -282,7 +282,7 @@
         <td class="nowrap" style="padding-left: 2px;">
             {% if nextFile %}
                 <a class="btn btn-primary needTooltip" data-toggle="tooltip"
-                    title="{{nextFile.state}} {{nextFile.fileName}}"
+                    title="{{nextFile.state}} {{nextFile.script_identifier}}"
                     href="{{url_for('main.edit_page', scriptid=nextFile.id)}}">
                     <span class="glyphicon glyphicon-step-forward"></span>Next File
                 </a>

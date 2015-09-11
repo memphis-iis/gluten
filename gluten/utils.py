@@ -21,6 +21,45 @@ def app_logger():
     return logging.getLogger("gluten")
 
 
+def user_audit_record(transcript, msg):
+    """Write a user log record. Note that we assume that we are currently in a
+    Flash request context."""
+
+    user = getattr(g, 'user', None)
+
+    base_msg = "%s: {usr:%s,name:%s,state:%s,scriptid:%s,orig_scriptid:%s}" % (
+        msg,
+        user.email if user else '[NOUSER]',
+        user.name if user else '[NOUSER]',
+        transcript.state,
+        transcript.id,
+        transcript.source_transcript
+    )
+
+    def tag_count(fld):
+        if not fld or fld.lower() == 'unspecified':
+            return 0
+        else:
+            return 1
+
+    utts = transcript.utterance_list if transcript else []
+    act, subact, mode, totitems = 0, 0, 0, 0
+
+    for utt in utts:
+        totitems += 1
+        act += tag_count(utt['act'])
+        subact += tag_count(utt['subact'])
+        mode += tag_count(utt['mode'])
+
+    app_logger.info("[[AUDIT]] %s {totitems:%d,act:%d,subact:%d,mode:%d}" % (
+        base_msg,
+        totitems,
+        act,
+        subact,
+        mode
+    ))
+
+
 def project_file(relpath):
     """Given the path to a file relative to the project root, return the
     absolute file name."""

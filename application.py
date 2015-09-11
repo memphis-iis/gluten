@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-# TODO: audit records
-
 # TODO: deploy script that builds a zip file for AWS *and* enforces a
 #       prod.config file *and* warns you to remember to set that env var in
 #       the AWS EB settings
@@ -19,7 +17,7 @@ from flask import Flask
 from gludb.config import Database, default_database
 
 from config import env_populate
-from gluten.utils import project_file, first
+from gluten.utils import project_file, first, app_logger
 from gluten.models import User, Taxonomy, Transcript
 from gluten.auth import auth
 from gluten.main_app import main
@@ -40,6 +38,8 @@ for name in env_populate:
     os.environ[name] = application.config.get(name)
 
 # Final app settings depending on whether or not we are set for debug mode
+# Note that once we get everything working, we'll have be able to use the
+# logging help in gluten.utils (like app_logger)
 if application.config.get('DEBUG', None):
     # Debug mode - running on a workstation
     application.debug = True
@@ -47,8 +47,13 @@ if application.config.get('DEBUG', None):
 else:
     # We are running on AWS Elastic Beanstalk (or something like it)
     application.debug = False
-    logging.basicConfig(level=logging.INFO)
-logging.getLogger('gluten').info('Application debug is %s', application.debug)
+    # See .ebextensions/01logging.config
+    logging.basicConfig(
+        filename='/opt/python/log/gluten.log',
+        level=logging.INFO
+    )
+
+app_logger().info('Application debug is %s', application.debug)
 
 # Register our blueprints
 application.register_blueprint(auth)
@@ -59,6 +64,8 @@ application.register_blueprint(admin)
 # This will be called before the first request is ever serviced
 @application.before_first_request
 def before_first():
+    app_logger().info('Handling database init')
+
     if application.debug:
         # Debug/local dev
         default_database(Database('sqlite', filename=project_file('.test.db')))

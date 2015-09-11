@@ -138,6 +138,7 @@ def log_in_event(blueprint, token):
     user.save()
 
     set_user_session(user.id)
+    app_logger().info("Logged in user id %s, email %s" % (user.id, user.email))
 
 
 # notify on OAuth provider error

@@ -16,7 +16,7 @@ from flask import (
     g
 )
 
-from .utils import project_file, template
+from .utils import project_file, template, user_audit_record
 from .auth import require_login
 from .models import Taxonomy, Transcript
 
@@ -167,6 +167,7 @@ def edit_page(scriptid):
     if script.state == Transcript.STATES[0]:
         script.mark_in_progress()
         script.save()
+        user_audit_record(script, "Transcript MOVED Pending to InProgress")
 
     # Add any extra data they might need
     for utt in script.utterance_list:
@@ -176,6 +177,7 @@ def edit_page(scriptid):
     prevFile, nextFile = get_prev_next(userid, scriptid)
 
     # We're finally ready
+    user_audit_record(script, "DISPLAY Transcript")
     return template(
         "edit.html",
         transcript=script,
@@ -195,6 +197,7 @@ def save_page(script, tax, user):
     if not raw_data:
         # Not sure what this is, but it's nothing we can handle
         flash("No data was found, so nothing was saved")
+        user_audit_record(script, "Transcript SAVE-SKIPPED - no fulldata")
         return redirect(url_for('main.edit_page', scriptid=script.id))
 
     is_autosave = request.values.get('autosave', False)
@@ -227,6 +230,7 @@ def save_page(script, tax, user):
 
     if is_autosave:
         # On autosave, there is no redirect - they get back a JSON response
+        user_audit_record(script, "Transcript AUTOSAVE Accepted")
         return jsonify({
             'success': True if not autosave_err else False,
             'errmsg': autosave_err
@@ -236,11 +240,13 @@ def save_page(script, tax, user):
         if script.state != Transcript.STATES[-1]:
             script.mark_completed()
             script.save()
+            user_audit_record(script, "Transcript COMPLETE-BTN Accepted")
         flash("The transcript was marked completed")
         return redirect(url_for('main.main_page'))
     else:
         # Normal save - they get to keep editing
         flash("Your changes were saved")
+        user_audit_record(script, "Transcript SAVE-BTN Accepted")
         return redirect(url_for('main.edit_page', scriptid=script.id))
 
 

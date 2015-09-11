@@ -8,7 +8,7 @@ from flask import (
     flash
 )
 
-from .utils import project_file, template
+from .utils import project_file, template, user_audit_record, app_logger
 from .auth import require_login
 from .models import User, Transcript, Taxonomy
 
@@ -44,6 +44,7 @@ def admin_page():
     if transcript and assignee:
         transcript = transcript.assigned_copy(assignee, taxonomy)
         transcript.save()
+        user_audit_record(transcript, "Transcript ASSIGNED to " + assignee)
         flash("Transcript has been assigned")
     else:
         flash("Nothing assigned")
@@ -63,6 +64,7 @@ def upload_transcript():
             transcript = Transcript.from_xml(data)
             transcript.owner = user.id
             transcript.save()
+            user_audit_record(transcript, "Transcript UPLOAD Accepted")
             flash("Transcript was saved")
         except:
             flash("Transcript was invalid - nothing was saved", "error")
@@ -87,6 +89,7 @@ def upload_taxonomy():
             tax.name = name
             tax.owner = user.id
             tax.save()
+            app_logger().info("Taxonomy UPLOAD: " + tax.id)
             flash("Taxonomy was saved")
         except:
             flash("Taxonomy was NOT saved - file was invalid", "error")

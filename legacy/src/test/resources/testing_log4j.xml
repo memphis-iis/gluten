@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!-- DEFAULT log4j configuration -->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- Take whatever our logger gives us and put it on the console: generally 
+         INFO for prod and TRACE or DEBUG for dev -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} [TESTING %t] %-5p %c %x - %m%n" />
+        </layout>
+    </appender>
+    
+    <!-- Like the console logger, grab everything -->
+    <appender name="server" class="org.apache.log4j.FileAppender">
+        <param name="file" value="/tmp/annotator/logs/server.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} [TESTING %t] %-5p %c %x - %m%n" />
+        </layout>
+    </appender>
+
+    <!-- Only warn and worse -->
+    <appender name="errors" class="org.apache.log4j.FileAppender">
+        <param name="Threshold" value="WARN" />
+
+        <param name="file" value="/tmp/annotator/logs/error.log" />
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} [TESTING %t] %-5p %c %x - %m%n" />
+        </layout>
+    </appender>
+
+    <!-- Only audit messages -->
+    <appender name="audit" class="org.apache.log4j.FileAppender">
+        <param name="file" value="/tmp/annotator/logs/audit.log" />
+        
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ISO8601} [TESTING %t] %-5p %c %x - %m%n" />
+        </layout>
+        
+        <filter class="org.apache.log4j.varia.StringMatchFilter">
+            <param name="StringToMatch" value="[[AUDIT]]" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter" />
+    </appender>
+
+    <root>
+        <priority value="TRACE" />
+        <appender-ref ref="console" />
+        <appender-ref ref="server" />
+        <appender-ref ref="errors" />
+        <appender-ref ref="audit" />
+    </root>
+
+</log4j:configuration>

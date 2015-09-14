@@ -1,0 +1,21 @@
+Tomcat 7 note: remember /var/tagging should be owned by the tomcat
+user (not the Apache user)
+
+Apache 2 changes in /etc/apache2/sites-enabled/000-default
+    <Location /annotator/>
+        ProxyPass http://localhost:8080/annotator/
+        ProxyPassReverse http://localhost:8080/annotator/
+    </Location>
+
+
+TOMCAT 7 connector changes in /etc/tomcat7/server.xml
+    <Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               address="127.0.0.1"
+               proxyName="iistdc-dev.memphis.edu"
+               proxyPort="80"
+               URIEncoding="UTF-8"
+               redirectPort="8443" />
+
+SVN changes for Apache server were in:
+/etc/apache2/mods-enabled/dav_svn.conf

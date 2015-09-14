@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="annotator">
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>1.3.0</version>
+    </skin>
+
+    <bannerLeft>
+        <name>Annotator</name>
+    </bannerLeft>
+
+    <body>
+        <links>
+            <item name="Annotator Dev Server" href="http://iistdc.memphis.edu/" />
+            <item name="The Annotator Application" href="http://iistdc.memphis.edu/annotator/" />
+            <item name="IIS" href="http://www.memphis.edu/iis/" />
+            <item name="Tutor.com" href="http://www.tutor.com/" />
+            <item name="ADL" href="http://www.adlnet.gov/" />
+        </links>
+
+        <menu name="Main Information">
+            <item name="Introduction and Architectural Overview" href="index.html" />
+            <item name="Configuration, Logging, and Security" href="config.html" />
+            <item name="Deployment (including Server Setup)" href="deploy.html" />
+            <item name="Development" href="develop.html" />
+        </menu>
+        
+        <menu ref="reports" />
+    </body>
+</project>

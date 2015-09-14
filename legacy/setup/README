@@ -1,0 +1,8 @@
+setenv.sh is for the bin directory of your tomcat instance...
+it sets a JVM opt for the config directory for annotator
+
+annotator_conf is a sample config directory
+
+annotator_setup.tar.gz is a complete setup tree structure that you
+can expand for help with testing (e.g. in a temp dir on you workstation)
+

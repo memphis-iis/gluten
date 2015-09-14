@@ -10,4 +10,4 @@ then
 fi
 
 # Create the upload archive, skipping our environment and compiled Python files
-zip -r ../gluten_aws.zip . -x .git/\* env/\* \*.sh \*.pyc \*.pyo .gitignore __pycache__/\* .vagrant/\* .test.db test.config
+zip -r ../gluten_aws.zip . -x legacy/\* .git/\* env/\* \*.sh \*.pyc \*.pyo .gitignore __pycache__/\* .vagrant/\* .test.db test.config

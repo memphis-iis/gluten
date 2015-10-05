@@ -161,6 +161,10 @@ class Transcript(object):
     def idx_assigned(self):
         return self.tagger
 
+    @Index
+    def idx_source(self):
+        return self.source_transcript
+
     # Implementation
 
     def mark_in_progress(self):

@@ -5,6 +5,8 @@ sudo apt-get -y install build-essential git python-dev python-pip python-virtual
 sudo apt-get -y install python3 python3-dev python3-pip python-pip-whl
 sudo apt-get -y install libyaml-dev
 
+sudo pip install --upgrade pip
+
 # Make a symbolic link to the sync'ed directory for more "natural" work
 ln -s /vagrant ~/gluten
 

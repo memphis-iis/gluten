@@ -8,4 +8,5 @@ cd $SCRIPT_DIR
 # install our dependencies
 virtualenv -p python3 env
 source $SCRIPT_DIR/env/bin/activate
+pip install --upgrade requests[security]
 pip install -r requirements.txt

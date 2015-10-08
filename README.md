@@ -117,7 +117,7 @@ The deployment is fairly easy:
 
 * Make sure your have a prod.config file created with at least these
   variables defined:
-    - DEBUG (should be 1)
+    - DEBUG (should be 0)
     - FLASK_SECRET (use a really good random string)
     - GOOGLE_OAUTH_CLIENT_ID (you get this from Google)
     - GOOGLE_OAUTH_CLIENT_SECRET (you get this from Google)

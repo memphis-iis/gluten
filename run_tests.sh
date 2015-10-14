@@ -6,8 +6,10 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+source $SCRIPT_DIR/vars.sh
+
 cd $SCRIPT_DIR
-source $SCRIPT_DIR/env/bin/activate
+source $GLUTEN_VENV/env/bin/activate
 which python
 
 #Run tests! (with any extra parameters passed in)

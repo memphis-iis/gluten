@@ -32,7 +32,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.jdk.version>1.8</project.jdk.version>
-        <project.commons.http.version>4.3.3</project.commons.http.version>
+        <project.commons.http.version>4.3.6</project.commons.http.version>
     </properties>
 
     <dependencies>

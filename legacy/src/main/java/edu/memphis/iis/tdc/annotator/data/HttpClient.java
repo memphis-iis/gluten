@@ -17,8 +17,8 @@ import edu.memphis.iis.tdc.annotator.UserErrorException;
  */
 public class HttpClient {
     private static final Logger logger = Logger.getLogger(HttpClient.class);
-    
-    //Our generic HTTP client execution - we expect a 200 and a body to come back 
+
+    //Our generic HTTP client execution - we expect a 200 and a body to come back
     public String execute(HttpRequestBase post) throws UserErrorException {
         CloseableHttpClient client = null;
         CloseableHttpResponse resp = null;
@@ -27,16 +27,16 @@ public class HttpClient {
             resp = client.execute(post);
             HttpEntity entity = resp.getEntity();
             String body = EntityUtils.toString(entity);
-            
-            int statCode = resp.getStatusLine().getStatusCode(); 
+
+            int statCode = resp.getStatusLine().getStatusCode();
             if (statCode != 200) {
                 String msg = "Expected 200 but got " + statCode;
                 logger.warn("About to throw " + msg + " body was " + body);
                 throw new RuntimeException(msg);
             }
-            
+
             return body;
-        } 
+        }
         catch (Throwable e) {
             throw new UserErrorException("Error performing remote server post", e);
         }

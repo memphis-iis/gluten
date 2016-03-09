@@ -28,7 +28,7 @@ import edu.memphis.iis.tdc.annotator.data.HttpClient;
 /**
  * In this lightweight project, this Singleton is our stand in for a
  * "real" IoC container AND it's configuration
- * 
+ *
  * <p>The IMPORTANT thing to remember is that you need to specify
  * annotator.config.dir for your container, and that location should
  * have an annotator.properties file and a log4j XML config file.
@@ -41,24 +41,24 @@ public class ConfigContext extends CompositeConfiguration {
     public static final String DEFAULT_LOG_CONFIG = "default_log4j.xml";
 
     private static Logger logger;
-    
+
     private static volatile ConfigContext inst;
-    
+
     /**
-     * Get the one,true singleton instance of ConfigContext 
+     * Get the one,true singleton instance of ConfigContext
      */
     public static ConfigContext getInst() {
         if (inst == null)
             inst = createContext();
         return inst;
     }
-    
+
     //Simple static setter for a static variable - gives us a place to
     //see where we manipulate a static variable from an instance method
     private static final void setLogger(Logger log) {
         logger = log;
     }
-    
+
     /**
      * This is probably not a method you want to call.  It is for
      * overriding (or clearing) the current ConfigContext.  Generally
@@ -74,7 +74,7 @@ public class ConfigContext extends CompositeConfiguration {
     public static ConfigContext createContext() {
         return new ConfigContext();
     }
-    
+
     private Taxonomy taxonomy;
     private ArrayList<String> taggers;
     private ArrayList<String> verifiers;
@@ -82,31 +82,31 @@ public class ConfigContext extends CompositeConfiguration {
     private String userDataDir;
     private TranscriptService transcriptService;
     private HttpClient httpClient;
-    
+
     //Note that if we fail to configure properly, we'll throw
     //an UNCHECKED exception
     private ConfigContext() {
         //To start, we use basic log4j configuration.  After the config file is loaded, we'll read more
         BasicConfigurator.configure();
-        
+
         //We have a default set of properties - these may be overridden with
         //system properties (-D on the JVM command line).  In addition, we
         //load annotator.properties from directory specified at
-        //annotator.config.dir - that file ALWAYS wins. 
+        //annotator.config.dir - that file ALWAYS wins.
         try {
             //Set up the default - system config beats our defaults
             CompositeConfiguration defaultConfig = new CompositeConfiguration();
             defaultConfig.setListDelimiter(',');
             defaultConfig.addConfiguration(new SystemConfiguration());
             defaultConfig.addConfiguration(new PropertiesConfiguration("annotator.default.properties"));
-            
+
             //Read the user supplied configuration
             PropertiesConfiguration props = new PropertiesConfiguration();
             defaultConfig.setListDelimiter(',');
             props.setBasePath(defaultConfig.getString("annotator.config.dir"));
             props.setFileName("annotator.properties");
             props.load();
-            
+
             //Now set our configurations - user-supplied beats sys/default config
             addConfiguration(props);
             addConfiguration(defaultConfig);
@@ -118,7 +118,7 @@ public class ConfigContext extends CompositeConfiguration {
             e.printStackTrace(); //NOPMD
             throw new RuntimeException("Could not establish base configuration", e);
         }
-        
+
         //Configure log4j - note that we reset our configuration from the
         //basic above to use the "real" config
         LogManager.resetConfiguration();
@@ -143,18 +143,18 @@ public class ConfigContext extends CompositeConfiguration {
                 logger.info("Used filesystem log4j config file " + logConfigFile);
             }
         }
-        
+
         //Log out our "important" configuration variables
         logger.info("annotator.config is " + getString("annotator.config"));
-        logger.info("annotator.log4j.config.file is " + getString("annotator.log4j.config.file"));  
-        
+        logger.info("annotator.log4j.config.file is " + getString("annotator.log4j.config.file"));
+
         if (getBoolean(Const.PROP_TEST_IGNORE_USR, false)) {
             logger.info(Const.PROP_TEST_IGNORE_USR + " detected - removing test user and email");
             clearProperty(Const.PROP_TEST_USR_EMAIL);
             clearProperty(Const.PROP_TEST_USR_NAME);
         }
-        
-        //Load taggers and verifiers 
+
+        //Load taggers and verifiers
         try{
         	String rolesdata = readResource("userroles.csv");
         	taggers = new ArrayList<String>();
@@ -177,8 +177,8 @@ public class ConfigContext extends CompositeConfiguration {
             logger.fatal("Error reading userrole.csv!", e);
             throw new RuntimeException("Could not load user roles!", e);
         }
-        
-        
+
+
         //Load Dialog Taxonomy
         try {
             Serializer serializer = new Persister();
@@ -188,25 +188,25 @@ public class ConfigContext extends CompositeConfiguration {
             logger.fatal("No Discourse Taxonomy found!", e);
             throw new RuntimeException("Could not load discourse taxonomy", e);
         }
-        
+
         //Setup data directories
         derbyDir = Utils.checkDir(reqStr("annotator.database.location"));
         userDataDir = Utils.checkDir(reqStr("annotator.transcript.dir"));
-        
+
         //Setup services that we "inject"
         transcriptService = new TranscriptService();
         transcriptService.setUserDirectory(userDataDir);
-        
+
         httpClient = new HttpClient();
     }
-    
+
     /**
      * Configured taxonomy (carried in classpath)
      */
     public Taxonomy getTaxonomy() {
         return taxonomy;
     }
-    
+
     /**
      * Location for derby database
      */
@@ -220,48 +220,48 @@ public class ConfigContext extends CompositeConfiguration {
     public String getUserDataDir() {
         return userDataDir;
     }
-    
+
     /**
-     * Return true if the given user is allowed to assign transcripts 
+     * Return true if the given user is allowed to assign transcripts
      */
     public boolean userIsAssigner(String userEmail) {
         return userInProp(userEmail, "annotator.admin.assigner");
     }
     /**
-     * Return true if based on the userrole csv the given user is a tagger 
+     * Return true if based on the userrole csv the given user is a tagger
      */
-    public boolean userIsTagger(String userEmail) {    	
+    public boolean userIsTagger(String userEmail) {
         return taggers.contains(userEmail);
-    }    
+    }
     /**
-     * Return true if based on the userrole csv the given user is allowed to verify transcripts 
+     * Return true if based on the userrole csv the given user is allowed to verify transcripts
      */
     public boolean userIsVerifier(String userEmail) {
     	return verifiers.contains(userEmail);
     }
-    
+
     private boolean userInProp(String userEmail, String propName) {
         if (StringUtils.isBlank(userEmail))
             return false;
-        
+
         String[] peeps = getStringArray(propName);
         if (peeps == null || peeps.length < 1)
             return false;
-        
+
         for(String p: peeps) {
             if (StringUtils.equalsIgnoreCase(userEmail, p))
                 return true;
         }
         return false;
     }
-    
+
     /**
      * CRUD service for transcript files
      */
     public TranscriptService getTranscriptService() {
         return transcriptService;
     }
-    
+
     /**
      * Client class used for HTTP comms.  STRONGLY tied to the
      * Apache commons HTTP library.
@@ -280,7 +280,7 @@ public class ConfigContext extends CompositeConfiguration {
             logger.error("There was a request for a blank resource");
             return "";
         }
-        
+
         try {
             URL resUrl = findResource(name);
             if (resUrl == null) {
@@ -295,14 +295,14 @@ public class ConfigContext extends CompositeConfiguration {
             return "";
         }
     }
-    
+
     /**
      * Return a URL specifying the location of a resource
      */
     public URL findResource(String name) {
         return this.getClass().getClassLoader().getResource(name);
     }
-    
+
     private String reqStr(String propName) {
         String value = StringUtils.trimToEmpty(getString(propName));
         if (StringUtils.isBlank(value)) {

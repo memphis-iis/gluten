@@ -197,7 +197,7 @@ public class EditServlet extends ServletBase {
             throw new UserErrorException("Could not find the request transcript");
         }
 
-        //Read and set any top-level information        
+        //Read and set any top-level information
         ts.setSoundness(getStrParm(request, "soundness"));
         ts.setSessionComments(getStrParm(request, "sessionComments"));
         ts.setLearningAssessmentScore(getStrParm(request, "learningAssessmentScore"));
@@ -257,7 +257,7 @@ public class EditServlet extends ServletBase {
             java.util.Date date= new java.util.Date();
             String savedtime =  ""+(new  Timestamp(date.getTime()));
             ts.setLastSavedTime(savedtime);
-            
+
             if(ctx.userIsVerifier(getUserEmail(request))){
                 ts.setVerifier(userEmail);
             }
@@ -282,7 +282,7 @@ public class EditServlet extends ServletBase {
 
         /* TODO: the "autosave, completed, or vanilla redirect" block below has
          * gotten out of control... refactor this code (or this method) to be
-         * much leaner and cleaner 
+         * much leaner and cleaner
          * */
 
         //If this is an autosave, we just return a status JSON
@@ -393,8 +393,8 @@ public class EditServlet extends ServletBase {
             throw new UserErrorException("Could not determine the file matching " + hidden, t);
         }
     }
-    
-    //Simple helper for some repeated logic in this file 
+
+    //Simple helper for some repeated logic in this file
     private String getStrParm(HttpServletRequest request, String name) {
     	String val = request.getParameter(name);
     	if (StringUtils.isBlank(val))

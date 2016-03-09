@@ -13,14 +13,14 @@ public class SessionLogger implements HttpSessionListener {
     private Logger log() {
         return Logger.getLogger(SessionLogger.class);
     }
-    
+
     @Override
     public void sessionCreated(HttpSessionEvent evt) {
         HttpSession session = evt.getSession();
         if (session == null) {
             return;
         }
-        
+
         log().info("Creating session " + StringUtils.defaultIfBlank(session.getId(), "{BLANK}"));
     }
 
@@ -30,7 +30,7 @@ public class SessionLogger implements HttpSessionListener {
         if (session == null) {
             return;
         }
-        
+
         StringBuilder sb = new StringBuilder();
         sb.append("Destroying session: ");
         sb.append(StringUtils.defaultIfBlank(session.getId(), "{BLANK}"));
@@ -39,7 +39,7 @@ public class SessionLogger implements HttpSessionListener {
         app(sb, session, Const.SESS_USR_NAME);
         app(sb, session, Const.SESS_USR_LOC);
         app(sb, session, Const.SESS_USR_PHOTO);
-        
+
         log().info(sb.toString());
     }
     private static void app(StringBuilder sb, HttpSession session, String name) {

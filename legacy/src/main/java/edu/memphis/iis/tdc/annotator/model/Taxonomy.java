@@ -17,7 +17,7 @@ public class Taxonomy {
     public List<String> getDialogModes() {
         return dialogModes;
     }
-    
+
     public List<DialogAct> getDialogActs() {
         return dialogActs;
     }

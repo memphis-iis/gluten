@@ -30,7 +30,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  *   <li>Wraps doGet and doPost to require secured login
  *   <li>Provides current user ID
  * </ul>
- * 
+ *
  * <p>Note that we use Google OAuth 2, so only the first part of the login
  * is handled here.  We give Google a redirect URL that should point to
  * our OAuth2Servlet servlet
@@ -38,13 +38,13 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 public abstract class ServletBase extends HttpServlet {
     private static final long serialVersionUID = 1L;
     protected transient Logger logger;
-    
+
     public static final String NO_VIEW = "{{NOVIEW}}";
-    
+
     /**
      * Direct access to a Logger instance for the current class
      */
-    //Suppress FindBugs - the warning is spurious 
+    //Suppress FindBugs - the warning is spurious
     @SuppressWarnings
     public synchronized Logger log() {
         if (logger == null) {
@@ -52,7 +52,7 @@ public abstract class ServletBase extends HttpServlet {
         }
         return logger;
     }
-    
+
     /**
      * Helper for writing to the audit log - this is meant to work in
      * tandem with a log4j config.  The message is logged at the INFO level
@@ -60,7 +60,7 @@ public abstract class ServletBase extends HttpServlet {
     public void audit(String msg) {
         audit(Level.INFO, msg);
     }
-    
+
     /**
      * Helper for writing to the audit log - this is meant to work in
      * tandem with a log4j config.  The level logged to is exposed.  This
@@ -70,7 +70,7 @@ public abstract class ServletBase extends HttpServlet {
     public void audit(Level level, String msg) {
         log().log(level, "[[AUDIT]] " + msg);
     }
-    
+
     /**
      * Return the current user's email address as stored in the session.  If
      * it is not in the session, then a test value will be used from the
@@ -87,7 +87,7 @@ public abstract class ServletBase extends HttpServlet {
         }
         return email;
     }
-    
+
     public String getUserFullName(HttpServletRequest request) {
         String fullName = (String)request.getSession(true).getAttribute(Const.SESS_USR_NAME);
         if (StringUtils.isBlank(fullName)) {
@@ -98,7 +98,7 @@ public abstract class ServletBase extends HttpServlet {
         }
         return fullName;
     }
-    
+
     //Sometimes we need a string to log regardless of whether or not
     //someone if logged in - and DON'T leak or log exceptions
     protected String getUserForLogging(HttpServletRequest request) {
@@ -109,28 +109,28 @@ public abstract class ServletBase extends HttpServlet {
         catch(Throwable t) {
             user = "";
         }
-        
+
         if (StringUtils.isBlank(user))
             user = "[Anonymous User]";
         return user;
     }
-    
+
     protected boolean isUserAssigner(HttpServletRequest request) {
         return ConfigContext.getInst().userIsAssigner(getUserEmail(request));
     }
-    
+
     protected boolean isUserVerifier(HttpServletRequest request) {
         return ConfigContext.getInst().userIsVerifier(getUserEmail(request));
     }
-    
-    protected abstract String doProtectedGet(HttpServletRequest request, HttpServletResponse response) 
+
+    protected abstract String doProtectedGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, UserErrorException;
-    
+
     protected abstract String doProtectedPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, UserErrorException;
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
         try {
@@ -155,7 +155,7 @@ public abstract class ServletBase extends HttpServlet {
             doErrorPage(request, response, t.getMessage());
         }
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
@@ -182,14 +182,14 @@ public abstract class ServletBase extends HttpServlet {
             doErrorPage(request, response, t.getMessage());
         }
     }
-    
+
     /**
      * Returns false if the context fails.  If we DO return false, then our
      * caller should assume that the response has been changed (error msg,
      * redirect, etc) and processing should stop
      */
-    private boolean setupHttpContext(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException 
+    private boolean setupHttpContext(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
     {
         String userEmail = getUserEmail(request);
         if (StringUtils.isBlank(userEmail)) {
@@ -197,11 +197,11 @@ public abstract class ServletBase extends HttpServlet {
             seeLogin(request, response);
             return false;
         }
-        
+
         //Admin roles
         boolean assigner = isUserAssigner(request);
         boolean verifier = isUserVerifier(request);
-        
+
         //REQUIRED to be there
         request.setAttribute(Const.REQ_USR_NAME, getUserFullName(request));
         request.setAttribute(Const.REQ_USR_EMAIL, userEmail);
@@ -210,20 +210,20 @@ public abstract class ServletBase extends HttpServlet {
         request.setAttribute(Const.REQ_IS_ASSIGNER, assigner);
         request.setAttribute(Const.REQ_IS_VERIFIER, verifier);
         request.setAttribute(Const.REQ_IS_ASSESSOR, assigner || verifier);
-        
+
         //Things we provide as a nicety if they were found (and are generally
-        //set by the login) note that for a few, we actually handle a default       
+        //set by the login) note that for a few, we actually handle a default
         HttpSession session = request.getSession(true);
-        
-        request.setAttribute(Const.REQ_USR_LOC, 
+
+        request.setAttribute(Const.REQ_USR_LOC,
                 getOptStr(session, Const.SESS_USR_LOC, "en"));
-        
-        request.setAttribute(Const.REQ_USR_PHOTO, 
+
+        request.setAttribute(Const.REQ_USR_PHOTO,
                 getOptStr(session, Const.SESS_USR_PHOTO, "img/anonymous_person.png"));
-        
+
         return true;
     }
-    
+
     //Return the session string variable.  If isn't there, set the session
     //variable to the default value and use that
     private String getOptStr(HttpSession session, String name, String defVal) {
@@ -234,12 +234,12 @@ public abstract class ServletBase extends HttpServlet {
         }
         return val;
     }
-    
+
     private void handleHttpTarget(
-            HttpServletRequest request, 
-            HttpServletResponse response, 
-            String target) 
-            throws UserErrorException, ServletException, IOException 
+            HttpServletRequest request,
+            HttpServletResponse response,
+            String target)
+            throws UserErrorException, ServletException, IOException
     {
         if (StringUtils.isBlank(target)) {
             throw new UserErrorException("No view specified for the method");
@@ -247,10 +247,10 @@ public abstract class ServletBase extends HttpServlet {
         else if (NO_VIEW.equals(target)) {
             return;
         }
-        
+
         request.getRequestDispatcher(target).forward(request, response);
     }
-    
+
     /**
      * Return the full URL (with query string) for the specified request
      */
@@ -259,7 +259,7 @@ public abstract class ServletBase extends HttpServlet {
         qs = StringUtils.isBlank(qs) ? "" : "?"+qs;
         return request.getRequestURL() + qs;
     }
-    
+
     /**
      * Wrapper (with logging) around static rawBuildAppURL
      */
@@ -272,16 +272,16 @@ public abstract class ServletBase extends HttpServlet {
             log().warn("Syntax error building a URI for req " + request.getRequestURI(), e);
             return null;
         }
-        
+
         return uri.toString();
     }
-    
+
     /**
      * Construct a link to the given component for this app
      * For instance, if this app is at http://localhost:8080/annotator, then
      * <code>buildAppURL(request, "xyz")</code> should return
      * http://localhost:8080/annotator/xyz
-     * 
+     *
      * <p>Mainly called by the method buildAppURL
      */
     public static URI rawBuildAppURL(HttpServletRequest request, String component) throws URISyntaxException {
@@ -292,28 +292,28 @@ public abstract class ServletBase extends HttpServlet {
             .setPath("/" + request.getContextPath() + "/" + component)
             .build();
     }
-    
-    protected void doErrorPage(HttpServletRequest request, HttpServletResponse response, String msg) 
-            throws ServletException, IOException 
+
+    protected void doErrorPage(HttpServletRequest request, HttpServletResponse response, String msg)
+            throws ServletException, IOException
     {
         request.setAttribute(Const.REQ_ERR_MSG, msg);
         request.getRequestDispatcher("/WEB-INF/view/error.jsp").forward(request, response);
     }
-    
+
     protected void seeOther(HttpServletRequest request, HttpServletResponse response, String url) {
         log().info(String.format("Redirecting %s to %s", getUserEmail(request), url));
         response.setStatus(HttpServletResponse.SC_SEE_OTHER);
         response.setHeader("Location", url);
     }
-    
+
     //Start them on the login path - note that we're currently using
     //only Google
-    protected void seeLogin(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException 
+    protected void seeLogin(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
     {
         try {
             ConfigContext ctx = ConfigContext.getInst();
-            
+
             //Note changes you may need:
             // * access_type should be "offline" if we want a refresh token to
             //   come back with the access token
@@ -328,62 +328,62 @@ public abstract class ServletBase extends HttpServlet {
                 .setParameter("access_type", "online")
                 .setParameter("approval_prompt", "auto")
                 .build();
-            
+
             seeOther(request, response, uri.toString());
-            
+
         }
         catch (Exception e) {
             log().error("There was an error attempting to start login process!", e);
-            doErrorPage(request, response, e.getMessage()); 
+            doErrorPage(request, response, e.getMessage());
         }
     }
-    
+
     protected void userAudit(
-            String auditMsg, 
-            HttpServletRequest request, 
-            State state, 
-            String baseFileName, 
-            TranscriptSession ts) 
+            String auditMsg,
+            HttpServletRequest request,
+            State state,
+            String baseFileName,
+            TranscriptSession ts)
     {
         userAudit(Level.INFO, auditMsg, request, state, baseFileName, ts);
     }
-    
+
     protected void userAudit(
-            Level level, 
-            String auditMsg, 
-            HttpServletRequest request, 
-            State state, 
-            String baseFileName, 
-            TranscriptSession ts) 
-    {       
-        
+            Level level,
+            String auditMsg,
+            HttpServletRequest request,
+            State state,
+            String baseFileName,
+            TranscriptSession ts)
+    {
+
         String errMsg = String.format("%s: {usr:%s,name:%s,state:%s,baseFn:%s,srcFn:%s}",
                 auditMsg,
-                getUserEmail(request), 
+                getUserEmail(request),
                 getUserFullName(request),
                 state == null ? "" : state.toString(),
                 baseFileName,
                 ts.getSourceFileName());
-        
+
         int act = 0;
         int subact = 0;
         int mode = 0;
-        
+
         for(Utterance u: ts.getTranscriptItems()) {
             act += validTag(u.getDialogAct());
             subact += validTag(u.getDialogSubAct());
             mode += validTag(u.getDialogMode());
         }
-        
+
         errMsg += String.format(" {totitems:%d,act:%d,subact:%d,mode:%d}",
             ts.getTranscriptItems().size(),
             act,
             subact,
             mode);
-        
+
         audit(level, errMsg);
     }
-    
+
     private static int validTag(String s) {
         if (StringUtils.isBlank(s) || "unspecified".equals(s.toLowerCase(Locale.ENGLISH))) {
             return 0;
@@ -392,14 +392,14 @@ public abstract class ServletBase extends HttpServlet {
             return 1;
         }
     }
-    
+
     /**
      * Helper for parsing state string submitted to a servlet
      */
     protected TranscriptService.State parseState(String state) throws UserErrorException {
         if (StringUtils.isBlank(state))
             throw new UserErrorException("No file state specified");
-        
+
         try {
             return TranscriptService.State.valueOf(state);
         }

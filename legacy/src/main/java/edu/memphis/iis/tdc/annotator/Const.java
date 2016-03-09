@@ -5,11 +5,11 @@ package edu.memphis.iis.tdc.annotator;
  * session variable names, and request attribute names.  Note that
  * we generally don't have all possibilities here - just the names
  * that are used multiple times (and in multiple places) to reduce
- * typo's and improve readability. 
+ * typo's and improve readability.
  */
 public class Const {
     public Const() { throw new RuntimeException("Don't instantiate this class!"); }
-    
+
     //Config (property) file names
     //Note that these aren't comprehensive - generally we only constant-ize
     //prop names used in multiple places
@@ -18,7 +18,7 @@ public class Const {
     public final static String PROP_TEST_IGNORE_USR = "annotator.test.user.notest";
     public final static String PROP_TEST_USR_EMAIL = "annotator.test.user.email";
     public final static String PROP_TEST_USR_NAME = "annotator.test.user.name";
-    
+
     //Session variable names
     public final static String SESS_USR_EMAIL = "user.email";
     public final static String SESS_USR_NAME = "user.fullname";
@@ -26,7 +26,7 @@ public class Const {
     public final static String SESS_USR_PHOTO = "user.photo";
     public final static String SESS_OAUTH_REFRESH_TOK = "refresh_token";
     public final static String SESS_OAUTH_ACCESS_TOK = "access_token";
-    
+
     //Request attibute names (used by our view templates)
     public final static String REQ_USR_EMAIL = "userEmail";
     public final static String REQ_USR_NAME = "userFullName";

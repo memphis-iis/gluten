@@ -29,7 +29,7 @@ import edu.memphis.iis.tdc.annotator.model.TranscriptSession;
  */
 
 /**
- * Our main servlet that handles initialization and the index/home stuff 
+ * Our main servlet that handles initialization and the index/home stuff
  */
 @WebServlet(value="/home", loadOnStartup=1)
 public class MainServlet extends ServletBase {
@@ -41,16 +41,16 @@ public class MainServlet extends ServletBase {
         //framework, this forces the configuration init - before any requests.
         //If we were using something like Spring, this would already be done.
         ConfigContext configContext = ConfigContext.getInst();
-        log().info(String.format("Configuration completed: Found %d dialog acts", 
+        log().info(String.format("Configuration completed: Found %d dialog acts",
                 configContext.getTaxonomy().getDialogActs().size()));
-        
+
         //Probably the only place we'll specify the level for an audit, but
         //we want this one in our error log as well
         audit(Level.WARN, "Server init has completed");
     }
 
     @Override
-    protected String doProtectedGet(HttpServletRequest request, HttpServletResponse response) 
+    protected String doProtectedGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, UserErrorException
     {
         //Note that if we're here, they are already logged in
@@ -59,48 +59,48 @@ public class MainServlet extends ServletBase {
             seeOther(request, response, buildAppURL(request, "loggedout.html"));
             return NO_VIEW;
         }
-        
+
         ConfigContext ctx = ConfigContext.getInst();
         TranscriptService tserv = ctx.getTranscriptService();
-        
+
         String userEmail = getUserEmail(request);
-        
+
         //Get all the training filenames so that we can mark any transcripts
         //as training mode
         String trainer = ctx.getString(Const.PROP_TRAINER_NAME, "");
         Set<String> trainNames = tserv.findAllFiles(trainer, State.Completed, null).keySet();
-        
+
         request.setAttribute(Const.REQ_SESS_PEND, findSessions(tserv, State.Pending, userEmail, trainNames));
         request.setAttribute(Const.REQ_SESS_INPROG, findSessions(tserv, State.InProgress, userEmail, trainNames));
         request.setAttribute(Const.REQ_SESS_COMP, findSessions(tserv, State.Completed, userEmail, trainNames));
-        
+
         return "/WEB-INF/view/home.jsp";
     }
 
     @Override
     protected String doProtectedPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, UserErrorException 
+            throws ServletException, IOException, UserErrorException
     {
         throw new UserErrorException("Something is wrong - the HTTP action is supported for this page");
     }
-    
+
     //Find a list of sessions in the given state for the current user - also
-    //note that we handle any annotation needed by a view 
+    //note that we handle any annotation needed by a view
     private List<TranscriptSession> findSessions(
-            TranscriptService tserv, 
-            TranscriptService.State state, 
+            TranscriptService tserv,
+            TranscriptService.State state,
             String userEmail,
-            Set<String> trainNames) 
+            Set<String> trainNames)
     {
         List<TranscriptSession> ret = tserv.getUserTranscripts(state, userEmail);
-        
+
         for(TranscriptSession ts: ret) {
             String baseFileName = ts.getBaseFileName();
             if (StringUtils.isNotBlank(baseFileName)) {
                 ts.setWebFileName(SimpleEncrypt.hideString(baseFileName));
             }
-            
-            //If this transcript is in "training" mode, set a dummy 
+
+            //If this transcript is in "training" mode, set a dummy
             if (trainNames.contains(baseFileName)) {
                 ModeSource ms = new ModeSource();
                 ms.setMode("training");
@@ -112,7 +112,7 @@ public class MainServlet extends ServletBase {
                 ts.setModeSource(ms);
             }
         }
-        
+
         return ret;
     }
 }

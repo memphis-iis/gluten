@@ -14,7 +14,7 @@ import org.simpleframework.xml.Root;
 public class DialogAct {
     @Element
     private String name;
-    
+
     @ElementList
     private List<String> subtypes;
 

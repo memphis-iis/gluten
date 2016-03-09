@@ -16,14 +16,14 @@ import org.simpleframework.xml.Root;
 public class ModeSource {
     @Element private String mode;
     @ElementList private List<TranscriptFileInfo> sources;
-    
+
     public String getMode() {
         return mode;
     }
     public void setMode(String mode) {
         this.mode = mode;
     }
-    
+
     public List<TranscriptFileInfo> getSources() {
         if (sources == null) {
             sources = new ArrayList<TranscriptFileInfo>();

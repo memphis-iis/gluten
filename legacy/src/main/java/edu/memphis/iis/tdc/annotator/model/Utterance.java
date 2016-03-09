@@ -12,7 +12,7 @@ import org.simpleframework.xml.Root;
 /**
  * Represents a single line in a transcript session.  Timestamp, Speaker,
  * and Text are parsed from the original transcript. All other fields are
- * user-supplied as part of the annotation process (or are calculated). 
+ * user-supplied as part of the annotation process (or are calculated).
  */
 @Root
 public class Utterance {
@@ -24,7 +24,7 @@ public class Utterance {
     @Element(required=false) private String dialogMode = "";
     @Element(required=false) private String comments = "";
     @Element(required=false) private int tagConfidence = 1;
-    
+
     public static class TagComparison implements Comparator<Utterance>, Serializable {
         private static final long serialVersionUID = 1L;
         @Override
@@ -36,7 +36,7 @@ public class Utterance {
                 .toComparison();
         }
     };
-    
+
     /**
      * From transcript - the time of the utterance (relative to start of session)
      */
@@ -46,7 +46,7 @@ public class Utterance {
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
-    
+
     /**
      * From transcript - string specify who generated this utterance
      */
@@ -56,7 +56,7 @@ public class Utterance {
     public void setSpeaker(String speaker) {
         this.speaker = speaker;
     }
-    
+
     /**
      * Provide a "displayable" version of speaker.  Generally this handles
      * exception cases, anonymity, shortening, etc
@@ -65,7 +65,7 @@ public class Utterance {
         if (StringUtils.isBlank(speaker)) {
             return "?";
         }
-        
+
         String check = speaker.trim().toLowerCase(Locale.ENGLISH);
         if (check.equals("you")) {
             return "Tutor";
@@ -76,10 +76,10 @@ public class Utterance {
         else if (check.endsWith("(tutor)")) {
             return "Tutor";
         }
-        
+
         return speaker;
     }
-    
+
     /**
      * From transcript - Actual text of utterance
      */
@@ -89,7 +89,7 @@ public class Utterance {
     public void setText(String text) {
         this.text = text;
     }
-    
+
     /**
      * User entered - Dialog act (from our taxonomy)
      */
@@ -99,10 +99,10 @@ public class Utterance {
     public void setDialogAct(String dialogAct) {
         this.dialogAct = dialogAct;
     }
-    
+
     /**
      * User entered - Dialog sub-act (from our taxonomy) - dependent on
-     * user-specified DialogAct 
+     * user-specified DialogAct
      */
     public String getDialogSubAct() {
         return dialogSubAct;
@@ -110,7 +110,7 @@ public class Utterance {
     public void setDialogSubAct(String dialogSubAct) {
         this.dialogSubAct = dialogSubAct;
     }
-    
+
     /**
      * User entered - Dialog mdoe (from our taxonomy)
      */
@@ -120,7 +120,7 @@ public class Utterance {
     public void setDialogMode(String dialogMode) {
         this.dialogMode = dialogMode;
     }
-    
+
     /**
      * User entered - comments about the current utterance
      */
@@ -130,9 +130,9 @@ public class Utterance {
     public void setComments(String comments) {
         this.comments = comments;
     }
-    
+
     /**
-     * User may specify whether or not they are confident with their tag 
+     * User may specify whether or not they are confident with their tag
      */
     public int getTagConfidence() {
         return tagConfidence;
@@ -140,7 +140,7 @@ public class Utterance {
     public void setTagConfidence(int tagConfidence) {
         this.tagConfidence = tagConfidence;
     }
-    
+
     /**
      * Helper: return string representation of tag state for comparisons
      */

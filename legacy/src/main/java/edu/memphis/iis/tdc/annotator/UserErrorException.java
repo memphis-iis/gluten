@@ -6,7 +6,7 @@ package edu.memphis.iis.tdc.annotator;
  */
 public class UserErrorException extends Exception {
     private static final long serialVersionUID = 1L;
-    
+
     public UserErrorException(String msg) {
         super(msg);
     }

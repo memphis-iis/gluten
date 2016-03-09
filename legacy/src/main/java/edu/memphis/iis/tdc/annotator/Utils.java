@@ -16,27 +16,27 @@ import org.apache.log4j.Logger;
  */
 public class Utils {
     private final static Logger logger = Logger.getLogger(Utils.class);
-    
+
     public Utils() { throw new RuntimeException("Don't instantiate this class!"); }
-    
+
     /**
      * Make sure the given directory is valid, that it exists, and that it is
-     * writable (by creating and deleting a "touch" file)  
+     * writable (by creating and deleting a "touch" file)
      * @param dirName name to check
      * @param checkForWrite if true, insure that the directory can be written to
      * @return name with any changes
      * @throws RuntimeException if the directory can't be created/checked
      */
-    
+
     public static String checkDir(String dirName, boolean checkForWrite) {
         while(dirName.endsWith(File.separator)) {
             dirName = dirName.substring(0, dirName.length() - File.separator.length());
         }
-        
+
         if (StringUtils.isBlank(dirName)) {
             throw new RuntimeException("Invalid directory name discovered");
         }
-        
+
         try {
             File touchFile = new File(dirName + "/exists");
             FileUtils.forceMkdir(touchFile.getParentFile());
@@ -49,10 +49,10 @@ public class Utils {
             logger.fatal(errMsg, e);
             throw new RuntimeException(errMsg, e);
         }
-        
+
         return dirName;
     }
-    
+
     public static void checkWrite(File touchFile) throws IOException {
         if (!touchFile.createNewFile()) {
             //File was already there? try to delete and recreate
@@ -63,9 +63,9 @@ public class Utils {
                 throw new IOException("Touch file exists after delete?");
             }
         }
-        
+
         if (!touchFile.delete()) {
-            throw new IOException("Touch file deletion failed but threw no exception"); 
+            throw new IOException("Touch file deletion failed but threw no exception");
         }
     }
 
@@ -88,7 +88,7 @@ public class Utils {
             return defaultVal;
         }
     }
-    
+
     /**
      * Using the commons beanutils and a little wrapper, create a map
      * from property name to value object
@@ -96,14 +96,14 @@ public class Utils {
     public static Map<String, Object> objectToMap(Object obj) {
         BeanMap beanMap = new BeanMap(obj);
         Map<String, Object> map = new HashMap<String, Object>();
-        
+
         //yes, archaic iterator code, but the BeanMap is so handy...
         Iterator<String> keys = beanMap.keyIterator();
         while(keys.hasNext()) {
             String key = keys.next();
             map.put(key, beanMap.get(key));
         }
-        
+
         return map;
     }
 }

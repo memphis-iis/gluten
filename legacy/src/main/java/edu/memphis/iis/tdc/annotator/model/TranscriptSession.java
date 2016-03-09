@@ -22,14 +22,14 @@ import org.simpleframework.xml.Root;
 @Root(name="Session")
 public class TranscriptSession {
     //Note order of variables corresponds to default order when file is written
-    
+
     @Element private long scriptId;
     @Element(required=false) private String tagger;
     @Element(required=false) private String verifier;
-    @Element(required=false) private String taggedTime; 
+    @Element(required=false) private String taggedTime;
     @Element(required=false) private String verifiedTime;
-    @Element(required=false) private String lastSavedTime; 
-    @Element private String beginDateTime; 
+    @Element(required=false) private String lastSavedTime;
+    @Element private String beginDateTime;
 //    @Element private long studentId;
 //    @Element private long tutorId;
     @Element private float scriptDuration;
@@ -58,14 +58,14 @@ public class TranscriptSession {
     @Element(required=false) private String learningAssessmentScore;
     @Element(required=false) private String learningAssessmentComments;
     @Element(required=false) private ModeSource modeSource;
-    
+
     //Tagged lines of transcript (vs raw transcript below)
     @ElementList(required=false)
     private List<Utterance> transcriptItems = new ArrayList<Utterance>();
-    
+
     //The text of a transcript - note that they can actually have a BLANK transcript
     @Element(required=false) private String transcript;
-    
+
     public String getTranscript() {
         return transcript;
     }
@@ -253,10 +253,10 @@ public class TranscriptSession {
     public void setTutorNotes(String tutorComments) {
         this.tutorNotes = tutorComments;
     }
-    
+
     /**
      * Soundness is special - it doesn't come in the transcript sessions,
-     * but we force our taggers to add it when tagging 
+     * but we force our taggers to add it when tagging
      */
     public String getSoundness() {
         return soundness;
@@ -264,7 +264,7 @@ public class TranscriptSession {
     public void setSoundness(String soundness) {
         this.soundness = soundness;
     }
-    
+
     /**
      * Like soundness, session comments don't come in the original
      * transcript sessions.  They are added by our annotators
@@ -275,30 +275,30 @@ public class TranscriptSession {
     public void setSessionComments(String s) {
         this.sessionComments = s;
     }
-    
+
     /**
-     * Annotator's evaluation (1-5 Likert scale) of whether or not learning occurred 
+     * Annotator's evaluation (1-5 Likert scale) of whether or not learning occurred
      * Like soundness, not in the original transcript.
      */
     public String getLearningAssessmentScore() {
-		return learningAssessmentScore;
-	}
-	public void setLearningAssessmentScore(String learningAssessmentScore) {
-		this.learningAssessmentScore = learningAssessmentScore;
-	}
-	
-	/**
-     * Annotator's justification for learningAsessmentScore. 
+        return learningAssessmentScore;
+    }
+    public void setLearningAssessmentScore(String learningAssessmentScore) {
+        this.learningAssessmentScore = learningAssessmentScore;
+    }
+
+    /**
+     * Annotator's justification for learningAsessmentScore.
      * Like soundness, not in the original transcript.
      */
-	public String getLearningAssessmentComments() {
-		return learningAssessmentComments;
-	}
-	public void setLearningAssessmentComments(String learningAssessmentComments) {
-		this.learningAssessmentComments = learningAssessmentComments;
-	}
-	
-	/**
+    public String getLearningAssessmentComments() {
+        return learningAssessmentComments;
+    }
+    public void setLearningAssessmentComments(String learningAssessmentComments) {
+        this.learningAssessmentComments = learningAssessmentComments;
+    }
+
+    /**
      * The mode of this transcript and the sources behind it
      */
     public ModeSource getModeSource() {
@@ -307,7 +307,7 @@ public class TranscriptSession {
     public void setModeSource(ModeSource modeSource) {
         this.modeSource = modeSource;
     }
-    
+
     /**
      * Helper for modeSource examination: returns true if this transcript
      * is in <em>ANY</em> mode
@@ -315,7 +315,7 @@ public class TranscriptSession {
     public boolean isInMode() {
         return modeSource != null && StringUtils.isNotBlank(modeSource.getMode());
     }
-    
+
     /**
      * Helper for modeSource examination: returns true if this transcript
      * is in the given mode
@@ -323,7 +323,7 @@ public class TranscriptSession {
     public boolean isInMode(String check) {
         return isInMode() && modeSource.getMode().equals(check);
     }
-    
+
     /**
      * Helper for modeSource examination: returns true if this transcript
      * is in verification mode
@@ -331,7 +331,7 @@ public class TranscriptSession {
     public boolean isVerify() {
         return isInMode("verify");
     }
-    
+
     /**
      * Helper for modeSource examination: returns true if this transcript
      * is in training mode.  <em>IMPORTANT:</em> This is currently a VIRTUAL
@@ -339,23 +339,23 @@ public class TranscriptSession {
      * assignment process can decide if it is in training mode or not, and
      * this will become a "real" state.  Until then the edit controller decides
      * on the fly whether or not the transcript is in training mode based on
-     * the existence of a matching transcript for the "trainer" user 
+     * the existence of a matching transcript for the "trainer" user
      */
     public boolean isTraining() {
         return isInMode("training");
     }
-    
+
     public List<Utterance> getTranscriptItems() {
         return transcriptItems;
     }
-    
+
     /*
      * Data elements that don't correspond exactly to the raw value of an
      * XML field
      */
     private String sourceFileName;
     private String webFileName;
-    
+
     /**
      * Source file name for transcript data - discovered when the file
      * is actually read
@@ -366,10 +366,10 @@ public class TranscriptSession {
     public void setSourceFileName(String sourceFileName) {
         this.sourceFileName = sourceFileName;
     }
-    
+
     /**
      * Web file name is a string used for web displays and query strings -
-     * generally only set/read by controllers/views 
+     * generally only set/read by controllers/views
      */
     public String getWebFileName() {
         return webFileName;
@@ -377,83 +377,83 @@ public class TranscriptSession {
     public void setWebFileName(String webFileName) {
         this.webFileName = webFileName;
     }
-    
+
     /**
      * File name extract from sourceFileName
      */
     public String getBaseFileName() {
         return FilenameUtils.getName(sourceFileName);
     }
-    
+
     /**
      * Return true if every utterance has a dialog act and subact (even
      * if it's "unspecified") and at least one non-blank mode that is
-     * NOT "unspecified"  
+     * NOT "unspecified"
      */
-    
+
     public boolean isTaggingComplete() {
         List<Utterance> utts = getTranscriptItems();
-        
+
         //Special - no items to tag means we're complete!
         if (utts == null || utts.size() < 1)
             return true;
-        
+
         int modeCount = 0;
-        
+
         for(Utterance utt: utts) {
             if (StringUtils.isBlank(utt.getDialogAct()))
                 return false;
             if (StringUtils.isBlank(utt.getDialogSubAct()))
                 return false;
-            
+
             String mode = utt.getDialogMode();
             if (StringUtils.isNotBlank(mode) && !mode.equalsIgnoreCase("unspecified")) {
                 modeCount++;
             }
         }
-        
+
         //We need at least ONE unspecified mode
         return modeCount > 0;
     }
-    
+
     /**
      * Parse the current transcript into transcript items.  Note that this
      * is only performed if there are not already transcriptItems.  The
      * idea is that if the list is blank then these items need to be created;
      * otherwise they are already in the file and are considered the "real"
-     * transcript data  
+     * transcript data
      */
     public void parseTranscript() {
         if (transcriptItems != null && transcriptItems.size() > 0) {
             return;
         }
-        
+
         if (transcriptItems == null) {
             transcriptItems = new ArrayList<Utterance>();
         }
         transcriptItems.clear();
-        
+
         Pattern timestamp = Pattern.compile("^\\[\\d\\d:\\d\\d:\\d\\d\\]");
-        
+
         //We could actually have a blank transcript...
         if (StringUtils.isBlank(transcript)) {
             transcript = "";
             return;
         }
-        
+
         boolean seenBlank = true; //Yep
         String currentSpeaker = "UKNOWN SPEAKER";
-        
+
         for(String line: StringUtils.splitPreserveAllTokens(transcript, '\n')) {
             line = StringUtils.stripEnd(line, " \t\r\n");
-            
+
             if (StringUtils.isBlank(line)) {
                 seenBlank = true;
                 continue;
             }
-            
+
             Matcher match = timestamp.matcher(line.trim());
-            
+
             if (match.lookingAt()) {
                 //Timestamp, so an utterance
                 Utterance utt = new Utterance();
@@ -477,41 +477,41 @@ public class TranscriptSession {
                     utt.setText(utt.getText() + "\r\n" + line.trim());
                 }
             }
-            
+
             seenBlank = false;
         }
     }
-    
+
     //Return true if the given string appear to match our "known"
-    //speaker patterns 
+    //speaker patterns
     private boolean speakerMatch(String s) {
         String check = s.trim().toLowerCase(Locale.ENGLISH);
-        
+
         if (StringUtils.isBlank(check))
             return false;
-        
+
         //Our order of checking is based on frequencies we saw
         //across about 2k transcripts
-        
+
         //Tutor
         if (check.equals("you") || check.endsWith("(tutor)"))
             return true;
-        
+
         //Student
         if (check.endsWith("(customer)"))
             return true;
-        
+
         //System message
         if (check.equals("system message"))
             return true;
-        
+
         return false;
     }
-    
+
     private Utterance finalUtterance() {
         int sz = transcriptItems == null ? 0 : transcriptItems.size();
         if (sz < 1)
             return null;
-        return transcriptItems.get(sz - 1); 
+        return transcriptItems.get(sz - 1);
     }
 }

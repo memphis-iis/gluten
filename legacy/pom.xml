@@ -48,7 +48,7 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
-        <!-- Note the classifier - this is for the LocalTestServer... we also have 
+        <!-- Note the classifier - this is for the LocalTestServer... we also have
             a dep for the "real" runtime library below -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>

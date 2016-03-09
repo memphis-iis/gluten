@@ -2,6 +2,15 @@
 
 A Flask-based Python 3 annotation application.
 
+## Important Legacy note
+
+We maintain a copy of the "legacy" Java application that predated this current
+project in the folder `legacy`. However it is NOT maintained. If you are interested
+in a Java web application using file-based storage for transcripts, this might be
+for you. Let us know and if interest is sufficient we might consider spinning out
+a separate project. Otherwise use at your own peril. See also this PR for why you
+might want to proceed with caution: https://github.com/memphis-iis/gluten/pull/1
+
 ## Getting started
 
 If you are running on a Ubuntu-like environment, you need to make sure you've
